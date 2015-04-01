@@ -13,7 +13,7 @@ namespace FDP_App.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201504011225197_Initial"; }
+            get { return "201504011400496_Initial"; }
         }
         
         string IMigrationMetadata.Source

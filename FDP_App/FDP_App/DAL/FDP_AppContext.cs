@@ -19,13 +19,13 @@ namespace FDP_App.DAL
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
-            modelBuilder.Entity<Equipo>()
-                .HasMany(a => a.Partidos)
-                .WithRequired(a => a.Local).HasForeignKey(a => a.LocalId);
+            //modelBuilder.Entity<Equipo>()
+            //    .HasMany(a => a.Partidos)
+            //    .WithRequired(a => a.Local).HasForeignKey(a => a.LocalId);
 
-            modelBuilder.Entity<Equipo>()
-                .HasMany(a => a.Partidos)
-                .WithOptional(a => a.Visitante).HasForeignKey(a => a.VisitanteId);
+            //modelBuilder.Entity<Equipo>()
+            //    .HasMany(a => a.Partidos)
+            //    .WithOptional(a => a.Visitante).HasForeignKey(a => a.VisitanteId);
 
             modelBuilder.Entity<Fecha>()
                 .HasMany(a => a.Partidos)

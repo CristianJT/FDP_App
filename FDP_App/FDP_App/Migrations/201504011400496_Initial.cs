@@ -30,26 +30,14 @@ namespace FDP_App.Migrations
                 .Index(t => t.TorneoId);
             
             CreateTable(
-                "dbo.Partido",
+                "dbo.Torneo",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        LocalId = c.Int(nullable: false),
-                        VisitanteId = c.Int(),
-                        FechaId = c.Int(nullable: false),
-                        FechaHora = c.DateTime(nullable: false),
-                        Estadio = c.String(),
-                        Clasico = c.Boolean(nullable: false),
-                        LocalRes = c.Int(nullable: false),
-                        VisitanteRes = c.Int(nullable: false),
+                        Nombre = c.String(),
+                        Descripcion = c.String(),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Fecha", t => t.FechaId, cascadeDelete: true)
-                .ForeignKey("dbo.Equipo", t => t.LocalId, cascadeDelete: true)
-                .ForeignKey("dbo.Equipo", t => t.VisitanteId)
-                .Index(t => t.LocalId)
-                .Index(t => t.VisitanteId)
-                .Index(t => t.FechaId);
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.Fecha",
@@ -64,32 +52,36 @@ namespace FDP_App.Migrations
                 .Index(t => t.TorneoId);
             
             CreateTable(
-                "dbo.Torneo",
+                "dbo.Partido",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Nombre = c.String(),
-                        Descripcion = c.String(),
+                        LocalId = c.Int(nullable: false),
+                        VisitanteId = c.Int(nullable: false),
+                        FechaId = c.Int(nullable: false),
+                        FechaHora = c.DateTime(nullable: false),
+                        Estadio = c.String(),
+                        Clasico = c.Boolean(nullable: false),
+                        LocalRes = c.Int(nullable: false),
+                        VisitanteRes = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Fecha", t => t.FechaId, cascadeDelete: true)
+                .Index(t => t.FechaId);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Partido", "VisitanteId", "dbo.Equipo");
-            DropForeignKey("dbo.Partido", "LocalId", "dbo.Equipo");
             DropForeignKey("dbo.Fecha", "TorneoId", "dbo.Torneo");
-            DropForeignKey("dbo.Equipo", "TorneoId", "dbo.Torneo");
             DropForeignKey("dbo.Partido", "FechaId", "dbo.Fecha");
-            DropIndex("dbo.Fecha", new[] { "TorneoId" });
+            DropForeignKey("dbo.Equipo", "TorneoId", "dbo.Torneo");
             DropIndex("dbo.Partido", new[] { "FechaId" });
-            DropIndex("dbo.Partido", new[] { "VisitanteId" });
-            DropIndex("dbo.Partido", new[] { "LocalId" });
+            DropIndex("dbo.Fecha", new[] { "TorneoId" });
             DropIndex("dbo.Equipo", new[] { "TorneoId" });
-            DropTable("dbo.Torneo");
-            DropTable("dbo.Fecha");
             DropTable("dbo.Partido");
+            DropTable("dbo.Fecha");
+            DropTable("dbo.Torneo");
             DropTable("dbo.Equipo");
         }
     }

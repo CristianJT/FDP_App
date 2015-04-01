@@ -10,7 +10,7 @@ namespace FDP_App.Models
     {
         public Equipo()
         {
-            this.Partidos = new HashSet<Partido>();
+            //this.Partidos = new HashSet<Partido>();
 
             this.Jugados = 0;
             this.Puntos = 0;
@@ -38,6 +38,6 @@ namespace FDP_App.Models
         public int Diferencia { get; set; }
 
         public virtual Torneo Torneo { get; set; }
-        public virtual ICollection<Partido> Partidos { get; set; }
+        //public virtual ICollection<Partido> Partidos { get; set; }
     }
 }

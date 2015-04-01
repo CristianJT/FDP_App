@@ -10,7 +10,7 @@ namespace FDP_App.Models
     {
         public int Id { get; set; }
         public int LocalId { get; set; }
-        public int? VisitanteId { get; set; }
+        public int VisitanteId { get; set; }
         public int FechaId { get; set; }
 
         public DateTime FechaHora { get; set; }
@@ -19,8 +19,8 @@ namespace FDP_App.Models
         public int LocalRes { get; set; }
         public int VisitanteRes { get; set; }
 
-        public virtual Equipo Local { get; set; }
-        public virtual Equipo Visitante { get; set; }
+        //public virtual Equipo Local { get; set; }
+        //public virtual Equipo Visitante { get; set; }
         public virtual Fecha Fecha { get; set; }
     }
 }
