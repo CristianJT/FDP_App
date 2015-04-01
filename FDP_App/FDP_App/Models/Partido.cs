@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -9,7 +10,7 @@ namespace FDP_App.Models
     {
         public int Id { get; set; }
         public int LocalId { get; set; }
-        public int VisitanteId { get; set; }
+        public int? VisitanteId { get; set; }
         public int FechaId { get; set; }
 
         public DateTime FechaHora { get; set; }

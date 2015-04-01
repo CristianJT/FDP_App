@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -24,6 +25,7 @@ namespace FDP_App.Models
         public int Id { get; set; }
         public string Nombre { get; set; }
         public string Estadio { get; set; }
+        public string Ubicacion { get; set; }
         public int? TorneoId { get; set; }
 
         public int Puntos { get; set; }
