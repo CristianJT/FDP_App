@@ -8,6 +8,7 @@ namespace FDP_App.DAL
     {
         public FDP_AppContext() : base("FDP_AppContext")
         {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<FDP_AppContext,FDP_App.Migrations.Configuration>("FDP_AppContext"));
         }
 
         public DbSet<Torneo> Torneos { get; set; }

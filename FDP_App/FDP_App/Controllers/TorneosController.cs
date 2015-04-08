@@ -15,31 +15,42 @@ using System.Linq.Expressions;
 
 namespace FDP_App.Controllers
 {
+    [RoutePrefix("api/torneos")]
     public class TorneosController : ApiController
     {
         private FDP_AppContext db = new FDP_AppContext();
 
-        private static readonly Expression<Func<Torneo, TorneoDTO>> AsTorneoDTO =
-         x => new TorneoDTO
-         {
-            Id = x.Id,
-            Nombre = x.Nombre,
-            Decripcion = x.Descripcion
-         };
-      
-           
+        private static readonly Expression<Func<Equipo, EquipoDTO>> asEquipoDto =
+            e => new EquipoDTO
+            {
+                Id = e.Id,
+                Nombre = e.Nombre,
+                Puntos = e.Puntos,
+                Jugados = e.Jugados,
+                Ganados = e.Ganados,
+                Empatados = e.Empatados,
+                Perdidos = e.Perdidos,
+                GolesFavor = e.GolesFavor,
+                GolesContra = e.GolesContra,
+                Diferencia = e.Diferencia
+            };
 
-        // GET: api/Torneos
+        //GET: api/torneos
+        [Route("")]
         public IQueryable<TorneoDTO> GetTorneos()
         {
-            return db.Torneos.Select(AsTorneoDTO);
+            var torneos = from t in db.Torneos
+                          select new TorneoDTO() { Id = t.Id, Nombre = t.Nombre };
+            return torneos;
         }
 
-        // GET: api/Torneos/5
-        [ResponseType(typeof(Torneo))]
+        // GET: api/torneos/{id}
+        [Route("{id:int}")]
+        [ResponseType(typeof(TorneoDetailDTO))]
         public async Task<IHttpActionResult> GetTorneo(int id)
         {
-            Torneo torneo = await db.Torneos.FindAsync(id);
+            var torneo = await db.Torneos.Select(t => new TorneoDetailDTO() { Id = t.Id, Nombre = t.Nombre, Decripcion = t.Descripcion })
+                .SingleOrDefaultAsync(t => t.Id == id);
             if (torneo == null)
             {
                 return NotFound();
@@ -47,6 +58,16 @@ namespace FDP_App.Controllers
 
             return Ok(torneo);
         }
+
+        // GET: api/torneos/{id}/equipos
+        [Route("{id}/equipos")]
+        public IQueryable<EquipoDTO> GetEquiposByTorneo(int id)
+        {
+            return db.Equipos.Include(e => e.Torneo)
+                .Where(e => e.TorneoId == id)
+                .Select(asEquipoDto);
+        }
+
 
         // PUT: api/Torneos/5
         [ResponseType(typeof(void))]
