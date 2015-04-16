@@ -1,0 +1,56 @@
+﻿<div class="container">
+   
+    <form class="form-horizontal" name="formCrearTorneo" ng-submit="crearTorneo(torneo) " novalidate>
+        <br />
+        <blockquote class="col-md-offset-2 col-md-10">
+            <div ng-show="torneo.nombre"><h5><strong>Nombre: </strong>{{torneo.nombre}}</h5></div>
+            <div ng-show="torneo.inicio"><h5><strong>Fecha Inicio: </strong> {{torneo.inicio}}</h5></div>
+            <div ng-show="torneo.fin"><h5><strong>Fecha Finalización: </strong> {{torneo.fin}}</h5></div>
+            <div ng-show="torneo.descripcion"><h5><strong>Descripción: </strong> {{torneo.descripcion}}</h5></div>
+            <div ng-show="selectedTeams.length > 0"><h5><strong>Ascendidos: </strong><ul class="col-md-offset-2"><li class="list-group" ng-repeat="select in selectedTeams">{{select}}</li></ul></h5></div>
+        </blockquote>
+        <hr />
+        <div><h3 class="text-center">Nuevo Torneo</h3></div>
+        <hr />
+        <div class="form-group">
+            <label for="inputName" class="col-md-2 control-label">Torneo</label>
+            <div class="col-md-8">
+                <input ng-model="torneo.nombre" required type="text" class="form-control" id="inputName" placeholder="Nombre" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputDateInit" class="col-md-2 control-label">Inicio</label>
+            <div class="col-md-3">
+                <input ng-model="torneo.inicio" required type="month" class="form-control" id="inputDateInit"/>
+            </div>
+            <label for="inputDateEnd" class="col-md-2 control-label">Finalización</label>
+            <div class="col-md-3">
+                <input type="month" ng-model="torneo.fin" required class="form-control" id="inputDateEnd" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputDesc" class="col-md-2 control-label">Descripción</label>
+            <div class="col-md-8">
+                <textarea ng-model="torneo.descripcion" required class="form-control" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputTeams" class="col-md-2 control-label">Ascendidos</label>
+            <div class="col-md-8">
+                <button type="button" class="btn btn-default dropdown-toggle" ng-click="isCollapsed = !isCollapsed">Equipos Nacional B <spam class="caret"></spam></button>
+                <div class="col-md-offset-2 checkbox" collapse="!isCollapsed" ng-repeat="equipo in equipos | filter: {esPrimera:false}">
+                    <label><input type="checkbox" ng-click="selection(equipo.nombre)" />{{equipo.nombre}}</label>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-8">
+                <button type="submit" class="btn btn-primary" ng-disabled="formCrearTorneo.$invalid">Crear Torneo</button>
+            </div>
+        </div>
+    </form>
+    <button class="btn btn-link" ng-click="backToTournaments()">>>Volver</button>
+    <button class="btn btn-danger" ng-click="reset()">Limpiar</button>
+    
+</div>

@@ -3,8 +3,8 @@
 appService.factory('appData', ['$resource', function ($resource) {
 
     var torneos = [
-            { "id": 1, "nombre": "Transición 2014", "descripcion": "Torneo sin descensos", "isCurrent": false, "equipos": [] },
-            { "id": 2, "nombre": "Primera División 2015", "descripcion": "Primer torneo de 30 equipos", "isCurrent": true, "equipos": [] }
+            { "id": 1, "nombre": "Transición 2014", "inicio": "agosto de 2014", "fin": "diciembre de 2014", "descripcion": "Torneo sin descensos", "isCurrent": false, "equipos": [] },
+            { "id": 2, "nombre": "Primera División 2015", "inicio": "febrero de 2015", "fin": "diciembre de 2015", "descripcion": "Primer torneo de 30 equipos", "isCurrent": true, "equipos": [] }
     ];
 
     var equipos = [ 
@@ -17,7 +17,9 @@ appService.factory('appData', ['$resource', function ($resource) {
             { "id": 7, "nombre": "Estudiantes(LP)" , "estadio": "Ciudad de La Plata" , "ubicacion": "La Plata(BsAs)" , "puntos": 0, "jugados": 0, "ganados": 0, "empatados": 0, "perdidos": 0, "golesFavor": 0, "golesContra": 0, "diferencia": 0, "esPrimera": true }, 
             { "id": 8, "nombre": "Colon", "estadio": "Brigadier López" , "ubicacion": "Santa Fe(SFe)" , "puntos": 0, "jugados": 0, "ganados": 0, "empatados": 0, "perdidos": 0, "golesFavor": 0, "golesContra": 0, "diferencia": 0, "esPrimera": true }, 
             { "id": 9, "nombre": "Quilmes", "estadio": "Centenario", "ubicacion": "Quilmes(BsAs)", "puntos": 0, "jugados": 0, "ganados": 0, "empatados": 0, "perdidos": 0, "golesFavor": 0, "golesContra": 0, "diferencia": 0, "esPrimera": true },
-            { "id": 10, "nombre": "Gimnasia(J)", "estadio": "23 de Agosto", "ubicacion": "San Salvador(J)", "puntos": 0, "jugados": 0, "ganados": 0, "empatados": 0, "perdidos": 0, "golesFavor": 0, "golesContra": 0, "diferencia": 0, "esPrimera": false }
+            { "id": 10, "nombre": "Gimnasia(J)", "estadio": "23 de Agosto", "ubicacion": "San Salvador(J)", "puntos": 0, "jugados": 0, "ganados": 0, "empatados": 0, "perdidos": 0, "golesFavor": 0, "golesContra": 0, "diferencia": 0, "esPrimera": false },
+            { "id": 11, "nombre": "All Boys", "estadio": "Islas Malvinas", "ubicacion": "Floresta(CapFed)", "puntos": 0, "jugados": 0, "ganados": 0, "empatados": 0, "perdidos": 0, "golesFavor": 0, "golesContra": 0, "diferencia": 0, "esPrimera": false },
+            { "id": 12, "nombre": "Chacarita Juniors", "estadio": "Chacarita Juniors", "ubicacion": "Villa Maipú(BsAs)", "puntos": 0, "jugados": 0, "ganados": 0, "empatados": 0, "perdidos": 0, "golesFavor": 0, "golesContra": 0, "diferencia": 0, "esPrimera": false }
     ];
 
     return {
