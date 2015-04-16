@@ -19,11 +19,19 @@
 
     app.controller('TorneoController', ['$scope', 'appData', function ($scope, appData) {
         $scope.torneos = appData.getTorneos();
+
+        
     }]);
 
 app.controller('TorneoNuevoController', ['$scope', '$location', 'appData',  function ($scope, $location, appData) {
         $scope.torneos = appData.getTorneos();
         $scope.equipos = appData.getEquipos();
+
+        $scope.open = function ($event, opened) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope[opened] = !$scope[opened];
+        };
 
         $scope.selectedTeams = [];
         $scope.selection = function (teamName) {
@@ -40,6 +48,15 @@ app.controller('TorneoNuevoController', ['$scope', '$location', 'appData',  func
             var lastId = $scope.torneos[$scope.torneos.length - 1].id;
             unTorneo.id = lastId + 1;
             unTorneo.isCurrent = true;
+            unTorneo.equipos = [];
+            angular.forEach($scope.equipos, function (item) {
+                if ($scope.selectedTeams.indexOf(item.nombre) > -1) {
+                    item.esPrimera = true;
+                }
+                if (item.esPrimera) {
+                    unTorneo.equipos.push(item);
+                }
+            });
 
             $scope.torneos.push(unTorneo);
             $scope.backToTournaments();
@@ -47,13 +64,9 @@ app.controller('TorneoNuevoController', ['$scope', '$location', 'appData',  func
         
        
 
-
-   
-
         $scope.backToTournaments = function() {
             $location.path('/torneos');
         };
-
         $scope.reset = function() {
             $scope.torneo = {};
         };

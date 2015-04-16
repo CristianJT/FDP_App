@@ -3,8 +3,14 @@
 appService.factory('appData', ['$resource', function ($resource) {
 
     var torneos = [
-            { "id": 1, "nombre": "Transición 2014", "inicio": "agosto de 2014", "fin": "diciembre de 2014", "descripcion": "Torneo sin descensos", "isCurrent": false, "equipos": [] },
-            { "id": 2, "nombre": "Primera División 2015", "inicio": "febrero de 2015", "fin": "diciembre de 2015", "descripcion": "Primer torneo de 30 equipos", "isCurrent": true, "equipos": [] }
+            {
+                "id": 1, "nombre": "Transición 2014", "inicio": "", "fin": "", "descripcion": "Torneo sin descensos", "isCurrent": false,
+                "equipos": [{ "id": 3, "nombre": "Boca Juniors", "estadio": "Alberto J. Armando", "ubicacion": "La Boca(CapFed)", "puntos": 0, "jugados": 0, "ganados": 0, "empatados": 0, "perdidos": 0, "golesFavor": 0, "golesContra": 0, "diferencia": 0, "esPrimera": true }]
+            },
+            {
+                "id": 2, "nombre": "Primera División 2015", "inicio": "", "fin": "", "descripcion": "Primer torneo de 30 equipos", "isCurrent": true,
+                "equipos": [{ "id": 1, "nombre": "Independiente", "estadio": "Libertadores de América", "ubicacion": "Avellaneda(BsAs)", "puntos": 0, "jugados": 0, "ganados": 0, "empatados": 0, "perdidos": 0, "golesFavor": 0, "golesContra": 0, "diferencia": 0, "esPrimera": true }]
+            }
     ];
 
     var equipos = [ 

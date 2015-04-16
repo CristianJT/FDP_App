@@ -82,6 +82,7 @@
   <ItemGroup>
     <Content Include="App\app.js" />
     <Content Include="App\Views\TorneosNuevo.html" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Index.html" />
     <Content Include="App\Services\appService.js" />
     <Content Include="App\Views\Torneos.html" />
@@ -120,6 +121,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
