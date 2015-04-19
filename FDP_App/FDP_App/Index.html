@@ -4,33 +4,36 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>FDPApp</title>
     <link href="/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Content/angular-material.min.css" rel="stylesheet" />
 </head>
 <body>
-    <header class="container">
-        <div class="jumbotron">
-            <h1 class="text-center">Fútbol de Primera</h1>
-        </div>
-        
-        <nav class="navbar navbar-default">
-            
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a ui-sref="torneos">Torneos</a></li>                  
-                </ul>
-           
-        </nav>
-            
-    </header> 
-    <section class="container">
-        <div ui-view></div>
-    </section>
+    <div layout="column" layout-fill>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <span>Fútbol de Primera</span>  
+                <span flex></span>
+                <md-button><a ui-sref="torneos">Torneos</a></md-button>
+            </div>
+        </md-toolbar>
+        <md-content md-scroll-y flex layout-padding>
+            <div ui-view></div>
+        </md-content>
+               
+    </div>
+
     
     <script src="Scripts/angular.min.js"></script>
     <script src="Scripts/angular-ui-router.min.js"></script>
     <script src="Scripts/angular-resource.min.js"></script>
+    <script src="Scripts/angular-animate.min.js"></script>
+    <script src="Scripts/angular-aria.min.js"></script>
+    <script src="Scripts/angular-material.min.js"></script>
     <script src="Scripts/angular-ui/ui-bootstrap.min.js"></script>
     <script src="Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
+
     <script src="App/app.js"></script>
-    <script src="App/Services/appService.js"></script>
-    
+    <script src="App/Services/appService.js"></script>  
+
+
 </body>
 </html>

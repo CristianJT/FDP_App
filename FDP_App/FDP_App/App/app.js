@@ -1,6 +1,6 @@
 ﻿(function () {
 
-    var app = angular.module('FDPApp', ['ui.router', 'ui.bootstrap', 'appService']);
+    var app = angular.module('FDPApp', ['ui.router', 'ui.bootstrap', 'appService', 'ngMaterial']);
 
     app.config(function ($stateProvider) {
 
