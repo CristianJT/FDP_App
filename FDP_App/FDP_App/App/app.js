@@ -3,27 +3,19 @@
     var app = angular.module('FDPApp', ['ui.router', 'ui.bootstrap', 'appService', 'ngMaterial']);
 
     app.config(function ($stateProvider) {
-
         $stateProvider
-            .state('torneos', {
-                url: '/torneos',
-                templateUrl: '/App/Views/Torneos.html',
-                controller: 'TorneoController'
-            })
             .state('nuevoTorneo', {
-                url: '/torneos/crear',
+                url: '/nuevo',
                 templateUrl: '/App/Views/TorneosNuevo.html',
                 controller: 'TorneoNuevoController'
             })
     });
 
-    app.controller('TorneoController', ['$scope', 'appData', function ($scope, appData) {
-        $scope.torneos = appData.getTorneos();
-
-        
+    app.controller('NavController', ['$scope', 'appData', function ($scope, appData) {
+        $scope.torneos = appData.getTorneos();       
     }]);
 
-app.controller('TorneoNuevoController', ['$scope', '$location', 'appData',  function ($scope, $location, appData) {
+    app.controller('TorneoNuevoController', ['$scope', '$location', 'appData', function ($scope, $location, appData) {
         $scope.torneos = appData.getTorneos();
         $scope.equipos = appData.getEquipos();
 
@@ -36,12 +28,10 @@ app.controller('TorneoNuevoController', ['$scope', '$location', 'appData',  func
         $scope.selectedTeams = [];
         $scope.selection = function (teamName) {
             var idx = $scope.selectedTeams.indexOf(teamName);
-            if (idx > -1) {
-                $scope.selectedTeams.splice(idx, 1);
-            }
-            else {
-                $scope.selectedTeams.push(teamName);
-            }
+            if (idx > -1) 
+                $scope.selectedTeams.splice(idx, 1);  
+            else 
+                $scope.selectedTeams.push(teamName);        
         };
 
         $scope.crearTorneo = function(unTorneo) {
@@ -59,18 +49,17 @@ app.controller('TorneoNuevoController', ['$scope', '$location', 'appData',  func
             });
 
             $scope.torneos.push(unTorneo);
-            $scope.backToTournaments();
+            $scope.reset();
         };
-        
-       
 
         $scope.backToTournaments = function() {
-            $location.path('/torneos');
+            $location.path('/');
         };
         $scope.reset = function() {
-            $scope.torneo = {};
+            $scope.torneo = undefined;
         };
 
     }]);
+
 
 })();

@@ -84,6 +84,8 @@
     <Content Include="App\Views\TorneosNuevo.html" />
     <Content Include="Content\angular-material.css" />
     <Content Include="Content\angular-material.min.css" />
+    <Content Include="Content\docs.css" />
+    <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Index.html" />
     <Content Include="App\Services\appService.js" />
