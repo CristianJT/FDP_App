@@ -34,7 +34,7 @@
                 </div>
             </div>
             
-            <div layout-padding>
+            <div layout>
                 <md-select ng-model="selectedTeams" placeholder="Seleccione Equipo" multiple>
                     <md-checkbox ng-repeat="equipo in equipos | filter: {esPrimera:false}" ng-click="selection(equipo.nombre)">
                         {{equipo.nombre}}

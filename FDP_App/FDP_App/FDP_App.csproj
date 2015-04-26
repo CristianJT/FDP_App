@@ -84,12 +84,11 @@
     <Content Include="App\Views\TorneosNuevo.html" />
     <Content Include="Content\angular-material.css" />
     <Content Include="Content\angular-material.min.css" />
-    <Content Include="Content\docs.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Index.html" />
     <Content Include="App\Services\appService.js" />
-    <Content Include="App\Views\Torneos.html" />
+    <Content Include="App\Views\Fixture.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Global.asax" />
