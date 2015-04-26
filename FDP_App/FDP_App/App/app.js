@@ -67,20 +67,22 @@
 
         $scope.equipos = appData.getEquipos();
         var partidosEquipo = [
-                            {"nombre":"Rafaela", "isLocal": true }, {"nombre": "Estudiantes", "isLocal": false }, {"nombre": "Velez", "isLocal": true },
-                            {"nombre": "Olimpo", "isLocal": false }, {"nombre": "Racing", "isLocal": true }, {"nombre": "Banfield", "isLocal": false },
-                            {"nombre": "Quilmes", "isLocal": true }, {"nombre": "River", "isLocal": false }, {"nombre": "Rosario", "isLocal": true },
-                            {"nombre": "Godoy Cruz", "isLocal": false }, {"nombre": "Defensa", "isLocal": true }, {"nombre": "San Lorenzo", "isLocal": false },
-                            {"nombre": "Tigre", "isLocal": true }, {"nombre": "Arsenal", "isLocal": false }, {"nombre": "Gimnasia", "isLocal": true },
-                            {"nombre": "Lanus", "isLocal": true }, {"nombre": "Boca", "isLocal": false }, {"nombre": "Newells", "isLocal": true },
-                            {"nombre": "Belgrano", "isLocal": false } ]
+                            {"nombre":"Rafaela", "esLocal": true }, {"nombre": "Estudiantes", "esLocal": false }, {"nombre": "Velez", "esLocal": true },
+                            {"nombre": "Olimpo", "esLocal": false }, {"nombre": "Racing", "esLocal": true }, {"nombre": "Banfield", "esLocal": false },
+                            {"nombre": "Quilmes", "esLocal": true }, {"nombre": "River", "esLocal": false }, {"nombre": "Rosario", "esLocal": true },
+                            {"nombre": "Godoy Cruz", "esLocal": false }, {"nombre": "Defensa", "esLocal": true }, {"nombre": "San Lorenzo", "esLocal": false },
+                            {"nombre": "Tigre", "esLocal": true }, {"nombre": "Arsenal", "esLocal": false }, {"nombre": "Gimnasia", "esLocal": true },
+                            {"nombre": "Lanus", "esLocal": true }, {"nombre": "Boca", "esLocal": false }, {"nombre": "Newells", "esLocal": true },
+                            {"nombre": "Belgrano", "esLocal": false } ]
 
         var aux1 = [];
         var aux2 = [];
         $scope.equipoDistinto = "Gimnasia";
         $scope.equipoElegido = "Independiente";
+        $scope.equipoPareja = "Estudiantes";
+        esLocalDist = true;
         
-
+      
         /*Cargar los arrays auxiliares (aux1 y aux2)*/
         cantFechas = partidosEquipo.length;
         pos = cantFechas;
@@ -95,28 +97,45 @@
                 aux2.push(partidosEquipo[i].nombre);
         }
         
+        function buscarPosicion(equipo) {
+            for (p = 0; p < partidosEquipo.length; p++) {
+                if (partidosEquipo[p].nombre == equipo)
+                    return p;
+            }
+        };
+
+
+
         /*Función: cargar partidos por fecha*/
-        function cargarPartido(ini, fin, id, aux) {
-            while (ini <= fin) {
+        function cargarPartido(ini, fin, aux, id) {
                 var partido = {};
                 partido.id = id;
                 partido.resLocal = 0;
                 partido.resVisitante = 0;
-                partido.local = aux[ini];
-                if (ini == fin)
-                    partido.visitante = $scope.equipoDistinto;
-                else
+                
+                if (ini == fin) {
+                    if (esLocalDist) {
+                        partido.local = $scope.equipoDistinto;
+                        partido.visitante = aux[ini];
+                    } else {
+                        partido.local = aux[ini];
+                        partido.visitante = $scope.equipoDistinto;
+                    }
+                    if (aux[ini] == $scope.equipoPareja || aux[fin] == $scope.equipoPareja)
+                        esLocalDist = esLocalDist;
+                    else
+                        esLocalDist = !esLocalDist;
+                }
+                else {
+                    partido.local = aux[ini];
                     partido.visitante = aux[fin];
-
+                }
                 fecha.partidos.push(partido);
-                id++;
-                ini++;
-                fin--;                
-            }
         };
 
         /*Armar fixture completo*/
         $scope.fixture = [];
+        posDistinto = buscarPosicion($scope.equipoDistinto);
         for (i = 0; i < cantFechas; i++) {
             var fecha = { };
             fecha.id = i + 1;
@@ -126,13 +145,41 @@
             a = aux1.length - 1;
             j = 0;
             partidoId = 1;
-            cargarPartido(j, a, partidoId, aux1);
-           
+            while (j <= a) {
+                if (i <= posDistinto) {
+                    if (partidosEquipo[i].esLocal)
+                        cargarPartido(a, j, aux1, partidoId, i);
+                    else
+                        cargarPartido(j, a, aux1, partidoId, i);
+                } else {
+                    if (partidosEquipo[i].esLocal)
+                        cargarPartido(j, a, aux1, partidoId, i);
+                    else
+                        cargarPartido(a, j, aux1, partidoId, i);
+                }
+                j++;
+                a--;
+                partidoId++;
+            }
             //Recorro aux2
             b = aux2.length - 1;
             k = 0;
-            partidoId = partidoId + fecha.partidos.length;
-            cargarPartido(k, b, partidoId, aux2);
+            while (k <= b) {
+                if (i <= posDistinto) {
+                    if (partidosEquipo[i].esLocal)
+                        cargarPartido(k, b, aux2, partidoId, i);
+                    else
+                        cargarPartido(b, k, aux2, partidoId, i);
+                } else {
+                    if (partidosEquipo[i].esLocal)
+                        cargarPartido(b, k, aux2, partidoId, i);
+                    else
+                        cargarPartido(k, b, aux2, partidoId, i);
+                }
+                k++;
+                b--;
+                partidoId++;
+            }
             
             if (aux1.length > 1) {
                 equipoSale = aux1[0];
