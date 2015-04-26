@@ -1,0 +1,34 @@
+﻿<div layout="row" layout-margin layout-wrap layout-align="center center">
+    <div flex="90">
+        <div ng-hide="equipoDistinto" layout="column" class="md-whiteframe-z1">
+            <md-toolbar></md-toolbar>
+            <md-content layout-padding>
+                <p>El torneo actual no tiene partidos cargados. Cargar fixture</p>
+                <p>Para armar el fixture solo se necesita seleccionar un equipo y cargar todos los partidos del mismo</p>
+                <md-divider></md-divider>
+                <div layout="row">
+                    <div flex layout-align="start center">
+                        <md-select ng-model="equipoDistinto" placeholder="Seleccione Equipo">
+                            <md-option ng-value="equipo.nombre" ng-repeat="equipo in equipos | filter: {esPrimera:true}">{{equipo.nombre}}</md-option>
+                        </md-select>
+                    </div>
+               
+                    <div ng-show="equipoDistinto" flex layout-align="center center">
+                        <md-select ng-model="equipoElegido" placeholder="Seleccione Equipo">
+                            <md-option ng-value="equipo.nombre" ng-repeat="equipo in equipos | filter: {esPrimera:true}">{{equipo.nombre}}</md-option>
+                        </md-select>
+                    </div>
+                </div>
+            </md-content>
+        </div>
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab ng-repeat="item in fixture" label="Fecha {{item.id}}">
+                <md-content flex md-scroll-y class="md-padding">
+                    <md-list-item ng-repeat="partido in item.partidos">
+                        <div>{{partido.id}} - {{partido.local}} vs. {{partido.visitante}}</div>
+                    </md-list-item>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </div>
+</div>
