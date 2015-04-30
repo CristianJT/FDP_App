@@ -1,0 +1,58 @@
+﻿<div layout="row" layout-align="center center">
+    <div flex="90">
+        <div ng-show="torneo.fixture == 0" layout="column" class="md-whiteframe-z1">
+            <md-toolbar>{{torneo.nombre}}</md-toolbar>
+            <md-content layout-padding>
+                <div ng-repeat="partido in torneo.fixture">{{partido.id}}</div>
+                <p>El torneo actual no tiene partidos cargados. Cargar fixture</p>
+                <p>Para armar el fixture solo se necesita seleccionar un equipo y cargar todos los partidos del mismo</p>
+                <md-divider></md-divider>
+                <div layout="row">
+                    <div layout="column" flex="50" class="md-whiteframe-z1">
+                        <div layout-padding class="md-whiteframe-z1">
+                            <md-select ng-model="equipoDistinto" placeholder="Seleccione Equipo">
+                                <md-option ng-value="equipo.nombre" ng-repeat="equipo in torneo.equipos">{{equipo.nombre}}</md-option>
+                            </md-select>
+                        </div>
+                        <div ng-show="equipoDistinto" layout="row" layout-padding class="md-whiteframe-z1">
+                            <span layout-fill class="md-whiteframe-z1"> Equipo seleccionado: {{equipoDistinto}} </span>
+                            <md-checkbox layout-fill class="md-whiteframe-z1" ng-model="esLocalDistinto" aria-label="Local">Local</md-checkbox>
+                        </div>
+                    </div>
+                    <div layout="column" flex="50" class="md-whiteframe-z1">
+                        <div layout-padding class="md-whiteframe-z1">
+                            <md-select ng-model="equipoPareja" placeholder="Seleccione Equipo">
+                                <md-option ng-value="equipo.nombre" ng-repeat="equipo in torneo.equipos">{{equipo.nombre}}</md-option>
+                            </md-select>
+                        </div>
+                        <div ng-show="equipoPareja" layout="row" layout-padding class="md-whiteframe-z1">
+                            <span layout-fill class="md-whiteframe-z1"> Equipo seleccionado: {{equipoPareja}} </span>
+                        </div>
+                    </div>
+                </div>
+                <div layout="row">
+                    <div layout="column" flex="50" class="md-whiteframe-z1">
+                        <div layout-padding class="md-whiteframe-z1">
+                            <md-select ng-model="equipoElegido" placeholder="Seleccione Equipo">
+                                <md-option ng-value="equipo.nombre" ng-repeat="equipo in torneo.equipos">{{equipo.nombre}}</md-option>
+                            </md-select>
+                        </div>
+                        <div ng-show="equipoElegido" layout="row" layout-padding class="md-whiteframe-z1">
+                            <span layout-fill class="md-whiteframe-z1"> Equipo seleccionado: {{equipoElegido}} </span>
+                            <md-checkbox layout-fill class="md-whiteframe-z1" ng-model="esLocalElegido" aria-label="Local">Local</md-checkbox>
+                        </div>
+                    </div>
+                    <div layout="column" flex="50" class="md-whiteframe-z1">
+                        <md-select ng-model="partidosEquipo" placeholder="Seleccione Equipo" multiple>
+                            <md-checkbox ng-repeat="equipo in torneo.equipos" ng-click="selection(equipo.nombre)">
+                                {{equipo.nombre}}
+                            </md-checkbox>
+                        </md-select>
+                        <span>Selected: {{partidosEquipo}}</span>
+                    </div>
+                </div>
+                <md-button ng-click="armarFixture()">Aceptar</md-button>
+            </md-content>
+        </div>
+    </div>
+</div>

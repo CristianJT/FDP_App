@@ -9,16 +9,22 @@
                 templateUrl: '/App/Views/TorneosNuevo.html',
                 controller: 'TorneoNuevoController'
             })
-            .state('fixture', {
-                url: '/fixture',
-                templateUrl: '/App/Views/Fixture.html',
-                controller: 'FixtureController'
+            .state('torneo', {
+                url: '/torneos/:id',
+                templateUrl: '/App/Views/Torneo.html',
+                controller: 'TorneoController'
             })
+            //.state('fixture', {
+            //    url: '/fixture',
+            //    templateUrl: '/App/Views/Fixture.html',
+            //    controller: 'FixtureController'
+            //})
     });
 
     app.controller('NavController', ['$scope', 'appData', function ($scope, appData) {
         $scope.torneos = appData.getTorneos();       
     }]);
+
 
     app.controller('TorneoNuevoController', ['$scope', '$location', 'appData', function ($scope, $location, appData) {
         $scope.torneos = appData.getTorneos();
@@ -44,6 +50,8 @@
             unTorneo.id = lastId + 1;
             unTorneo.isCurrent = true;
             unTorneo.equipos = [];
+            unTorneo.fixture = [];
+
             angular.forEach($scope.equipos, function (item) {
                 if ($scope.selectedTeams.indexOf(item.nombre) > -1) {
                     item.esPrimera = true;
@@ -63,41 +71,40 @@
 
     }]);
 
-    app.controller('FixtureController', ['$scope', 'appData', function ($scope, appData) {
+    app.controller('TorneoController', ['$scope', '$stateParams', 'appData', function ($scope, $stateParams, appData) {
 
-        $scope.equipos = appData.getEquipos();
-        var partidosEquipo = [ "Atletico de Rafaela", "Estudiantes(LP)", "Velez", "Olimpo", "Racing Club", "Banfield",
-                            "Quilmes", "River Plate", "Rosario Central", "Godoy Cruz", "Defensa y Justicia", "San Lorenzo",
-                            "Tigre", "Arsenal", "Gimnasia", "Lanus", "Boca Juniors", "Newells", "Belgrano" ]
+        $scope.torneo = appData.getTorneosById($stateParams.id);
 
-        
-        
-        $scope.equipoElegido = "Independiente";
-        $scope.equipoPareja = "Estudiantes(LP)";
-        esLocalDistinto = true;
-        esLocalElegido = true;
-        
-      
+        /*Array: Cargar los partidos de un equipo*/
+        $scope.partidosEquipo = [];
+        $scope.selection = function (teamName) {
+            var idx = $scope.partidosEquipo.indexOf(teamName);
+            if (idx > -1)
+                $scope.partidosEquipo.splice(idx, 1);
+            else
+                $scope.partidosEquipo.push(teamName);
+        };
+             
         /*Cargar los arrays auxiliares (aux1 y aux2)*/
         function cargarArray(aux1, aux2) {
-            cantFechas = partidosEquipo.length;
+            cantFechas = $scope.partidosEquipo.length;
             pos = cantFechas;
             for (i = 0; i < cantFechas; i++) {
-                if (partidosEquipo[i] == $scope.equipoDistinto) {
+                if ($scope.partidosEquipo[i] == $scope.equipoDistinto) {
                     pos = i;
                     aux1.push($scope.equipoElegido);
                 }
                 if (i < pos)
-                    aux1.push(partidosEquipo[i]);
+                    aux1.push($scope.partidosEquipo[i]);
                 else if (i > pos)
-                    aux2.push(partidosEquipo[i]);
+                    aux2.push($scope.partidosEquipo[i]);
             }
         }
         
         /*Función: buscar posición de un equipo dentro del array partidosEquipo*/
         function buscarPosicion(equipo) {
-            for (p = 0; p < partidosEquipo.length; p++) {
-                if (partidosEquipo[p] == equipo)
+            for (p = 0; p < $scope.partidosEquipo.length; p++) {
+                if ($scope.partidosEquipo[p] == equipo)
                     return p;
             }
         };
@@ -110,7 +117,7 @@
                 partido.resVisitante = 0;
                 
                 if (ini == fin) {
-                    if (esLocalDistinto) {
+                    if ($scope.esLocalDistinto) {
                         partido.local = $scope.equipoDistinto;
                         partido.visitante = aux[ini];
                     } else {
@@ -118,7 +125,7 @@
                         partido.visitante = $scope.equipoDistinto;
                     }
                     if (aux[ini] != $scope.equipoPareja)
-                        esLocalDistinto = !esLocalDistinto;
+                        $scope.esLocalDistinto = !$scope.esLocalDistinto;
                 }
                 else {
                     partido.local = aux[ini];
@@ -145,12 +152,12 @@
                 partidoId = 1;
                 while (j <= a) {
                     if (i <= posDistinto) {
-                        if (esLocalElegido)
+                        if ($scope.esLocalElegido)
                             partido = cargarPartido(a, j, aux1, partidoId, i);
                         else
                             partido = cargarPartido(j, a, aux1, partidoId, i);
                     } else {
-                        if (esLocalElegido)
+                        if ($scope.esLocalElegido)
                             partido = cargarPartido(j, a, aux1, partidoId, i);
                         else
                             partido = cargarPartido(a, j, aux1, partidoId, i);
@@ -166,12 +173,12 @@
                 k = 0;
                 while (k <= b) {
                     if (i <= posDistinto) {
-                        if (esLocalElegido)
+                        if ($scope.esLocalElegido)
                             partido = cargarPartido(k, b, aux2, partidoId, i);
                         else
                             partido = cargarPartido(b, k, aux2, partidoId, i);
                     } else {
-                        if (esLocalElegido)
+                        if ($scope.esLocalElegido)
                             partido = cargarPartido(b, k, aux2, partidoId, i);
                         else
                             partido = cargarPartido(k, b, aux2, partidoId, i);
@@ -192,11 +199,11 @@
                     aux2.splice(0, 1);
                     aux1.push(equipoSale);
                 }
-
-                
-                $scope.fixture.push(fecha);
+                             
                 if (i != posDistinto)
-                    esLocalElegido = !esLocalElegido;
+                    $scope.esLocalElegido = !$scope.esLocalElegido;
+
+                $scope.torneo.fixture.push(fecha);
             }
         }
 

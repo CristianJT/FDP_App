@@ -14,7 +14,7 @@
             <md-list>
                 <md-button layout-fill><div layout="row" style="margin-left:10px"><h3>En Progreso</h3></div></md-button>
                 <md-list-item class="md-2-line" ng-repeat="item in torneos | filter: {isCurrent:true}">
-                    <md-button layout-fill><div layout=row style="margin-left:50px">{{item.id}} - {{item.nombre}}</div></md-button>
+                    <md-button ui-sref="torneo({id: item.id})" layout-fill><div layout=row style="margin-left:50px">{{item.id}} - {{item.nombre}}</div></md-button>
                 </md-list-item>
                 <md-divider></md-divider>
 

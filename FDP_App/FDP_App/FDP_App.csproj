@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\app.js" />
+    <Content Include="App\Views\Torneo.html" />
     <Content Include="App\Views\TorneosNuevo.html" />
     <Content Include="Content\angular-material.css" />
     <Content Include="Content\angular-material.min.css" />
