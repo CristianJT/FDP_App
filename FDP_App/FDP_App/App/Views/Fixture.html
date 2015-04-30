@@ -1,4 +1,4 @@
-﻿<div layout="row" layout-margin layout-wrap layout-align="center center">
+﻿<div layout="row" layout-align="center center">
     <div flex="90">
         <div layout="column" class="md-whiteframe-z1">
             <md-toolbar></md-toolbar>
@@ -7,18 +7,29 @@
                 <p>Para armar el fixture solo se necesita seleccionar un equipo y cargar todos los partidos del mismo</p>
                 <md-divider></md-divider>
                 <div layout="row">
-                    <div flex layout-align="start center">
-                        <md-select ng-model="equipoDistinto" placeholder="Seleccione Equipo">
-                            <md-option ng-value="equipo.nombre" ng-repeat="equipo in equipos | filter: {esPrimera:true}">{{equipo.nombre}}</md-option>
-                        </md-select>
+                    <div layout="column" flex="50" class="md-whiteframe-z1">
+                        <div layout-padding class="md-whiteframe-z1">
+                            <md-select ng-model="equipoDistinto" ng-change="armarFixture()" placeholder="Seleccione Equipo">
+                                <md-option ng-value="equipo.nombre" ng-repeat="equipo in equipos | filter: {esPrimera:true}">{{equipo.nombre}}</md-option>
+                            </md-select>
+                        </div>
+                        <div ng-show="equipoDistinto" layout="row" layout-padding class="md-whiteframe-z1">
+                            <span layout-fill class="md-whiteframe-z1"> Equipo seleccionado: {{equipoDistinto}} </span>
+                            <md-checkbox layout-fill class="md-whiteframe-z1" ng-model="esLocalDist" aria-label="Local">Local</md-checkbox>
+                        </div>
                     </div>
-               
-                    <div ng-show="equipoDistinto" flex layout-align="center center">
-                        <md-select ng-model="equipoElegido" placeholder="Seleccione Equipo">
-                            <md-option ng-value="equipo.nombre" ng-repeat="equipo in equipos | filter: {esPrimera:true}">{{equipo.nombre}}</md-option>
-                        </md-select>
+                    <div layout="column" flex="50" class="md-whiteframe-z1">
+                        <div layout-padding class="md-whiteframe-z1">
+                            <md-select ng-model="equipoPareja" placeholder="Seleccione Equipo">
+                                <md-option ng-value="equipo.nombre" ng-repeat="equipo in equipos | filter: {esPrimera:true}">{{equipo.nombre}}</md-option>
+                            </md-select>
+                        </div>
+                        <div ng-show="equipoPareja" layout="row" layout-padding class="md-whiteframe-z1">
+                            <span layout-fill class="md-whiteframe-z1"> Equipo seleccionado: {{equipoPareja}} </span>
+                        </div>
                     </div>
                 </div>
+                
             </md-content>
         </div>
         <md-tabs md-dynamic-height md-border-bottom>
