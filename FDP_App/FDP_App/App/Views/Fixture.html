@@ -1,6 +1,6 @@
 ﻿<div layout="row" layout-align="center center">
     <div flex="90">
-        <md-tabs ng-show="partidosEquipo.length > 0" md-dynamic-height md-border-bottom>
+        <md-tabs md-dynamic-height md-border-bottom>
             <md-tab ng-repeat="item in fixture" label="Fecha {{item.id}}">
                 <md-content flex md-scroll-y class="md-padding">
                     <md-list-item ng-repeat="partido in item.partidos">

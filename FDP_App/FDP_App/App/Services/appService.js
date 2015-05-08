@@ -54,18 +54,22 @@ appService.factory('appData', ['$resource', function ($resource) {
         },
         getEquiposById: function (teamId) {
             for (i = 0; i < equipos.length; i++) {
-                if (equipos[i].id == teamId) {
+                if (equipos[i].id == teamId)
                     return equipos[i];
-                }
             }
         },
         getTorneosById: function (torneoId) {
             for (i = 0; i < torneos.length; i++) {
-                if (torneos[i].id == torneoId) {
+                if (torneos[i].id == torneoId) 
                     return torneos[i];
-                }
             }
         },
+        getTorneosByIdFixture: function (torneoId) {
+            for (i = 0; i < torneos.length; i++) {
+                if (torneos[i].id == torneoId)
+                    return torneos[i].fixture;
+            }
+        }
     }
     
        

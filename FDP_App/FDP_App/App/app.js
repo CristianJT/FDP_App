@@ -2,7 +2,7 @@
 
     var app = angular.module('FDPApp', ['ui.router', 'ui.bootstrap', 'appService', 'ngMaterial']);
 
-    app.config(function ($stateProvider) {
+    app.config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('nuevoTorneo', {
                 url: '/nuevo',
@@ -14,19 +14,20 @@
                 templateUrl: '/App/Views/Torneo.html',
                 controller: 'TorneoController'
             })
-            //.state('fixture', {
-            //    url: '/fixture',
-            //    templateUrl: '/App/Views/Fixture.html',
-            //    controller: 'FixtureController'
-            //})
+            .state('fixture', {
+                url: '/torneos/:id/fixture',
+                templateUrl: '/App/Views/Fixture.html',
+                controller: 'FixtureController'
+            })
+        $urlRouterProvider.otherwise('/');
     });
 
     app.controller('NavController', ['$scope', 'appData', function ($scope, appData) {
         $scope.torneos = appData.getTorneos();       
     }]);
 
-
     app.controller('TorneoNuevoController', ['$scope', '$location', 'appData', function ($scope, $location, appData) {
+
         $scope.torneos = appData.getTorneos();
         $scope.equipos = appData.getEquipos();
 
@@ -62,18 +63,46 @@
             });
 
             $scope.torneos.push(unTorneo);
-            $scope.reset();
+            redirect(unTorneo.id);
         };
 
         $scope.reset = function() {
             $scope.torneo = undefined;
         };
 
+        redirect = function (id) {
+            $location.path('/torneos/' + id);
+        };
+
     }]);
 
-    app.controller('TorneoController', ['$scope', '$stateParams', 'appData', function ($scope, $stateParams, appData) {
+    app.controller('TorneoController', ['$scope', '$stateParams', 'appData', '$mdDialog', '$mdSidenav', function ($scope, $stateParams, appData, $mdDialog, $mdSidenav) {
 
         $scope.torneo = appData.getTorneosById($stateParams.id);
+
+        //$scope.localia = function (ev, team) {
+        //    var confirm = $mdDialog.confirm()
+        //      .title('Seleccione localía')
+        //      .content('Como jugará ' + team + ' en la 1º fecha')
+        //      .ariaLabel('Localia')
+        //      .ok('Local')
+        //      .cancel('Visitante')
+        //    $mdDialog.show(confirm).then(function () {
+        //        $scope.esLocalDistinto = true;
+        //    }, function () {
+        //        $scope.esLocalDistinto = false;
+        //    });
+        //};
+
+        $scope.open = function() {
+            $mdSidenav('partidos').open()
+        };
+
+        $scope.close = function () {
+            $mdSidenav('partidos').close()
+        };
+        
+
 
         /*Array: Cargar los partidos de un equipo*/
         $scope.partidosEquipo = [];
@@ -205,7 +234,15 @@
 
                 $scope.torneo.fixture.push(fecha);
             }
+
+
         }
+
+    }]);
+
+    app.controller('FixtureController', ['$scope', '$stateParams', 'appData', function ($scope, $stateParams, appData) {
+
+        $scope.fixture = appData.getTorneosByIdFixture($stateParams.id);
 
     }]);
 })();

@@ -1,58 +1,91 @@
-﻿<div layout="row" layout-align="center center">
-    <div flex="90">
-        <div ng-show="torneo.fixture == 0" layout="column" class="md-whiteframe-z1">
-            <md-toolbar>{{torneo.nombre}}</md-toolbar>
-            <md-content layout-padding>
-                <div ng-repeat="partido in torneo.fixture">{{partido.id}}</div>
-                <p>El torneo actual no tiene partidos cargados. Cargar fixture</p>
-                <p>Para armar el fixture solo se necesita seleccionar un equipo y cargar todos los partidos del mismo</p>
+﻿<div layout="column">
+    <form name="formCrearFixture" ng-show="torneo.fixture == 0" novalidate>
+        <md-content layout="column" layout-padding>
+            <p>El torneo actual no tiene partidos cargados. Cargar fixture</p>
+            <md-divider></md-divider>
+
+            <div layout="row" layout-padding>
+                <div flex="40" layout="row">
+                    <label layout-fill layout-margin>Equipo Distinto:</label>
+                    <md-select layout-fill layout-margin ng-model="equipoDistinto" placeholder="Seleccione Equipo" required>
+                        <md-option ng-value="equipo.nombre" ng-repeat="equipo in torneo.equipos | orderBy:'nombre'">{{equipo.nombre}}</md-option>
+                    </md-select>
+                </div>
+                <span flex></span>
+                <div ng-show="equipoDistinto" flex="50" layout="row">
+                    <div flex="50"><label>Equipo:</label> {{equipoDistinto}}</div>
+                    <md-checkbox flex="40" layout-fill layout-margin ng-model="esLocalDistinto" aria-label="Local" ng-true-value="'Local'" ng-false-value="'Visitante'"><label>1º fecha:</label><span ng-show="esLocalDistinto == null"> Visitante</span><span ng-hide="esLocalDistinto == null"> {{esLocalDistinto}}</span></md-checkbox>
+                </div>
+                <span flex></span>
+            </div>
+            <md-divider></md-divider>
+
+            <div layout="row" layout-padding>
+                <div flex="40" layout="row">
+                    <label layout-fill layout-margin>Equipo Pareja:</label>
+                    <md-select layout-fill layout-margin ng-model="equipoPareja" placeholder="Seleccione Equipo" required>
+                        <md-option ng-value="equipo.nombre" ng-repeat="equipo in torneo.equipos | orderBy:'nombre' | filter: {nombre: '!' + equipoDistinto} ">{{equipo.nombre}}</md-option>
+                    </md-select>
+                </div>
+                <span flex></span>
+                <div ng-show="equipoPareja" flex="50"><label>Equipo:</label> {{equipoPareja}}</div>
+                <span flex></span>
+            </div>
+            <md-divider></md-divider>
+
+            <div layout="row" layout-padding>
+                <div flex="40" layout="row">
+                    <label layout-fill layout-margin>Equipo Elegido:</label>
+                    <md-select layout-fill layout-margin ng-model="equipoElegido" placeholder="Seleccione Equipo" required>
+                        <md-option ng-value="equipo.nombre" ng-repeat="equipo in torneo.equipos | orderBy:'nombre' | filter: {nombre: '!' + equipoDistinto}">{{equipo.nombre}}</md-option>
+                    </md-select>
+                </div>
+                <span flex></span>
+                <div ng-show="equipoElegido" flex="50" layout="row">
+                    <div flex="50"><label>Equipo:</label> {{equipoElegido}}</div>
+                    <md-checkbox flex="40" layout-fill layout-margin ng-model="esLocalElegido" aria-label="Local" ng-true-value="'Local'" ng-false-value="'Visitante'"><label>1º fecha:</label><span ng-show="esLocalElegido == null"> Visitante</span><span ng-hide="esLocalElegido == null"> {{esLocalElegido}}</span></md-checkbox>
+                </div>
+                <span flex></span>
+            </div>
+            <md-divider></md-divider>
+
+            <div layout="row" layout-padding>
+                <div flex="40" layout="row">
+                    <label layout-fill layout-margin>Partidos de {{equipoElegido}}:</label>
+                    <md-select layout-fill layout-margin ng-model="partidosEquipo" placeholder="Seleccione Equipo" multiple>
+                        <md-checkbox ng-repeat="equipo in torneo.equipos | orderBy:'nombre' | filter: {nombre: '!' + equipoElegido}" ng-click="selection(equipo.nombre)">
+                            {{equipo.nombre}}
+                        </md-checkbox>
+                    </md-select>
+                </div>
+                <span flex></span>
+                <div ng-show="partidosEquipo.length > 0" flex="50">
+                    <md-button class="md-raised" ng-click="open()">Ver partidos</md-button>
+                </div>
+                <span flex></span>
+            </div>
+            <md-divider></md-divider>
+        </md-content>      
+        <md-button class="md-raised md-primary" ng-click="armarFixture()" ng-disabled="partidosEquipo.length != torneo.fechas">Crear Fixture</md-button>
+    </form>
+
+    <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="partidos">
+        <md-toolbar layout="column">
+            <span flex></span>
+            <div layout="row" layout-align="center center">{{equipoElegido | uppercase}}</div>
+            <span flex></span>
+        </md-toolbar>
+        <md-content>
+            <md-list-item ng-repeat="partido in partidosEquipo">
+                <div layout-padding layout-margin><label>{{$index + 1 + 'º' + ' FECHA:'}}</label>  {{partido}}</div>
                 <md-divider></md-divider>
-                <div layout="row">
-                    <div layout="column" flex="50" class="md-whiteframe-z1">
-                        <div layout-padding class="md-whiteframe-z1">
-                            <md-select ng-model="equipoDistinto" placeholder="Seleccione Equipo">
-                                <md-option ng-value="equipo.nombre" ng-repeat="equipo in torneo.equipos">{{equipo.nombre}}</md-option>
-                            </md-select>
-                        </div>
-                        <div ng-show="equipoDistinto" layout="row" layout-padding class="md-whiteframe-z1">
-                            <span layout-fill class="md-whiteframe-z1"> Equipo seleccionado: {{equipoDistinto}} </span>
-                            <md-checkbox layout-fill class="md-whiteframe-z1" ng-model="esLocalDistinto" aria-label="Local">Local</md-checkbox>
-                        </div>
-                    </div>
-                    <div layout="column" flex="50" class="md-whiteframe-z1">
-                        <div layout-padding class="md-whiteframe-z1">
-                            <md-select ng-model="equipoPareja" placeholder="Seleccione Equipo">
-                                <md-option ng-value="equipo.nombre" ng-repeat="equipo in torneo.equipos">{{equipo.nombre}}</md-option>
-                            </md-select>
-                        </div>
-                        <div ng-show="equipoPareja" layout="row" layout-padding class="md-whiteframe-z1">
-                            <span layout-fill class="md-whiteframe-z1"> Equipo seleccionado: {{equipoPareja}} </span>
-                        </div>
-                    </div>
-                </div>
-                <div layout="row">
-                    <div layout="column" flex="50" class="md-whiteframe-z1">
-                        <div layout-padding class="md-whiteframe-z1">
-                            <md-select ng-model="equipoElegido" placeholder="Seleccione Equipo">
-                                <md-option ng-value="equipo.nombre" ng-repeat="equipo in torneo.equipos">{{equipo.nombre}}</md-option>
-                            </md-select>
-                        </div>
-                        <div ng-show="equipoElegido" layout="row" layout-padding class="md-whiteframe-z1">
-                            <span layout-fill class="md-whiteframe-z1"> Equipo seleccionado: {{equipoElegido}} </span>
-                            <md-checkbox layout-fill class="md-whiteframe-z1" ng-model="esLocalElegido" aria-label="Local">Local</md-checkbox>
-                        </div>
-                    </div>
-                    <div layout="column" flex="50" class="md-whiteframe-z1">
-                        <md-select ng-model="partidosEquipo" placeholder="Seleccione Equipo" multiple>
-                            <md-checkbox ng-repeat="equipo in torneo.equipos" ng-click="selection(equipo.nombre)">
-                                {{equipo.nombre}}
-                            </md-checkbox>
-                        </md-select>
-                        <span>Selected: {{partidosEquipo}}</span>
-                    </div>
-                </div>
-                <md-button ng-click="armarFixture()">Aceptar</md-button>
-            </md-content>
-        </div>
-    </div>
+            </md-list-item>          
+            <md-button ng-click="close()">Cerrar</md-button>
+        </md-content>       
+    </md-sidenav>
+
+    <div ng-hide="torneo.fixture == 0">
+        <md-button ui-sref="fixture({id:torneo.id})">Fixture</md-button>
+    </div>   
+
 </div>
