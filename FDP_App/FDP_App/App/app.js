@@ -19,6 +19,11 @@
                 templateUrl: '/App/Views/Fixture.html',
                 controller: 'FixtureController'
             })
+            .state('posiciones', {
+                url: '/torneos/:id/fixture',
+                templateUrl: '/App/Views/Posiciones.html',
+                controller: 'PosicionesController'
+            })
         $urlRouterProvider.otherwise('/');
     });
 
@@ -80,7 +85,7 @@
 
         $scope.torneo = appData.getTorneosById($stateParams.id);
 
-        //$scope.localia = function (ev, team) {
+        //$scope.ayuda = function (ev, team) {
         //    var confirm = $mdDialog.confirm()
         //      .title('Seleccione localía')
         //      .content('Como jugará ' + team + ' en la 1º fecha')
@@ -94,6 +99,7 @@
         //    });
         //};
 
+        /*Partidos Sidenav*/
         $scope.open = function() {
             $mdSidenav('partidos').open()
         };
@@ -102,7 +108,6 @@
             $mdSidenav('partidos').close()
         };
         
-
 
         /*Array: Cargar los partidos de un equipo*/
         $scope.partidosEquipo = [];

@@ -84,8 +84,14 @@
         </md-content>       
     </md-sidenav>
 
-    <div ng-hide="torneo.fixture == 0">
-        <md-button ui-sref="fixture({id:torneo.id})">Fixture</md-button>
-    </div>   
+    <div layout-padding layout-margin ng-hide="torneo.fixture == 0">
+        <tabset justified="true">
+            <tab heading="Posiciones"></tab>
+            <tab heading="Promedios" class="disabled"></tab>
+            <tab heading="Fixture" ui-sref="fixture({id:torneo.id})"></tab>
+            <tab heading="Equipos" class="disabled"></tab>
+        </tabset>
+    </div>
+       
 
 </div>
