@@ -69,7 +69,14 @@ appService.factory('appData', ['$resource', function ($resource) {
                 if (torneos[i].id == torneoId)
                     return torneos[i].fixture;
             }
+        },
+        getTorneosByIdEquipos: function (torneoId) {
+            for (i = 0; i < torneos.length; i++) {
+                if (torneos[i].id == torneoId)
+                    return torneos[i].equipos;
+            }
         }
+
     }
     
        

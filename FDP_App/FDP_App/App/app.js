@@ -17,12 +17,14 @@
             .state('fixture', {
                 url: '/torneos/:id/fixture',
                 templateUrl: '/App/Views/Fixture.html',
-                controller: 'FixtureController'
+                controller: 'FixtureController',
+                controllerAs: 'fecha'
             })
             .state('posiciones', {
-                url: '/torneos/:id/fixture',
+                url: '/torneos/:id/posiciones',
                 templateUrl: '/App/Views/Posiciones.html',
-                controller: 'PosicionesController'
+                controller: 'PosicionesController',
+                controllerAs: 'tabla'
             })
         $urlRouterProvider.otherwise('/');
     });
@@ -245,9 +247,30 @@
 
     }]);
 
-    app.controller('FixtureController', ['$scope', '$stateParams', 'appData', function ($scope, $stateParams, appData) {
+    app.controller('FixtureController', ['$stateParams', 'appData', function ($stateParams, appData) {
 
-        $scope.fixture = appData.getTorneosByIdFixture($stateParams.id);
+        this.fixture = appData.getTorneosByIdFixture($stateParams.id);
 
+    }]);
+
+    app.controller('PosicionesController', ['$stateParams', 'appData', function ($stateParams, appData) {
+
+        this.equipos = appData.getTorneosByIdEquipos($stateParams.id);
+
+    }]);
+
+    app.directive('tabsPage', [function () {
+        return {
+            restrict: 'E',
+            templateUrl: '/App/Views/TabsPage.html',
+            controller: function ($stateParams) {
+                this.tab = 1;                                             
+                this.selectedTab = function(newTab) {                    
+                    this.tab = newTab;
+                };
+                this.id = $stateParams.id;
+            },
+            controllerAs: 'tab'
+        };
     }]);
 })();

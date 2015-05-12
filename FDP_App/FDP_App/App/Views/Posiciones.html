@@ -1,1 +1,33 @@
-﻿
+﻿<div><tabs-page></tabs-page></div>
+
+<div layout="row" layout-align="center center">
+    <div flex="70">
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th>Equipo</th>
+                    <th>J</th>
+                    <th>G</th>
+                    <th>E</th>
+                    <th>P</th>
+                    <th>GF</th>
+                    <th>GC</th>
+                    <th>Dif</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="equipo in tabla.equipos">
+                    <td>{{equipo.nombre}}</td>
+                    <td>{{equipo.jugados}}</td>
+                    <td>{{equipo.ganados}}</td>
+                    <td>{{equipo.empatados}}</td>
+                    <td>{{equipo.perdidos}}</td>
+                    <td>{{equipo.golesFavor}}</td>
+                    <td>{{equipo.golesContra}}</td>
+                    <td>{{equipo.diferencia}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>   
+</div>
+
