@@ -29,8 +29,8 @@
         $urlRouterProvider.otherwise('/');
     });
 
-    app.controller('NavController', ['$scope', 'appData', function ($scope, appData) {
-        $scope.torneos = appData.getTorneos();       
+    app.controller('NavController', ['appData', function (appData) {
+        this.torneos = appData.getTorneos();       
     }]);
 
     app.controller('TorneoNuevoController', ['$scope', '$location', 'appData', function ($scope, $location, appData) {
@@ -256,6 +256,14 @@
     app.controller('PosicionesController', ['$stateParams', 'appData', function ($stateParams, appData) {
 
         this.equipos = appData.getTorneosByIdEquipos($stateParams.id);
+
+        var actualFechaId = 1;
+        this.fechaActual = appData.getFechaById($stateParams.id, actualFechaId);
+
+        this.finalizarFecha = function (fechaId) {
+            actualFechaId = fechaId + 1;
+            this.fechaActual = appData.getFechaById($stateParams.id, actualFechaId);
+        };
 
     }]);
 

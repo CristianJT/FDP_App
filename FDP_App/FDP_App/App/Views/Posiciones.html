@@ -1,33 +1,51 @@
 ﻿<div><tabs-page></tabs-page></div>
 
 <div layout="row" layout-align="center center">
-    <div flex="70">
+    <div flex="50" flex-sm="90">
         <table class="table table-condensed">
             <thead>
                 <tr>
                     <th>Equipo</th>
-                    <th>J</th>
-                    <th>G</th>
-                    <th>E</th>
-                    <th>P</th>
-                    <th>GF</th>
-                    <th>GC</th>
-                    <th>Dif</th>
+                    <th class="col-md-1">Pts</th>
+                    <th class="col-md-1">J</th>
+                    <th class="col-md-1">G</th>
+                    <th class="col-md-1">E</th>
+                    <th class="col-md-1">P</th>
+                    <th class="col-md-1">GF</th>
+                    <th class="col-md-1">GC</th>
+                    <th class="col-md-1">Dif</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="equipo in tabla.equipos">
                     <td>{{equipo.nombre}}</td>
-                    <td>{{equipo.jugados}}</td>
-                    <td>{{equipo.ganados}}</td>
-                    <td>{{equipo.empatados}}</td>
-                    <td>{{equipo.perdidos}}</td>
-                    <td>{{equipo.golesFavor}}</td>
-                    <td>{{equipo.golesContra}}</td>
-                    <td>{{equipo.diferencia}}</td>
+                    <td class="col-md-1">{{equipo.puntos}}</td>
+                    <td class="col-md-1">{{equipo.jugados}}</td>
+                    <td class="col-md-1">{{equipo.ganados}}</td>
+                    <td class="col-md-1">{{equipo.empatados}}</td>
+                    <td class="col-md-1">{{equipo.perdidos}}</td>
+                    <td class="col-md-1">{{equipo.golesFavor}}</td>
+                    <td class="col-md-1">{{equipo.golesContra}}</td>
+                    <td class="col-md-1">{{equipo.diferencia}}</td>
                 </tr>
             </tbody>
         </table>
+        <md-divider></md-divider>
+        <h1>FECHA {{tabla.fechaActual.id}}</h1>
+        <md-divider></md-divider>
+        <md-list-item ng-repeat="partido in tabla.fechaActual.partidos" layout="row">
+            <div flex="25" layout="column">
+                <div>FECHA</div>
+                <div>HORA</div>
+                <div>ESTADIO</div>
+            </div>           
+            <div flex="30">{{partido.local}}</div>
+            <div flex="5">{{partido.resLocal}}</div>
+            <div flex="5">{{partido.resVisitante}}</div>
+            <div flex="30">{{partido.visitante}}</div>
+            <md-divider></md-divider>
+        </md-list-item>
+        <md-button ng-click="tabla.finalizarFecha(tabla.fechaActual.id)">Finalizar Fecha</md-button>
     </div>   
 </div>
 

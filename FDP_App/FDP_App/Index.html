@@ -7,19 +7,19 @@
     <link href="/Content/angular-material.min.css" rel="stylesheet" />
 </head>
 
-<body layout="row" ng-controller="NavController">
+<body layout="row" ng-controller="NavController as nav">
     <md-sidenav class="md-sidenav-left md-whiteframe-z2 md-closed md-locked-open" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
         <md-toolbar class="md-tall md-hue-2"></md-toolbar>
         <md-content flex>
             <md-list>
                 <md-button layout-fill><div layout="row" style="margin-left:10px"><h3>En Progreso</h3></div></md-button>
-                <md-list-item class="md-2-line" ng-repeat="item in torneos | filter: {isCurrent:true}">
+                <md-list-item class="md-2-line" ng-repeat="item in nav.torneos | filter: {isCurrent:true}">
                     <md-button ui-sref="torneo({id: item.id})" layout-fill><div layout=row style="margin-left:50px">{{item.nombre}}</div></md-button>
                 </md-list-item>
                 <md-divider></md-divider>
 
                 <md-button layout-fill><div layout="row" style="margin-left:10px"><h3>Anteriores</h3></div></md-button>
-                <md-list-item class="md-2-line" ng-repeat="item in torneos | filter: {isCurrent:false}">
+                <md-list-item class="md-2-line" ng-repeat="item in nav.torneos | filter: {isCurrent:false}">
                     <md-button layout-fill><div layout=row style="margin-left:50px">{{item.nombre}}</div></md-button>
                 </md-list-item>
                 <md-divider></md-divider>

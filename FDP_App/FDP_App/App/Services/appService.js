@@ -75,6 +75,16 @@ appService.factory('appData', ['$resource', function ($resource) {
                 if (torneos[i].id == torneoId)
                     return torneos[i].equipos;
             }
+        },
+        getFechaById: function (torneoId, fechaId) {
+            for (i = 0; i < torneos.length; i++) {
+                if (torneos[i].id == torneoId) {
+                    for (j = 0; j < torneos[i].fixture.length; j++) {
+                        if (torneos[i].fixture[j].id == fechaId)
+                            return torneos[i].fixture[j];
+                    }
+                }
+            }
         }
 
     }
