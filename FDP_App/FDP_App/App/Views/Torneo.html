@@ -70,7 +70,7 @@
             </div>
             <md-divider></md-divider>
         </md-content>
-        <md-button class="md-raised md-primary" ng-click="armarFixture()" ng-disabled="partidosEquipo.length != torneo.fechas">Crear Fixture</md-button>
+        <md-button class="md-raised md-primary" ng-click="armarFixture()" ng-disabled="partidosEquipo.length != torneo.equipos.length - 1">Crear Fixture</md-button>
     </form>
 
     <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="partidos">

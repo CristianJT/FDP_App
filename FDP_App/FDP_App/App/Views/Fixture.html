@@ -2,7 +2,7 @@
 <div layout="row" layout-align="center center">
     <div flex="90">
         <md-tabs md-dynamic-height md-border-bottom>
-            <md-tab ng-repeat="item in fecha.fixture" label="Fecha {{item.id}}">
+            <md-tab ng-repeat="item in fechaCtrl.fixture" label="Fecha {{item.id}}">
                 <md-content flex md-scroll-y class="md-padding">
                     <md-list-item ng-repeat="partido in item.partidos">
                         <div>{{partido.id}} - {{partido.local}} vs. {{partido.visitante}}</div>

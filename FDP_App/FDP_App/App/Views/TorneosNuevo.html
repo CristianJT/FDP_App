@@ -1,58 +1,74 @@
 ﻿
-<div layout="row" layout-margin  layout-wrap layout-align ="center center">
+<div layout="row" layout-margin layout-wrap layout-align ="center center">
     <div flex="60" flex-sm="90">
-        <form name="formCrearTorneo" novalidate>
-
-            <blockquote>
-                <div ng-show="torneo.nombre"><h5><strong>Nombre: </strong>{{torneo.nombre}}</h5></div>
-                <div ng-show="torneo.descripcion"><h5><strong>Descripción: </strong> {{torneo.descripcion}}</h5></div>
-                <div ng-show="torneo.inicio"><h5><strong>Fecha Inicio: </strong> {{torneo.inicio | date: "MMMM - yyyy"}}</h5></div>
-                <div ng-show="torneo.fin"><h5><strong>Fecha Finalización: </strong> {{torneo.fin | date: "MMMM - yyyy"}}</h5></div>
-            </blockquote>
-
-            <md-input-container flex>
-                <label>Torneo</label>
-                <input ng-model="torneo.nombre" placeholder="Nombre" required />
-            </md-input-container>
-
-            <md-input-container flex>
-                <label>Cantidad de Fechas</label>
-                <input type="number" ng-model="torneo.fechas" placeholder="Cantidad Fechas" required />
-            </md-input-container>
-
-            <md-input-container flex>
-                <label>Descripción</label>
-                <textarea ng-model="torneo.descripcion"></textarea>
-            </md-input-container>
-
-            <div layout layout-sm="column">
-                <div flex="40" layout="row" layout-padding>
-                    <input class="md-button" ng-model="torneo.inicio" placeholder="Fecha Inicio" datepicker-popup="MM - yyyy" datepicker-mode="'month'" datepicker-options="{minMode: 'month'}" is-open="opened1" show-button-bar="false" disabled />
-                    <span flex></span>
-                    <md-button ng-click="open($event,'opened1')"><i class="glyphicon glyphicon-calendar"></i></md-button>
+        <form layout="column" name="formCrearTorneo" novalidate>
+            <div>
+                <div layout="row" layout-sm="column" layout-padding>
+                    <md-input-container flex>
+                        <label>Torneo</label>
+                        <input ng-model="nuevoCtrl.torneo.nombre" required name="nombre"/>
+                    </md-input-container>
+                    <md-input-container flex>
+                        <label>Temporada</label>
+                        <input type="number" ng-model="nuevoCtrl.torneo.temporada" min="2000" max="2050" required/>
+                    </md-input-container>
                 </div>
-                <span flex></span>
-                <div flex="40" layout="row" layout-padding>
-                    <input class="md-button" ng-model="torneo.fin" placeholder="Fecha Finalización" datepicker-popup="MM - yyyy" datepicker-mode="'month'" datepicker-options="{minMode: 'month'}" is-open="opened2" show-button-bar="false" disabled/>
-                    <span flex></span>
-                    <md-button ng-click="open($event, 'opened2')"><i class="glyphicon glyphicon-calendar"></i></md-button>
+                <div layout-padding>
+                    <md-input-container flex>
+                        <label>Descripción</label>
+                        <textarea ng-model="nuevoCtrl.torneo.descripcion"></textarea>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-sm="column" layout-align="space-between center" layout-padding>
+                    <div flex="40" flex-sm="90" layout="row">
+                        <input class="form-control" ng-model="nuevoCtrl.torneo.fechaInicio" placeholder="FECHA INICIO" datepicker-popup="MM-yyyy" datepicker-mode="'month'" datepicker-options="{minMode: 'month'}" is-open="opened1" show-button-bar="false" required/>
+                        <button type="button" class="btn btn-default" ng-click="open($event,'opened1')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </div>
+                    <div flex="40" flex-sm="90" layout="row">
+                        <input class="form-control" ng-model="nuevoCtrl.torneo.fechaFin" placeholder="FECHA FINALIZACIÓN" datepicker-popup="MM - yyyy" datepicker-mode="'month'" datepicker-options="{minMode: 'month'}" is-open="opened2" show-button-bar="false" min-date="nuevoCtrl.torneo.fechaInicio" required />
+                        <button type="button" class="btn btn-default" ng-click="open($event, 'opened2')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </div>
                 </div>
             </div>
-            
-            <div layout>
-                <md-select ng-model="selectedTeams" placeholder="Seleccione Equipo" multiple>
-                    <md-checkbox ng-repeat="equipo in equipos | filter: {esPrimera:false}" ng-click="selection(equipo.nombre)">
-                        {{equipo.nombre}}
-                    </md-checkbox>
-                </md-select> 
+            <span layout-padding flex></span>
+            <div>
+                <h2>Fixture</h2>
+                <md-divider></md-divider>
+                <div layout="row" layout-sm="column" layout-padding>
+                    <md-input-container flex>
+                        <label>Cantidad de Fechas</label>
+                        <input type="number" ng-model="nuevoCtrl.totalFechas" ng-change="nuevoCtrl.cantidadFechasEquipos(nuevoCtrl.torneo.fechaEspecial)" min="15" max="40" required />
+                    </md-input-container>
+                    <md-checkbox flex ng-change="nuevoCtrl.cantidadFechasEquipos(nuevoCtrl.torneo.fechaEspecial)" ng-model="nuevoCtrl.torneo.fechaEspecial">Fecha especial</md-checkbox>
+                    <md-input-container ng-show="nuevoCtrl.torneo.fechaEspecial && nuevoCtrl.totalFechas" flex>
+                        <label>Número de fecha</label>
+                        <input type="number" ng-model="nuevoCtrl.torneo.fechaEspecialNum" ng-init="1" min="1" max="{{nuevoCtrl.totalFechas}}" />
+                    </md-input-container>
+                </div>
             </div>
-          
-            <div layout="row" layout-margin>
-                <md-button ng-click="reset()" ng-disabled="!torneo" style="margin-right: 20px">Limpiar</md-button>
-                <md-button ng-click="crearTorneo(torneo)" ng-disabled="formCrearTorneo.$invalid" class="md-raised md-primary">Crear</md-button>
+            <span layout-padding flex></span>
+            <div ng-show="nuevoCtrl.totalFechas">
+                <h2>Equipos</h2>
+                <md-divider></md-divider>
+                <div layout="row" layout-padding>
+                    <div><b layout-padding>Número de Equipos:</b>{{nuevoCtrl.totalEquipos}}</div>
+                </div>
+                <div ng-show="nuevoCtrl.totalEquipos > nuevoCtrl.totalEquiposPrimera" layout="row" layout-sm="column">
+                    <md-checkbox ng-disabled="true" ng-checked="nuevoCtrl.totalEquiposAscendidos == nuevoCtrl.equiposSelec.length"><b>Equipos ascendidos:</b> {{nuevoCtrl.totalEquiposAscendidos}}</md-checkbox>
+                    <span flex></span>            
+                    <md-select flex="50" flex-sm="80" layout-padding layout-fill ng-model="nuevoCtrl.equiposSelec" placeholder="Seleccione Equipo" multiple>
+                        <md-checkbox ng-repeat="equipo in nuevoCtrl.equipos | filter: {esPrimera:false} | orderBy: 'nombre'" ng-click="nuevoCtrl.seleccion(equipo.nombre)">
+                            {{equipo.nombre}}
+                        </md-checkbox>
+                    </md-select>
+                </div>
             </div>
-        </form>
-        
+            <span layout-padding flex></span>    
+            <div layout="row" layout-padding>
+                <md-button ng-click="nuevoCtrl.reset()" style="margin-right: 20px">Limpiar</md-button>
+                <md-button ng-click="nuevoCtrl.crearTorneo(nuevoCtrl.equiposSelec)" ng-disabled="formCrearTorneo.$invalid" class="md-raised md-primary">Crear</md-button>
+            </div>
+        </form>      
     </div>
 </div>
 

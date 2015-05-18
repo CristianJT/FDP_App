@@ -1,13 +1,14 @@
 ﻿(function () {
 
-    var app = angular.module('FDPApp', ['ui.router', 'ui.bootstrap', 'appService', 'ngMaterial']);
+    var app = angular.module('FDPApp', ['ui.router', 'ui.bootstrap', 'appService', 'ngMaterial', 'ngMessages']);
 
     app.config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('nuevoTorneo', {
                 url: '/nuevo',
                 templateUrl: '/App/Views/TorneosNuevo.html',
-                controller: 'TorneoNuevoController'
+                controller: 'TorneoNuevoController',
+                controllerAs: 'nuevoCtrl'
             })
             .state('torneo', {
                 url: '/torneos/:id',
@@ -18,13 +19,13 @@
                 url: '/torneos/:id/fixture',
                 templateUrl: '/App/Views/Fixture.html',
                 controller: 'FixtureController',
-                controllerAs: 'fecha'
+                controllerAs: 'fechaCtrl'
             })
             .state('posiciones', {
                 url: '/torneos/:id/posiciones',
                 templateUrl: '/App/Views/Posiciones.html',
                 controller: 'PosicionesController',
-                controllerAs: 'tabla'
+                controllerAs: 'posicion'
             })
         $urlRouterProvider.otherwise('/');
     });
@@ -35,48 +36,76 @@
 
     app.controller('TorneoNuevoController', ['$scope', '$location', 'appData', function ($scope, $location, appData) {
 
-        $scope.torneos = appData.getTorneos();
-        $scope.equipos = appData.getEquipos();
-
+        this.torneos = appData.getTorneos();
+        this.equipos = appData.getEquipos();
+    
+        /*Funcionalidad para el monthPicker*/
         $scope.open = function ($event, opened) {
             $event.preventDefault();
             $event.stopPropagation();
             $scope[opened] = !$scope[opened];
         };
 
-        $scope.selectedTeams = [];
-        $scope.selection = function (teamName) {
-            var idx = $scope.selectedTeams.indexOf(teamName);
+        /*Array: Cargar equipos ascendidos*/
+        this.equiposSelec = [];
+        this.seleccion = function (nombreEquipo) {
+            var idx = this.equiposSelec.indexOf(nombreEquipo);
             if (idx > -1) 
-                $scope.selectedTeams.splice(idx, 1);  
+                this.equiposSelec.splice(idx, 1);
             else 
-                $scope.selectedTeams.push(teamName);        
+                this.equiposSelec.push(nombreEquipo);
+        };
+   
+        /*Calcular datos extras formulario (fixture y equipos)  */
+        this.cantidadFechasEquipos = function (fechaEspecial) {
+            this.totalFechas;
+            this.totalEquipos;
+            this.totalEquiposPrimera = 0;
+            this.totalEquiposAscendidos;
+
+            for (i = 0; i < this.equipos.length; i++) {
+                if (this.equipos[i].esPrimera)
+                    this.totalEquiposPrimera++;
+            }
+            if (fechaEspecial)
+                this.totalEquipos = this.totalFechas;
+            else
+                this.totalEquipos = this.totalFechas + 1;
+
+            this.totalEquiposAscendidos = this.totalEquipos - this.totalEquiposPrimera;
         };
 
-        $scope.crearTorneo = function(unTorneo) {
-            var lastId = $scope.torneos[$scope.torneos.length - 1].id;
-            unTorneo.id = lastId + 1;
-            unTorneo.isCurrent = true;
-            unTorneo.equipos = [];
-            unTorneo.fixture = [];
+        /*Función: Crear torneo*/
+        this.torneo = {};
+        this.crearTorneo = function() {
+            var lastId = this.torneos[this.torneos.length - 1].id;
+            this.torneo.id = lastId + 1;
+            this.torneo.isCurrent = true;
+            this.torneo.equipos = [];
+            this.torneo.fixture = [];
 
-            angular.forEach($scope.equipos, function (item) {
-                if ($scope.selectedTeams.indexOf(item.nombre) > -1) {
-                    item.esPrimera = true;
+            /*Recorro el array de equipos. Si un equipo es "ascendido" modifico atributo "esPrimera"*/
+            /*Si "esPrimera" = true cargo el equipo al nuevo torneo*/
+            for (i = 0; i < this.equipos.length; i++) {
+                if (this.equiposSelec.indexOf(this.equipos[i].nombre) > -1) {
+                    this.equipos[i].esPrimera = true;
                 }
-                if (item.esPrimera) {
-                    unTorneo.equipos.push(item);
+                if (this.equipos[i].esPrimera) {
+                    this.torneo.equipos.push(this.equipos[i]);
                 }
-            });
-
-            $scope.torneos.push(unTorneo);
-            redirect(unTorneo.id);
+            };
+            
+            this.torneos.push(this.torneo);
+            redirect(this.torneo.id);
         };
 
-        $scope.reset = function() {
-            $scope.torneo = undefined;
+        /*Función: Resetear formulario*/
+        this.reset = function() {
+            this.torneo = {};
+            this.totalFechas = null;
         };
 
+        /*Redireccionar al nuevo torneo*/
         redirect = function (id) {
             $location.path('/torneos/' + id);
         };
@@ -258,10 +287,14 @@
         this.equipos = appData.getTorneosByIdEquipos($stateParams.id);
 
         var actualFechaId = 1;
+        this.anteriorFechaId = 0;
+   
         this.fechaActual = appData.getFechaById($stateParams.id, actualFechaId);
 
-        this.finalizarFecha = function (fechaId) {
-            actualFechaId = fechaId + 1;
+        this.finalizarFecha = function () {
+            this.anteriorFechaId = actualFechaId;
+            actualFechaId ++;
+            this.fechaAnterior = this.fechaActual;
             this.fechaActual = appData.getFechaById($stateParams.id, actualFechaId);
         };
 

@@ -99,6 +99,8 @@
     <Content Include="Scripts\angular-aria.min.js" />
     <Content Include="Scripts\angular-material.js" />
     <Content Include="Scripts\angular-material.min.js" />
+    <Content Include="Scripts\angular-messages.js" />
+    <Content Include="Scripts\angular-messages.min.js" />
     <Content Include="Scripts\angular-resource.min.js" />
     <Content Include="Scripts\angular-route.min.js" />
     <Content Include="Scripts\angular-ui-router.min.js" />
