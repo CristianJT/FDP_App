@@ -2,13 +2,8 @@
 
 appService.factory('appData', ['$resource', function ($resource) {
 
-    var torneos = [
-            {
-                "id": 1, "nombre": "Transición 2014", "inicio": "", "fin": "", "descripcion": "Torneo sin descensos", "isCurrent": false,
-                "equipos": [{ "id": 3, "nombre": "Boca Juniors", "estadio": "Alberto J. Armando", "ubicacion": "La Boca(CapFed)", "puntos": 0, "jugados": 0, "ganados": 0, "empatados": 0, "perdidos": 0, "golesFavor": 0, "golesContra": 0, "diferencia": 0, "esPrimera": true }]
-            }
-    ];
-
+    var torneos = [];
+  
     var equipos = [ 
             { "id": 1, "nombre": "Independiente", "estadio": "Libertadores de América" , "ubicacion": "Avellaneda(BsAs)" , "puntos": 0, "jugados": 0, "ganados": 0, "empatados": 0, "perdidos": 0, "golesFavor": 0, "golesContra": 0, "diferencia": 0, "esPrimera": true }, 
             { "id": 2, "nombre": "River Plate", "estadio": "Antonio Vespucio Liberti" , "ubicacion": "Nuñez(CapFed)", "puntos": 0, "jugados": 0, "ganados": 0, "empatados": 0, "perdidos": 0, "golesFavor": 0, "golesContra": 0, "diferencia": 0, "esPrimera": true }, 

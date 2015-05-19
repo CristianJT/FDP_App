@@ -25,7 +25,7 @@
                 url: '/torneos/:id/posiciones',
                 templateUrl: '/App/Views/Posiciones.html',
                 controller: 'PosicionesController',
-                controllerAs: 'posicion'
+                controllerAs: 'posicionCtrl'
             })
         $urlRouterProvider.otherwise('/');
     });
@@ -78,9 +78,12 @@
         /*Función: Crear torneo*/
         this.torneo = {};
         this.crearTorneo = function() {
-            var lastId = this.torneos[this.torneos.length - 1].id;
+            var lastId = 0;
+            if (this.torneos.length != 0)
+                lastId = this.torneos[this.torneos.length - 1].id;
             this.torneo.id = lastId + 1;
             this.torneo.isCurrent = true;
+            this.torneo.campeon = null;
             this.torneo.equipos = [];
             this.torneo.fixture = [];
 

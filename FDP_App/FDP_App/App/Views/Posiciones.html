@@ -1,7 +1,7 @@
 ﻿<div><tabs-page></tabs-page></div>
 
-<div layout="row" layout-align="center center">
-    <div flex="50" flex-sm="90">
+<div layout="row" layout-align="space-around start">
+    <div flex="45" layout-padding>
         <table class="table table-condensed">
             <thead>
                 <tr>
@@ -17,7 +17,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="equipo in tabla.equipos">
+                <tr ng-repeat="equipo in posicionCtrl.equipos">
                     <td>{{equipo.nombre}}</td>
                     <td class="col-md-1">{{equipo.puntos}}</td>
                     <td class="col-md-1">{{equipo.jugados}}</td>
@@ -30,22 +30,37 @@
                 </tr>
             </tbody>
         </table>
-        <md-divider></md-divider>
-        <h1>FECHA {{tabla.fechaActual.id}}</h1>
-        <md-divider></md-divider>
-        <md-list-item ng-repeat="partido in tabla.fechaActual.partidos" layout="row">
-            <div flex="25" layout="column">
-                <div>FECHA</div>
-                <div>HORA</div>
-                <div>ESTADIO</div>
-            </div>           
-            <div flex="30">{{partido.local}}</div>
-            <div flex="5">{{partido.resLocal}}</div>
-            <div flex="5">{{partido.resVisitante}}</div>
-            <div flex="30">{{partido.visitante}}</div>
+    </div> 
+    <div flex="45" layout="column">
+        <div layout-padding ng-show="posicionCtrl.fechaActual != null">
+            <h2>FECHA {{posicionCtrl.fechaActual.id}}</h2>
             <md-divider></md-divider>
-        </md-list-item>
-        <md-button ng-click="tabla.finalizarFecha(tabla.fechaActual.id)">Finalizar Fecha</md-button>
-    </div>   
+            <md-list-item ng-repeat="partido in posicionCtrl.fechaActual.partidos" layout="row">
+                <div flex="25" layout="column">
+                    <div>FECHA</div>
+                    <div>HORA</div>
+                </div>
+                <div flex="30">{{partido.local}}</div>
+                <div flex="5">{{partido.resLocal}}</div>
+                <div flex="5">{{partido.resVisitante}}</div>
+                <div flex="30">{{partido.visitante}}</div>
+                <md-divider></md-divider>
+            </md-list-item>
+            <md-button ng-click="posicionCtrl.finalizarFecha()">Finalizar Fecha</md-button>
+        </div>
+        <span flex></span>
+        <div layout-padding ng-show="posicionCtrl.anteriorFechaId != 0">
+            <h2>Última fecha</h2>
+            <md-divider></md-divider>
+            <md-list-item ng-repeat="partido in posicionCtrl.fechaAnterior.partidos" layout="row">
+                <div flex="30">{{partido.local}}</div>
+                <div flex="5">{{partido.resLocal}}</div>
+                <div flex="5">{{partido.resVisitante}}</div>
+                <div flex="30">{{partido.visitante}}</div>
+            </md-list-item>
+        </div>
+    </div>
+        
+      
 </div>
 
