@@ -4,8 +4,19 @@ appService.factory('appData', ['$resource', function ($resource) {
 
     var torneos = [];
   
+    var clasicos = [
+            { "id": 1, "nombre": "Super clásico" },
+            { "id": 2, "nombre": "Clásico de Avellaneda" },
+            { "id": 3, "nombre": "Clásico Rosarino" },
+            { "id": 4, "nombre": "Clásico Platense" },
+            { "id": 5, "nombre": "Clásico San Lorenzo-Huracan" },
+            { "id": 6, "nombre": "Clásico Santafesino" },
+            { "id": 7, "nombre": "Clásico del Sur" },
+            { "id": 8, "nombre": "Clásico del Cuyo" }
+    ]
+
     var equipos = [ 
-            { "id": 1, "nombre": "Independiente", "estadio": "Libertadores de América" , "ubicacion": "Avellaneda(BsAs)" , "puntos": 0, "jugados": 0, "ganados": 0, "empatados": 0, "perdidos": 0, "golesFavor": 0, "golesContra": 0, "diferencia": 0, "esPrimera": true }, 
+            { "id": 1, "nombre": "Independiente", "estadio": "Libertadores de América" , "ubicacion": "Avellaneda(BsAs)" , "puntos": 0, "jugados": 0, "ganados": 0, "empatados": 0, "perdidos": 0, "golesFavor": 0, "golesContra": 0, "diferencia": 0, "esPrimera": true, "tieneClasico": true }, 
             { "id": 2, "nombre": "River Plate", "estadio": "Antonio Vespucio Liberti" , "ubicacion": "Nuñez(CapFed)", "puntos": 0, "jugados": 0, "ganados": 0, "empatados": 0, "perdidos": 0, "golesFavor": 0, "golesContra": 0, "diferencia": 0, "esPrimera": true }, 
             { "id": 3, "nombre": "Boca Juniors", "estadio": "Alberto J. Armando" , "ubicacion": "La Boca(CapFed)" , "puntos": 0, "jugados": 0, "ganados": 0, "empatados": 0, "perdidos": 0, "golesFavor": 0, "golesContra": 0, "diferencia": 0, "esPrimera": true }, 
             { "id": 4, "nombre": "Racing Club", "estadio": "Presidente Perón" , "ubicacion": "Avellaneda(BsAs)" , "puntos": 0, "jugados": 0, "ganados": 0, "empatados": 0, "perdidos": 0, "golesFavor": 0, "golesContra": 0, "diferencia": 0, "esPrimera": true }, 
@@ -62,7 +73,7 @@ appService.factory('appData', ['$resource', function ($resource) {
         getTorneosByIdFixture: function (torneoId) {
             for (i = 0; i < torneos.length; i++) {
                 if (torneos[i].id == torneoId)
-                    return torneos[i].fixture;
+                    return torneos[i].fixture.fechas;
             }
         },
         getTorneosByIdEquipos: function (torneoId) {

@@ -1,9 +1,9 @@
-﻿<div ng-hide="torneo.fixture.length == 0">
+﻿<div ng-hide="torneo.fixture.fechas.length == 0">
     <tabs-page></tabs-page>
     <div><p>UN SLIDER CON NOVEDADES SOBRE EL TORNEO</p></div>
 </div>
 <div layout="column">
-    <form name="formCrearFixture" ng-show="torneo.fixture == 0" novalidate>
+    <form name="formCrearFixture" ng-show="torneo.fixture.fechas.length == 0" novalidate>
         <md-content layout="column" layout-padding>
             <p>El torneo actual no tiene partidos cargados. Cargar fixture</p>
             <md-divider></md-divider>

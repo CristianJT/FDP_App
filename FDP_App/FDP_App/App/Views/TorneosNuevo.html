@@ -2,7 +2,9 @@
 <div layout="row" layout-margin layout-wrap layout-align ="center center">
     <div flex="60" flex-sm="90">
         <form layout="column" name="formCrearTorneo" novalidate>
+            
             <div>
+                <!--TORNEO/TEMPORADA-->
                 <div layout="row" layout-sm="column" layout-padding>
                     <md-input-container flex>
                         <label>Torneo</label>
@@ -13,47 +15,46 @@
                         <input type="number" ng-model="nuevoCtrl.torneo.temporada" min="2010" max="2050" required/>
                     </md-input-container>
                 </div>
-                <div layout-padding>
-                    <md-input-container flex>
-                        <label>Descripción</label>
-                        <textarea ng-model="nuevoCtrl.torneo.descripcion"></textarea>
-                    </md-input-container>
-                </div>
+               
+                <!--FECHA INICIO/FIN-->
                 <div layout="row" layout-sm="column" layout-align="space-between center" layout-padding>
                     <div flex="40" flex-sm="90" layout="row">
-                        <input class="form-control" ng-model="nuevoCtrl.torneo.fechaInicio" placeholder="FECHA INICIO" datepicker-popup="MM-yyyy" datepicker-mode="'month'" datepicker-options="{minMode: 'month'}" is-open="opened1" show-button-bar="false" required/>
+                        <input class="form-control" ng-model="nuevoCtrl.torneo.fechaInicio" placeholder="FECHA INICIO" datepicker-popup="MM-yyyy" datepicker-mode="'month'" datepicker-options="{minMode: 'month'}" is-open="opened1" show-button-bar="false" />
                         <button type="button" class="btn btn-default" ng-click="open($event,'opened1')"><i class="glyphicon glyphicon-calendar"></i></button>
                     </div>
                     <div flex="40" flex-sm="90" layout="row">
-                        <input class="form-control" ng-model="nuevoCtrl.torneo.fechaFin" placeholder="FECHA FINALIZACIÓN" datepicker-popup="MM - yyyy" datepicker-mode="'month'" datepicker-options="{minMode: 'month'}" is-open="opened2" show-button-bar="false" min-date="nuevoCtrl.torneo.fechaInicio" required />
+                        <input class="form-control" ng-model="nuevoCtrl.torneo.fechaFin" placeholder="FECHA FINALIZACIÓN" datepicker-popup="MM - yyyy" datepicker-mode="'month'" datepicker-options="{minMode: 'month'}" is-open="opened2" show-button-bar="false" min-date="nuevoCtrl.torneo.fechaInicio"/>
                         <button type="button" class="btn btn-default" ng-click="open($event, 'opened2')"><i class="glyphicon glyphicon-calendar"></i></button>
                     </div>
                 </div>
             </div>
             <span layout-padding flex></span>
-            <div>
+           
+             <div>
                 <h2>Fixture</h2>
                 <md-divider></md-divider>
+                 <!--TOTAL FECHAS/FECHA ESPECIAL/NÚMERO FECHA ESPECIAL-->
                 <div layout="row" layout-sm="column" layout-padding>
                     <md-input-container flex>
                         <label>Cantidad de Fechas</label>
-                        <input type="number" ng-model="nuevoCtrl.totalFechas" ng-change="nuevoCtrl.cantidadFechasEquipos(nuevoCtrl.torneo.fechaEspecial)" min="{{nuevoCtrl.totalEquiposPrimera - 1}}" max="40" required />
+                        <input type="number" ng-model="nuevoCtrl.totalFechas" ng-change="nuevoCtrl.cantidadFechasEquipos()" min="{{nuevoCtrl.totalEquiposPrimera - 1}}" max="40" required />
                     </md-input-container>
-                    <md-checkbox flex ng-change="nuevoCtrl.cantidadFechasEquipos(nuevoCtrl.torneo.fechaEspecial)" ng-model="nuevoCtrl.torneo.fechaEspecial">Fecha especial</md-checkbox>
-                    <md-input-container ng-show="nuevoCtrl.torneo.fechaEspecial && nuevoCtrl.totalFechas" flex>
+                    <md-checkbox flex ng-change="nuevoCtrl.cantidadFechasEquipos()" ng-model="nuevoCtrl.fechaEspecial">Fecha especial</md-checkbox>
+                    <md-input-container ng-show="nuevoCtrl.fechaEspecial && nuevoCtrl.totalFechas" flex>
                         <label>Número de fecha</label>
-                        <input type="number" ng-model="nuevoCtrl.torneo.fechaEspecialNum" min="1" max="{{nuevoCtrl.totalFechas}}" />
+                        <input type="number" ng-model="nuevoCtrl.fechaEspecialNum" min="1" max="{{nuevoCtrl.totalFechas}}" />
                     </md-input-container>
                 </div>
             </div>
             <span layout-padding flex></span>
+
             <div>
                 <h2>Equipos</h2>
                 <md-divider></md-divider>
                 <div layout="row" layout-padding>
                     <md-input-container flex="50" flex-sm="100">
-                        <label>descensos</label>
-                        <input type="number" ng-model="nuevoCtrl.torneo.descensos" min="0" max="10" required />
+                        <label>Descensos</label>
+                        <input type="number" ng-model="nuevoCtrl.torneo.descensos" min="0" max="10" />
                     </md-input-container>
                 </div>  
                 <div layout="row" layout-padding ng-show="nuevoCtrl.totalFechas">
@@ -72,7 +73,7 @@
             <span layout-padding flex></span>    
             <div layout="row" layout-padding>
                 <md-button ng-click="nuevoCtrl.reset()" style="margin-right: 20px">Limpiar</md-button>
-                <md-button ng-click="nuevoCtrl.crearTorneo(nuevoCtrl.equiposSelec)" ng-disabled="formCrearTorneo.$invalid" class="md-raised md-primary">Crear</md-button>
+                <md-button ng-click="nuevoCtrl.crearTorneo()" ng-disabled="formCrearTorneo.$invalid" class="md-raised md-primary">Crear</md-button>
             </div>
         </form>      
     </div>
