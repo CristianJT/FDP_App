@@ -1,6 +1,6 @@
 ﻿(function () {
 
-    var app = angular.module('FDPApp', ['ui.router', 'ui.bootstrap', 'appService', 'ngMaterial', 'ngMessages']);
+    var app = angular.module('FDPApp', ['ui.router', 'ui.bootstrap', 'appService', 'ngMaterial']);
 
     app.config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
@@ -203,17 +203,16 @@
             var aux2 = [];
             cargarArray(aux1, aux2);
             
-            //posicionDistinto = buscarPosicion($scope.equipoDistinto);
             for (i = 0; i < $scope.torneo.fixture.totalFechas; i++) {
                 var fecha = {};
                 fecha.id = i + 1;
                 fecha.partidos = [];
 
                 if ($scope.torneo.fixture.fechaEspecialNumero != fecha.id) {
+
                     //Recorro aux1
                     aux1Fin = aux1.length - 1;
                     aux1Inicio = 0;
-
                     partidoId = 1;
                     while (aux1Inicio <= aux1Fin) {
                         if (i <= posicionDistinto) {
@@ -233,6 +232,7 @@
                         aux1Fin--;
                         partidoId++;
                     }
+
                     //Recorro aux2
                     aux2Fin = aux2.length - 1;
                     aux2Inicio = 0;
@@ -268,9 +268,7 @@
                     if (i != posicionDistinto)
                         $scope.esLocalElegido = !$scope.esLocalElegido;
                 }
-                else {
-
-                }
+   
                 $scope.torneo.fixture.fechas.push(fecha);
             }
 
