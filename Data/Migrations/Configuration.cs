@@ -19,7 +19,8 @@ namespace Data.Migrations
             });
 
             context.Teams.AddOrUpdate(new Team[] {
-                new Team { TeamId = Guid.NewGuid(), Name = "Independiente", Stadium = "Libertadores de América", City = "Avellaneda(BsAs)", IsTopDivision = true }
+                new Team { TeamId = Guid.NewGuid(), Name = "Independiente", Stadium = "Libertadores de América", City = "Avellaneda(BsAs)", IsTopDivision = true },
+                new Team { TeamId = Guid.NewGuid(), Name = "River Plate", Stadium = "Antonio Vespucio Liberti", City = "Nuñez(CapFed)", IsTopDivision = true }
             });
         }
     }
