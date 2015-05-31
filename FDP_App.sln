@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FDP_App", "FDP_App\FDP_App.csproj", "{40FC2CB7-0A18-4ED3-A1E3-C0B6751F006F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{505601C2-F928-426C-892C-4BE3DFFA95BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{95940999-846F-489A-93E2-D5CFE6397A60}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{40FC2CB7-0A18-4ED3-A1E3-C0B6751F006F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40FC2CB7-0A18-4ED3-A1E3-C0B6751F006F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40FC2CB7-0A18-4ED3-A1E3-C0B6751F006F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{505601C2-F928-426C-892C-4BE3DFFA95BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{505601C2-F928-426C-892C-4BE3DFFA95BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{505601C2-F928-426C-892C-4BE3DFFA95BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{505601C2-F928-426C-892C-4BE3DFFA95BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95940999-846F-489A-93E2-D5CFE6397A60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95940999-846F-489A-93E2-D5CFE6397A60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95940999-846F-489A-93E2-D5CFE6397A60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95940999-846F-489A-93E2-D5CFE6397A60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
