@@ -16,8 +16,8 @@ namespace Entities.Models
             this.GoalDifference = 0;
         }
 
-        public Guid LeagueId { get; set; }
-        public Guid TeamId { get; set; }
+        public int LeagueId { get; set; }
+        public int TeamId { get; set; }
 
         public int Points { get; set; }
         public int Played { get; set; }

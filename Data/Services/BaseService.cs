@@ -14,7 +14,7 @@ namespace Data.Services
             return context.Set<T>().ToList();
         }
 
-        public T GetById(Guid id)
+        public T GetById(int id)
         {
             return context.Set<T>().Find(id);
         }
@@ -26,7 +26,7 @@ namespace Data.Services
             return item;
         }
 
-        public T Update(T item, Guid id)
+        public T Update(T item, int id)
         {
             T existingItem = GetById(id);
             if (existingItem != null)
@@ -37,14 +37,14 @@ namespace Data.Services
             return existingItem;
         }
 
-        public void Delete(Guid id)
+        public void Delete(int id)
         {
             T toDeleteitem = GetById(id);
             context.Set<T>().Remove(toDeleteitem);
             context.SaveChanges();
         }
 
-        public bool Exists(Guid id)
+        public bool Exists(int id)
         {
             T item = GetById(id);
             if (item == null)

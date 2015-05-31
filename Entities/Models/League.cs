@@ -11,7 +11,7 @@ namespace Entities.Models
             this.Teams = new HashSet<LeagueTeam>();
         }
 
-        public Guid LeagueId { get; set; }
+        public int LeagueId { get; set; }
 
         public string Name { get; set; }
         public int Season { get; set; }

@@ -11,7 +11,7 @@ namespace Data.Migrations
                 "dbo.League",
                 c => new
                     {
-                        LeagueId = c.Guid(nullable: false),
+                        LeagueId = c.Int(nullable: false, identity: true),
                         Name = c.String(),
                         Season = c.Int(nullable: false),
                         StartDate = c.DateTime(nullable: false),
@@ -26,8 +26,8 @@ namespace Data.Migrations
                 "dbo.LeagueTeam",
                 c => new
                     {
-                        LeagueId = c.Guid(nullable: false),
-                        TeamId = c.Guid(nullable: false),
+                        LeagueId = c.Int(nullable: false),
+                        TeamId = c.Int(nullable: false),
                         Points = c.Int(nullable: false),
                         Played = c.Int(nullable: false),
                         Won = c.Int(nullable: false),
@@ -47,7 +47,7 @@ namespace Data.Migrations
                 "dbo.Team",
                 c => new
                     {
-                        TeamId = c.Guid(nullable: false),
+                        TeamId = c.Int(nullable: false, identity: true),
                         Name = c.String(),
                         Stadium = c.String(),
                         City = c.String(),

@@ -6,10 +6,10 @@ namespace Data.Services
     public interface BaseInterface<T> where T : class
     {
         IList<T> GetAll();
-        T GetById(Guid id);
+        T GetById(int id);
         T Add(T item);
-        T Update(T item, Guid id);
-        void Delete(Guid id);
-        bool Exists(Guid id);
+        T Update(T item, int id);
+        void Delete(int id);
+        bool Exists(int id);
     }
 }

@@ -50,9 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FDPAppContext.cs" />
-    <Compile Include="Migrations\201505310148198_Initial.cs" />
-    <Compile Include="Migrations\201505310148198_Initial.Designer.cs">
-      <DependentUpon>201505310148198_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201505311815243_Initial.cs" />
+    <Compile Include="Migrations\201505311815243_Initial.Designer.cs">
+      <DependentUpon>201505311815243_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,8 +71,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201505310148198_Initial.resx">
-      <DependentUpon>201505310148198_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201505311815243_Initial.resx">
+      <DependentUpon>201505311815243_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
