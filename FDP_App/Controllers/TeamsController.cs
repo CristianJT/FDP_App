@@ -8,55 +8,56 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Data.Services;
 using Entities.Models;
+using Data.Services;
 
 namespace FDP_App.Controllers
 {
-    [RoutePrefix("api/leagues")]
-    public class LeaguesController : ApiController
+    [RoutePrefix("api/teams")]
+    public class TeamsController : ApiController
     {
-        private readonly LeagueService _leagueService = new LeagueService();
+        private readonly TeamService _teamService = new TeamService();
 
         [Route("")]
-        public IEnumerable<League> GetLeagues()
+        public IEnumerable<Team> GetTeams()
         {
-            return _leagueService.GetAll();
+            return _teamService.GetAll();
         }
 
-        [Route("{id}", Name = "GetLeagueByIdRoute")]
-        [ResponseType(typeof(League))]
-        public IHttpActionResult GetLeague(int id)
+        [Route("{id}", Name = "GetTeamByIdRoute")]
+        [ResponseType(typeof(Team))]
+        public IHttpActionResult GetTeam(int id)
         {
-            League league = _leagueService.GetById(id);
-            if (league == null)
+            Team team = _teamService.GetById(id);
+            if (team == null)
             {
                 return NotFound();
             }
-            return Ok(league);
+
+            return Ok(team);
         }
 
         [Route("{id}")]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutLeague(int id, League league)
+        public IHttpActionResult PutTeam(int id, Team team)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != league.LeagueId)
+            if (id != team.TeamId)
             {
                 return BadRequest();
             }
 
             try
             {
-                _leagueService.Update(league, id);
+                _teamService.Update(team, id);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_leagueService.Exists(id))
+                if (!_teamService.Exists(id))
                 {
                     return NotFound();
                 }
@@ -70,30 +71,30 @@ namespace FDP_App.Controllers
         }
 
         [Route("")]
-        [ResponseType(typeof(League))]
-        public IHttpActionResult PostLeague(League league)
+        [ResponseType(typeof(Team))]
+        public IHttpActionResult PostTeam(Team team)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _leagueService.Add(league);
-            return CreatedAtRoute("GetLeagueByIdRoute", new { id = league.LeagueId }, league);
+            _teamService.Add(team);
+            return CreatedAtRoute("GetTeamById", new { id = team.TeamId }, team);
         }
 
         [Route("{id}")]
-        [ResponseType(typeof(League))]
-        public IHttpActionResult DeleteLeague(int id)
+        [ResponseType(typeof(Team))]
+        public IHttpActionResult DeleteTeam(int id)
         {
-            League league = _leagueService.GetById(id);
-            if (league == null)
+            Team team = _teamService.GetById(id);
+            if (team == null)
             {
                 return NotFound();
             }
 
-            _leagueService.Delete(id);
-            return Ok(league);
+            _teamService.Delete(id);
+            return Ok(team);
         }
 
     }

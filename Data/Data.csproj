@@ -59,6 +59,7 @@
     <Compile Include="Services\BaseInterface.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\LeagueService.cs" />
+    <Compile Include="Services\TeamService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
