@@ -127,7 +127,7 @@
     app.controller('TorneoController', ['$scope', '$stateParams', 'appData', '$mdDialog', '$mdSidenav', function ($scope, $stateParams, appData, $mdDialog, $mdSidenav) {
 
         $scope.torneo = appData.getTorneosById($stateParams.id);
-
+        
         /*Partidos Sidenav*/
         $scope.open = function() {
             $mdSidenav('partidos').open()
