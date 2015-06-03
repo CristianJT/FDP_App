@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContextInitializer.cs" />
     <Compile Include="FDPAppContext.cs" />
     <Compile Include="Migrations\201505311815243_Initial.cs" />
     <Compile Include="Migrations\201505311815243_Initial.Designer.cs">

@@ -1,8 +1,9 @@
-﻿var appService = angular.module('appService', []);
+﻿var appService = angular.module('appService', ['ngResource']);
 
-appService.factory('appData', [ function () {
+appService.factory('leaguesData', ['$resource', function ($resource) {
 
-    var torneos = [];
+    return $resource("api/leagues/:id");
+
   
     var clasicos = [
             { "id": 1, "nombre": "Super clásico" },
@@ -50,7 +51,7 @@ appService.factory('appData', [ function () {
             { "id": 32, "nombre": "Argentinos Jr.", "estadio": "", "ubicacion": "", "puntos": 0, "jugados": 0, "ganados": 0, "empatados": 0, "perdidos": 0, "golesFavor": 0, "golesContra": 0, "diferencia": 0, "esPrimera": false },
             { "id": 33, "nombre": "Aldosivi", "estadio": "", "ubicacion": "", "puntos": 0, "jugados": 0, "ganados": 0, "empatados": 0, "perdidos": 0, "golesFavor": 0, "golesContra": 0, "diferencia": 0, "esPrimera": false }
     ];
-
+    /*
     return {
         getTorneos: function() {
             return torneos;
@@ -92,8 +93,16 @@ appService.factory('appData', [ function () {
                 }
             }
         }
-
+        
     }
+    */
     
-       
+    
+
+}]);
+
+appService.factory('teamsData', ['$resource', function ($resource) {
+
+    return $resource("api/teams");
+
 }]);

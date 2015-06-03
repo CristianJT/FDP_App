@@ -1,4 +1,6 @@
-﻿(function () {
+﻿
+(function () {
+    
 
     var app = angular.module('FDPApp', ['ui.router', 'ui.bootstrap', 'appService', 'ngMaterial']);
 
@@ -30,14 +32,15 @@
         $urlRouterProvider.otherwise('/');
     });
 
-    app.controller('NavController', ['appData', function (appData) {
-        this.torneos = appData.getTorneos();       
+    app.controller('NavController', ['leaguesData', 'teamsData', function (leagueData, teamsData) {
+        this.torneos = leagueData.query();
+        this.equipos = teamsData.query();
     }]);
 
-    app.controller('TorneoNuevoController', ['$scope', '$location', 'appData', function ($scope, $location, appData) {
+    app.controller('TorneoNuevoController', ['$scope', '$location', 'leaguesData', 'teamsData', function ($scope, $location, leaguesData, teamsData) {
 
-        this.torneos = appData.getTorneos();
-        this.equipos = appData.getEquipos();
+        this.torneos = leaguesData.query();
+        this.equipos = teamsData.query();
     
         /*Funcionalidad para el monthPicker*/
         $scope.open = function ($event, opened) {
@@ -67,7 +70,7 @@
             this.totalEquiposAscendidos;
 
             for (i = 0; i < this.equipos.length; i++) {
-                if (this.equipos[i].esPrimera)
+                if (this.equipos[i].isTopDivision)
                     this.totalEquiposPrimera++;
             }
             if (this.fechaEspecial)
@@ -79,36 +82,38 @@
         };
 
         /*Función: Crear torneo*/
-        this.torneo = {};     
+        this.torneo = new leaguesData();     
 
         this.crearTorneo = function () {
             var lastId = 0;
             if (this.torneos.length != 0)
-                lastId = this.torneos[this.torneos.length - 1].id;
-            this.torneo.id = lastId + 1;
+                lastId = this.torneos[this.torneos.length - 1].leagueId;
+            this.torneo.leagueId = lastId + 1;
             this.torneo.isCurrent = true;
-            this.torneo.campeon = null;
+            this.torneo.champion = null;
 
+            /*
             this.torneo.fixture = {};
             this.torneo.fixture.totalFechas = this.totalFechas;
             this.torneo.fixture.fechaEspecialNumero = this.fechaEspecialNum;
          
             this.torneo.fixture.fechas = [];
-            this.torneo.equipos = [];
+            */
+            this.torneo.teams = [];
 
             /*Recorro el array de equipos. Si un equipo es "ascendido" modifico atributo "esPrimera"*/
             /*Si "esPrimera" = true cargo el equipo al nuevo torneo*/
             for (i = 0; i < this.equipos.length; i++) {
-                if (this.equiposSelec.indexOf(this.equipos[i].nombre) > -1) {
-                    this.equipos[i].esPrimera = true;
+                if (this.equiposSelec.indexOf(this.equipos[i].name) > -1) {
+                    this.equipos[i].isTopDivision = true;
                 }
-                if (this.equipos[i].esPrimera) {
-                    this.torneo.equipos.push(this.equipos[i]);
+                if (this.equipos[i].isTopDivision) {
+                    this.torneo.teams.push(this.equipos[i]);
                 }
             };
             
-            this.torneos.push(this.torneo);
-            redirect(this.torneo.id);
+            this.torneo.$save(function () { $location.path('/torneos/' + torneo.leagueId); });
+            
         };
 
         /*Función: Resetear formulario*/
@@ -117,16 +122,12 @@
             this.totalFechas = null;
         };
 
-        /*Redireccionar al nuevo torneo*/
-        redirect = function (id) {
-            $location.path('/torneos/' + id);
-        };
 
     }]);
 
-    app.controller('TorneoController', ['$scope', '$stateParams', 'appData', '$mdDialog', '$mdSidenav', function ($scope, $stateParams, appData, $mdDialog, $mdSidenav) {
+    app.controller('TorneoController', ['$scope', '$stateParams', 'leaguesData', '$mdDialog', '$mdSidenav', function ($scope, $stateParams, leaguesData, $mdDialog, $mdSidenav) {
 
-        $scope.torneo = appData.getTorneosById($stateParams.id);
+        $scope.torneo = leaguesData.get({id: $stateParams.id});
         
         /*Partidos Sidenav*/
         $scope.open = function() {
@@ -277,16 +278,18 @@
 
     }]);
 
-    app.controller('FixtureController', ['$stateParams', 'appData', function ($stateParams, appData) {
+    app.controller('FixtureController', ['$stateParams', 'leaguesData', function ($stateParams, leaguesData) {
 
-        this.fixture = appData.getTorneosByIdFixture($stateParams.id);
+        //this.fixture = appData.getTorneosByIdFixture($stateParams.id);
 
     }]);
 
-    app.controller('PosicionesController', ['$stateParams', 'appData', function ($stateParams, appData) {
+    app.controller('PosicionesController', ['$stateParams', 'leaguesData', function ($stateParams, leaguesData) {
 
-        this.equipos = appData.getTorneosByIdEquipos($stateParams.id);
+        this.torneo = leaguesData.get({ id: $stateParams.id });
+        //this.equipos = appData.getTorneosByIdEquipos($stateParams.id);
 
+        /*
         var actualFechaId = 1;
         this.anteriorFechaId = 0;
    
@@ -298,7 +301,7 @@
             this.fechaAnterior = this.fechaActual;
             this.fechaActual = appData.getFechaById($stateParams.id, actualFechaId);
         };
-
+        */
     }]);
 
     app.directive('tabsPage', [function () {

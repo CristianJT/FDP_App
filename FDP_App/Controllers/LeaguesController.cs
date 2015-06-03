@@ -90,7 +90,7 @@ namespace FDP_App.Controllers
             }
 
             _leagueService.Add(league);
-            return CreatedAtRoute("GetLeagueByIdRoute", new { id = league.LeagueId }, _asDto.GetLeagueAsDTO(league));
+            return CreatedAtRoute("GetLeagueByIdRoute", new { id = league.LeagueId }, league);
         }
 
         /* DELETE: api/leagues/{id} */

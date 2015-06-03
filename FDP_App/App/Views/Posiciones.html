@@ -17,16 +17,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="equipo in posicionCtrl.equipos">
-                    <td>{{equipo.nombre}}</td>
-                    <td class="col-md-1">{{equipo.puntos}}</td>
-                    <td class="col-md-1">{{equipo.jugados}}</td>
-                    <td class="col-md-1">{{equipo.ganados}}</td>
-                    <td class="col-md-1">{{equipo.empatados}}</td>
-                    <td class="col-md-1">{{equipo.perdidos}}</td>
-                    <td class="col-md-1">{{equipo.golesFavor}}</td>
-                    <td class="col-md-1">{{equipo.golesContra}}</td>
-                    <td class="col-md-1">{{equipo.diferencia}}</td>
+                <tr ng-repeat="equipo in posicionCtrl.torneo.teams">
+                    <td>{{equipo.name}}</td>
+                    <td class="col-md-1">{{equipo.points}}</td>
+                    <td class="col-md-1">{{equipo.played}}</td>
+                    <td class="col-md-1">{{equipo.won}}</td>
+                    <td class="col-md-1">{{equipo.draws}}</td>
+                    <td class="col-md-1">{{equipo.lost}}</td>
+                    <td class="col-md-1">{{equipo.goalsFor}}</td>
+                    <td class="col-md-1">{{equipo.goalsAgainst}}</td>
+                    <td class="col-md-1">{{equipo.goalDifference}}</td>
                 </tr>
             </tbody>
         </table>

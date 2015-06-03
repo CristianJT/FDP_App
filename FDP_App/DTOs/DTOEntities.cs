@@ -37,10 +37,10 @@ namespace FDP_App.DTOs
             this.Season = l.Season;
             this.RelegatedTeams = l.RelegatedTeams;
 
-            List<TeamDTO> teamList = new List<TeamDTO>();
+            List<TeamsLeagueDTO> teamList = new List<TeamsLeagueDTO>();
             foreach (LeagueTeam t in l.Teams)
             {
-                teamList.Add(new TeamDTO(t));
+                teamList.Add(new TeamsLeagueDTO(t));
             }
             this.Teams = teamList.ToArray();
         }
@@ -49,24 +49,23 @@ namespace FDP_App.DTOs
         public string Name { get; set; }
         public int Season { get; set; }
         public int RelegatedTeams { get; set; }
-        public TeamDTO[] Teams { get; set; }
+        public TeamsLeagueDTO[] Teams { get; set; }
     }
 
-    public class TeamDTO
+    public class TeamsLeagueDTO
     {
-
-        public TeamDTO(LeagueTeam t)
+        public TeamsLeagueDTO(LeagueTeam tl)
         {
-            this.TeamId = t.TeamId;
-            this.Name = t.Team.Name;
-            this.Points = t.Points;
-            this.Played = t.Played;
-            this.Won = t.Won;
-            this.Draws = t.Draws;
-            this.Lost = t.Lost;
-            this.GoalsFor = t.GoalsFor;
-            this.GoalsAgainst = t.GoalsAgainst;
-            this.GoalDifference = t.GoalDifference;
+            this.TeamId = tl.TeamId;
+            this.Name = tl.Team.Name;
+            this.Points = tl.Points;
+            this.Played = tl.Played;
+            this.Won = tl.Won;
+            this.Draws = tl.Draws;
+            this.Lost = tl.Lost;
+            this.GoalsFor = tl.GoalsFor;
+            this.GoalsAgainst = tl.GoalsAgainst;
+            this.GoalDifference = tl.GoalDifference;
         }
 
         public int TeamId { get; set; }
@@ -79,5 +78,23 @@ namespace FDP_App.DTOs
         public int GoalsFor { get; set; }
         public int GoalsAgainst { get; set; }
         public int GoalDifference { get; set; }
+    }
+
+    public class TeamsDTO
+    {
+        public TeamsDTO(Team t)
+        {
+            this.TeamId = t.TeamId;
+            this.Name = t.Name;
+            this.Stadium = t.Stadium;
+            this.City = t.City;
+            this.IsTopDivision = t.IsTopDivision;
+        }
+
+        public int TeamId { get; set; }
+        public string Name { get; set; }
+        public string Stadium { get; set; }
+        public string City { get; set; }
+        public bool IsTopDivision { get; set; }
     }
 }

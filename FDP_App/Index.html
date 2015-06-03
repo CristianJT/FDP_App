@@ -14,19 +14,26 @@
             <md-list>
                 <md-button layout-fill><div layout="row" style="margin-left:10px"><h3>En Progreso</h3></div></md-button>
                 <md-list-item class="md-2-line" ng-repeat="item in navCtrl.torneos | filter: {isCurrent:true}">
-                    <md-button ui-sref="torneo({id: item.id})" layout-fill><div layout=row style="margin-left:50px">{{item.nombre}} {{item.temporada}}</div></md-button>
+                    <md-button ui-sref="torneo({id: item.leagueId})" layout-fill><div layout=row style="margin-left:50px">{{item.name}} {{item.season}}</div></md-button>
                 </md-list-item>
                 <md-divider></md-divider>
 
                 <md-button layout-fill><div layout="row" style="margin-left:10px"><h3>Anteriores</h3></div></md-button>
-                <md-list-item class="md-2-line" ng-repeat="item in navCtrl.torneos | filter: {isCurrent:false}">
-                    <md-button layout-fill><div layout=row style="margin-left:50px">{{item.nombre}} {{item.temporada}}</div></md-button>
+                <md-list-item class="md-2-line" ng-repeat="item in navCtrl.torneos | filter: {isCurrent:false} | orderBy:'-finishDate'">
+                    <md-button layout-fill><div layout=row style="margin-left:50px">{{item.name}} {{item.season}}</div></md-button>
                 </md-list-item>
                 <md-divider></md-divider>
 
-                <md-button layout-fill><div layout="row" style="margin-left:10px"><h3>Últimos Campeones</h3></div></md-button>
+                <md-button layout-fill><div layout="row" style="margin-left:10px"><h3>Campeones</h3></div></md-button>
+                <md-list-item class="md-2-line" ng-repeat="item in navCtrl.torneos | filter: {isCurrent:false} | orderBy:'-finishDate'">
+                    <md-button layout-fill><div layout=row style="margin-left:50px">{{item.champion}}</div></md-button>
+                </md-list-item>
                 <md-divider></md-divider>
+
                 <md-button layout-fill><div layout="row" style="margin-left:10px"><h3>Estadísticas</h3></div></md-button>
+                <md-list-item class="md-2-line" ng-repeat="item in navCtrl.equipos">
+                    <md-button layout-fill><div layout=row style="margin-left:50px">{{item.name}}</div></md-button>
+                </md-list-item>
                 <md-divider></md-divider>
                 <md-button ui-sref="nuevoTorneo" layout-fill><div layout="row" style="margin-left:10px"><h3>Nuevo Torneo</h3></div></md-button>
             </md-list>       
@@ -48,6 +55,7 @@
     <script src="Scripts/angular-ui-router.min.js"></script>
     <script src="Scripts/angular-animate.min.js"></script>
     <script src="Scripts/angular-aria.min.js"></script>
+    <script src="Scripts/angular-resource.min.js"></script>
     <script src="Scripts/angular-material.min.js"></script>
     <script src="Scripts/ui-bootstrap.min.js"></script>
     <script src="Scripts/ui-bootstrap-tpls.min.js"></script>

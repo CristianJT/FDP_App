@@ -17,5 +17,12 @@ namespace FDP_App.DTOs
         {
             return new LeaguesDetailDTO(l);
         }
+
+        public IEnumerable<TeamsDTO> GetAllTeamsAsDTO(IEnumerable<Team> t)
+        {
+            var teams = from x in t
+                        select new TeamsDTO(x);
+            return teams.AsEnumerable();
+        }
     }
 }

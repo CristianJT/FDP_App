@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Entities.Models;
 using Data.Services;
+using FDP_App.DTOs;
 
 namespace FDP_App.Controllers
 {
@@ -17,11 +18,13 @@ namespace FDP_App.Controllers
     public class TeamsController : ApiController
     {
         private readonly TeamService _teamService = new TeamService();
+        private readonly MapToDTO _asDto = new MapToDTO();
 
         [Route("")]
-        public IEnumerable<Team> GetTeams()
+        public IEnumerable<TeamsDTO> GetTeams()
         {
-            return _teamService.GetAll();
+            var teams = _teamService.GetAll();
+            return _asDto.GetAllTeamsAsDTO(teams);
         }
 
         [Route("{id}", Name = "GetTeamByIdRoute")]
