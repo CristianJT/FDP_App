@@ -55,6 +55,26 @@
     <Compile Include="Migrations\201505311815243_Initial.Designer.cs">
       <DependentUpon>201505311815243_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506031339042_Second.cs" />
+    <Compile Include="Migrations\201506031339042_Second.Designer.cs">
+      <DependentUpon>201506031339042_Second.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506031410019_addGameEntity.cs" />
+    <Compile Include="Migrations\201506031410019_addGameEntity.Designer.cs">
+      <DependentUpon>201506031410019_addGameEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506031526518_addMatchEntity.cs" />
+    <Compile Include="Migrations\201506031526518_addMatchEntity.Designer.cs">
+      <DependentUpon>201506031526518_addMatchEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506031908560_update.cs" />
+    <Compile Include="Migrations\201506031908560_update.Designer.cs">
+      <DependentUpon>201506031908560_update.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506041340326_update1.cs" />
+    <Compile Include="Migrations\201506041340326_update1.Designer.cs">
+      <DependentUpon>201506041340326_update1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BaseInterface.cs" />
@@ -64,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +96,21 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201505311815243_Initial.resx">
       <DependentUpon>201505311815243_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506031339042_Second.resx">
+      <DependentUpon>201506031339042_Second.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506031410019_addGameEntity.resx">
+      <DependentUpon>201506031410019_addGameEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506031526518_addMatchEntity.resx">
+      <DependentUpon>201506031526518_addMatchEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506031908560_update.resx">
+      <DependentUpon>201506031908560_update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506041340326_update1.resx">
+      <DependentUpon>201506041340326_update1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

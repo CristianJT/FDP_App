@@ -22,6 +22,7 @@ namespace Entities.Models
         public int RelegatedTeams { get; set; }
 
         public virtual ICollection<LeagueTeam> Teams { get; set; }
+        public virtual Fixture Fixture { get; set; }
 
     }
 

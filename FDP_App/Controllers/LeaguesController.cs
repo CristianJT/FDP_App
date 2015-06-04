@@ -54,11 +54,6 @@ namespace FDP_App.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != league.LeagueId)
-            {
-                return BadRequest();
-            }
-
             try
             {
                 _leagueService.Update(league, id);

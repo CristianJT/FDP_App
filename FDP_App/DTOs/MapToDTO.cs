@@ -24,5 +24,6 @@ namespace FDP_App.DTOs
                         select new TeamsDTO(x);
             return teams.AsEnumerable();
         }
+
     }
 }

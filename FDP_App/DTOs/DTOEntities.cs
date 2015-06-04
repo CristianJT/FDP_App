@@ -35,6 +35,10 @@ namespace FDP_App.DTOs
             this.LeagueId = l.LeagueId;
             this.Name = l.Name;
             this.Season = l.Season;
+            this.StartDate = l.StartDate;
+            this.FinishDate = l.FinishDate;
+            this.IsCurrent = l.IsCurrent;
+            this.Champion = l.Champion;
             this.RelegatedTeams = l.RelegatedTeams;
 
             List<TeamsLeagueDTO> teamList = new List<TeamsLeagueDTO>();
@@ -43,13 +47,20 @@ namespace FDP_App.DTOs
                 teamList.Add(new TeamsLeagueDTO(t));
             }
             this.Teams = teamList.ToArray();
+
+            this.Fixture = new FixtureLeagueDTO(l.Fixture);
         }
 
         public int LeagueId { get; set; }
         public string Name { get; set; }
         public int Season { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime FinishDate { get; set; }
+        public bool IsCurrent { get; set; }
+        public string Champion { get; set; }
         public int RelegatedTeams { get; set; }
         public TeamsLeagueDTO[] Teams { get; set; }
+        public FixtureLeagueDTO Fixture { get; set; }
     }
 
     public class TeamsLeagueDTO
@@ -96,5 +107,62 @@ namespace FDP_App.DTOs
         public string Stadium { get; set; }
         public string City { get; set; }
         public bool IsTopDivision { get; set; }
+    }
+
+    public class FixtureLeagueDTO
+    {
+        public FixtureLeagueDTO(Fixture f)
+        {
+            this.LeagueId = f.LeagueId;
+            this.TotalGames = f.TotalGames;
+            this.SpecialGame = f.SpecialGame;
+            List<GameDTO> gameList = new List<GameDTO>();
+            foreach (Game g in f.Games)
+            {
+                gameList.Add(new GameDTO(g));
+            }
+            this.Games = gameList.ToArray();
+        }
+        public int LeagueId { get; set; }
+        public int TotalGames { get; set; }
+        public int SpecialGame { get; set; }
+        public GameDTO[] Games { get; set; }
+    }
+
+    public class GameDTO
+    {
+        public GameDTO(Game g)
+        {
+            this.GameId = g.GameId;
+            this.IsSpecialGame = g.IsSpecialGame;
+            List<MatchDTO> matchList = new List<MatchDTO>();
+            foreach (Match m in g.Matches)
+            {
+                matchList.Add(new MatchDTO(m));
+            }
+            this.Matches = matchList.ToArray();
+        }
+
+        public int GameId { get; set; }
+        public bool IsSpecialGame { get; set; }
+        public MatchDTO[] Matches { get; set; }
+    }
+
+    public class MatchDTO
+    {
+        public MatchDTO(Match m)
+        {
+            this.MatchId = m.MatchId;
+            this.HomeTeam = m.HomeTeam;
+            this.AwayTeam = m.AwayTeam;
+            this.HomeResult = m.HomeResult;
+            this.AwayResult = m.AwayResult;
+        }
+
+        public int MatchId { get; set; }
+        public string HomeTeam { get; set; }
+        public string AwayTeam { get; set; }
+        public int HomeResult { get; set; }
+        public int AwayResult { get; set; }
     }
 }

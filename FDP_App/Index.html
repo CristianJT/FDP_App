@@ -31,9 +31,6 @@
                 <md-divider></md-divider>
 
                 <md-button layout-fill><div layout="row" style="margin-left:10px"><h3>Estadísticas</h3></div></md-button>
-                <md-list-item class="md-2-line" ng-repeat="item in navCtrl.equipos">
-                    <md-button layout-fill><div layout=row style="margin-left:50px">{{item.name}}</div></md-button>
-                </md-list-item>
                 <md-divider></md-divider>
                 <md-button ui-sref="nuevoTorneo" layout-fill><div layout="row" style="margin-left:10px"><h3>Nuevo Torneo</h3></div></md-button>
             </md-list>       
@@ -51,7 +48,7 @@
     </div>
 
 
-    <script src="Scripts/angular.min.js"></script>
+    <script src="Scripts/angular.js"></script>
     <script src="Scripts/angular-ui-router.min.js"></script>
     <script src="Scripts/angular-animate.min.js"></script>
     <script src="Scripts/angular-aria.min.js"></script>

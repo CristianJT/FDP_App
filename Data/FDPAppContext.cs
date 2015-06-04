@@ -15,6 +15,9 @@ namespace Data
         public DbSet<League> Leagues { get; set; }
         public DbSet<LeagueTeam> LeagueTeams { get; set; }
         public DbSet<Team> Teams { get; set; }
+        public DbSet<Fixture> Fixture { get; set; }
+        public DbSet<Game> Games { get; set; }
+        public DbSet<Match> Matches { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -32,6 +35,26 @@ namespace Data
 
             modelBuilder.Entity<LeagueTeam>()
                 .HasKey(lt => new { lt.LeagueId, lt.TeamId });
+
+            modelBuilder.Entity<Fixture>()
+                .HasKey(f => f.LeagueId)
+                .HasRequired(f => f.League)
+                .WithOptional(l => l.Fixture);
+
+            modelBuilder.Entity<Fixture>()
+                .HasMany<Game>(f => f.Games)
+                .WithRequired(g => g.Fixture)
+                .HasForeignKey(g => g.LeagueId);
+
+            modelBuilder.Entity<Game>()
+                .HasMany<Match>(g => g.Matches)
+                .WithRequired(m => m.Game)
+                .HasForeignKey(m => m.GameId);
+
+            modelBuilder.Entity<Match>()
+                .HasRequired(m => m.Game)
+                .WithMany(g => g.Matches)
+                .HasForeignKey(m => m.GameId);
 
             base.OnModelCreating(modelBuilder);
         }

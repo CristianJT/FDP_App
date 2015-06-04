@@ -72,7 +72,7 @@
                     </div>
                     <span flex></span>
                     <md-select flex="50" flex-sm="80" layout-padding layout-fill ng-model="nuevoCtrl.equiposSelec" placeholder="Seleccione Equipo" multiple>
-                        <md-checkbox ng-repeat="equipo in nuevoCtrl.equipos | filter: {isTopDivision:false} | orderBy: 'name'" ng-click="nuevoCtrl.seleccion(equipo.name)">{{equipo.nombre}}</md-checkbox>
+                        <md-checkbox ng-repeat="equipo in nuevoCtrl.equipos | filter: {isTopDivision:false} | orderBy: 'name'" ng-click="nuevoCtrl.seleccion(equipo.name)">{{equipo.name}}</md-checkbox>
                     </md-select>
                 </div>
             </div>

@@ -37,11 +37,11 @@
         this.equipos = teamsData.query();
     }]);
 
-    app.controller('TorneoNuevoController', ['$scope', '$location', 'leaguesData', 'teamsData', function ($scope, $location, leaguesData, teamsData) {
+    app.controller('TorneoNuevoController', ['$scope', '$location', 'leaguesData', 'teamsData', 'tempData', function ($scope, $location, leaguesData, teamsData, tempData) {
 
         this.torneos = leaguesData.query();
         this.equipos = teamsData.query();
-    
+        this.torneosTemp = tempData.getTorneos();
         /*Funcionalidad para el monthPicker*/
         $scope.open = function ($event, opened) {
             $event.preventDefault();
@@ -82,7 +82,7 @@
         };
 
         /*Función: Crear torneo*/
-        this.torneo = new leaguesData();     
+        this.torneo = new leaguesData()
 
         this.crearTorneo = function () {
             var lastId = 0;
@@ -91,16 +91,13 @@
             this.torneo.leagueId = lastId + 1;
             this.torneo.isCurrent = true;
             this.torneo.champion = null;
-
-            /*
-            this.torneo.fixture = {};
-            this.torneo.fixture.totalFechas = this.totalFechas;
-            this.torneo.fixture.fechaEspecialNumero = this.fechaEspecialNum;
-         
-            this.torneo.fixture.fechas = [];
-            */
             this.torneo.teams = [];
+            
+            this.torneo.fixture = {};
+            this.torneo.fixture.totalGames = this.totalFechas;
+            this.torneo.fixture.specialGame = this.fechaEspecialNum;
 
+            this.torneo.fixture.games = [];
             /*Recorro el array de equipos. Si un equipo es "ascendido" modifico atributo "esPrimera"*/
             /*Si "esPrimera" = true cargo el equipo al nuevo torneo*/
             for (i = 0; i < this.equipos.length; i++) {
@@ -112,9 +109,10 @@
                 }
             };
             
-            this.torneo.$save(function () { $location.path('/torneos/' + torneo.leagueId); });
-            
+            this.torneosTemp.push(this.torneo);
+            $location.path('/torneos/' + this.torneo.leagueId);
         };
+        
 
         /*Función: Resetear formulario*/
         this.reset = function() {
@@ -125,10 +123,10 @@
 
     }]);
 
-    app.controller('TorneoController', ['$scope', '$stateParams', 'leaguesData', '$mdDialog', '$mdSidenav', function ($scope, $stateParams, leaguesData, $mdDialog, $mdSidenav) {
+    app.controller('TorneoController', ['$scope', '$stateParams', 'leaguesData','tempData', '$mdDialog', '$mdSidenav', function ($scope, $stateParams, leaguesData, tempData, $mdDialog, $mdSidenav) {
 
-        $scope.torneo = leaguesData.get({id: $stateParams.id});
-        
+        $scope.torneo = tempData.getTorneosById($stateParams.id);
+       
         /*Partidos Sidenav*/
         $scope.open = function() {
             $mdSidenav('partidos').open()
@@ -176,24 +174,22 @@
         /*Función: cargar partidos por fecha*/
         function cargarPartido(ini, fin, aux, id, partido) {
                 var partido = {};
-                partido.id = id;
-                partido.resLocal = 0;
-                partido.resVisitante = 0;
+                partido.matchId = id;
                 
                 if (ini == fin) {
                     if ($scope.esLocalDistinto) {
-                        partido.local = $scope.equipoDistinto;
-                        partido.visitante = aux[ini];
+                        partido.homeTeam = $scope.equipoDistinto;
+                        partido.awayTeam = aux[ini];
                     } else {
-                        partido.local = aux[ini];
-                        partido.visitante = $scope.equipoDistinto;
+                        partido.homeTeam = aux[ini];
+                        partido.awayTeam = $scope.equipoDistinto;
                     }
                     if (aux[ini] != $scope.equipoPareja)
                         $scope.esLocalDistinto = !$scope.esLocalDistinto;
                 }
                 else {
-                    partido.local = aux[ini];
-                    partido.visitante = aux[fin];
+                    partido.homeTeam = aux[ini];
+                    partido.awayTeam = aux[fin];
                 }
                 return partido;
         };
@@ -204,12 +200,12 @@
             var aux2 = [];
             cargarArray(aux1, aux2);
             
-            for (i = 0; i < $scope.torneo.fixture.totalFechas; i++) {
+            for (i = 0; i < $scope.torneo.fixture.totalGames; i++) {
                 var fecha = {};
-                fecha.id = i + 1;
-                fecha.partidos = [];
+                fecha.gameId = i + 1;
+                fecha.matches = [];
 
-                if ($scope.torneo.fixture.fechaEspecialNumero != fecha.id) {
+                if ($scope.torneo.fixture.specialGame != fecha.gameId) {
 
                     //Recorro aux1
                     aux1Fin = aux1.length - 1;
@@ -228,7 +224,7 @@
                                 partido = cargarPartido(aux1Fin, aux1Inicio, aux1, partidoId, i);
                         }
 
-                        fecha.partidos.push(partido);
+                        fecha.matches.push(partido);
                         aux1Inicio++;
                         aux1Fin--;
                         partidoId++;
@@ -250,7 +246,7 @@
                                 partido = cargarPartido(aux2Inicio, aux2Fin, aux2, partidoId, i);
                         }
 
-                        fecha.partidos.push(partido);
+                        fecha.matches.push(partido);
                         aux2Inicio++;
                         aux2Fin--;
                         partidoId++;
@@ -269,24 +265,24 @@
                     if (i != posicionDistinto)
                         $scope.esLocalElegido = !$scope.esLocalElegido;
                 }
-   
-                $scope.torneo.fixture.fechas.push(fecha);
+                $scope.torneo.fixture.games.push(fecha);
             }
-
-
+            
+            $scope.torneo.$save();
         }
 
     }]);
 
-    app.controller('FixtureController', ['$stateParams', 'leaguesData', function ($stateParams, leaguesData) {
+    app.controller('FixtureController', ['$stateParams', 'tempData', function ($stateParams, tempData) {
 
-        //this.fixture = appData.getTorneosByIdFixture($stateParams.id);
-
+        this.fixture = tempData.getTorneosByIdFixture($stateParams.id);
+        console.log("asd");
     }]);
 
     app.controller('PosicionesController', ['$stateParams', 'leaguesData', function ($stateParams, leaguesData) {
 
         this.torneo = leaguesData.get({ id: $stateParams.id });
+        
         //this.equipos = appData.getTorneosByIdEquipos($stateParams.id);
 
         /*

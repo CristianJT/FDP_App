@@ -1,21 +1,22 @@
-﻿<div>
+﻿<div  ng-hide="torneo.fixture.games.length == 0">
     <tabs-page></tabs-page>
     <div><p>UN SLIDER CON NOVEDADES SOBRE EL TORNEO</p></div>
 </div>
-<!--
-     ng-hide="torneo.fixture.fechas.length == 0"
+
+    
 
 <div layout="column">
-    <form name="formCrearFixture" ng-show="torneo.fixture.fechas.length == 0" novalidate>
+    <form name="formCrearFixture" ng-show="torneo.fixture.games.length == 0" novalidate>
         <md-content layout="column" layout-padding>
             <p>El torneo actual no tiene partidos cargados. Cargar fixture</p>
             <md-divider></md-divider>
 
+            <!--EQUIPO DISTINTO-->
             <div layout="row" layout-padding>
                 <div flex="40" layout="row">
                     <label layout-fill layout-margin>Equipo Distinto:</label>
                     <md-select layout-fill layout-margin ng-model="equipoDistinto" placeholder="Seleccione Equipo" required>
-                        <md-option ng-value="equipo.nombre" ng-repeat="equipo in torneo.equipos | orderBy:'nombre'">{{equipo.nombre}}</md-option>
+                        <md-option ng-value="equipo.name" ng-repeat="equipo in torneo.teams | orderBy:'name'">{{equipo.name}}</md-option>
                     </md-select>
                 </div>
                 <span flex></span>
@@ -27,11 +28,12 @@
             </div>
             <md-divider></md-divider>
 
+            <!--EQUIPO PAREJA-->
             <div layout="row" layout-padding>
                 <div flex="40" layout="row">
                     <label layout-fill layout-margin>Equipo Pareja:</label>
                     <md-select layout-fill layout-margin ng-model="equipoPareja" placeholder="Seleccione Equipo" required>
-                        <md-option ng-value="equipo.nombre" ng-repeat="equipo in torneo.equipos | orderBy:'nombre' | filter: {nombre: '!' + equipoDistinto} ">{{equipo.nombre}}</md-option>
+                        <md-option ng-value="equipo.name" ng-repeat="equipo in torneo.teams | orderBy:'name' | filter: {name: '!' + equipoDistinto} ">{{equipo.name}}</md-option>
                     </md-select>
                 </div>
                 <span flex></span>
@@ -40,11 +42,12 @@
             </div>
             <md-divider></md-divider>
 
+            <!--EQUIPO SELECCIONADO-->
             <div layout="row" layout-padding>
                 <div flex="40" layout="row">
                     <label layout-fill layout-margin>Equipo Elegido:</label>
                     <md-select layout-fill layout-margin ng-model="equipoElegido" placeholder="Seleccione Equipo" required>
-                        <md-option ng-value="equipo.nombre" ng-repeat="equipo in torneo.equipos | orderBy:'nombre' | filter: {nombre: '!' + equipoDistinto}">{{equipo.nombre}}</md-option>
+                        <md-option ng-value="equipo.name" ng-repeat="equipo in torneo.teams| orderBy:'name' | filter: {name: '!' + equipoDistinto}">{{equipo.name}}</md-option>
                     </md-select>
                 </div>
                 <span flex></span>
@@ -56,12 +59,13 @@
             </div>
             <md-divider></md-divider>
 
+            <!--CARGAR PARTIDOS EQUIPO SELECCIONADO-->
             <div layout="row" layout-padding>
                 <div flex="40" layout="row">
                     <label layout-fill layout-margin>Partidos de {{equipoElegido}}:</label>
                     <md-select layout-fill layout-margin ng-model="partidosEquipo" placeholder="Seleccione Equipo" multiple>
-                        <md-checkbox ng-repeat="equipo in torneo.equipos | orderBy:'nombre' | filter: {nombre: '!' + equipoElegido}" ng-click="selection(equipo.nombre)">
-                            {{equipo.nombre}}
+                        <md-checkbox aria-label="Seleccion" ng-repeat="equipo in torneo.teams | orderBy:'name' | filter: {name: '!' + equipoElegido}" ng-click="selection(equipo.name)">
+                            {{equipo.name}}
                         </md-checkbox>
                     </md-select>
                 </div>
@@ -73,9 +77,10 @@
             </div>
             <md-divider></md-divider>
         </md-content>
-        <md-button class="md-raised md-primary" ng-click="armarFixture()" ng-disabled="partidosEquipo.length != torneo.equipos.length - 1">Crear Fixture</md-button>
+        <md-button class="md-raised md-primary" ng-click="armarFixture()" ng-disabled="partidosEquipo.length != torneo.teams.length - 1">Crear Fixture</md-button>
     </form>
 
+    <!--SIDENAV DE PARTIDOS DEL EQUIPO SELECCIONADO-->
     <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="partidos">
         <md-toolbar layout="column">
             <span flex></span>
@@ -91,6 +96,5 @@
         </md-content>
     </md-sidenav>
 </div>
-    
-   -->   
+ 
 
