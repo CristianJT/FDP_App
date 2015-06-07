@@ -2,7 +2,7 @@
 
 appService.factory('leaguesData', ['$resource', function ($resource) {
 
-    return $resource("api/leagues/:id", null, 
+    return $resource("/api/leagues/:id", null, 
         {
             'update': { method: 'PUT' }
         });
@@ -11,7 +11,7 @@ appService.factory('leaguesData', ['$resource', function ($resource) {
 
 appService.factory('teamsData', ['$resource', function ($resource) {
 
-    return $resource("api/teams");
+    return $resource("/api/teams");
 
 }]);
 

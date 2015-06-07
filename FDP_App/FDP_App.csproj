@@ -81,19 +81,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App\app.js" />
-    <Content Include="App\Services\appService.js" />
-    <Content Include="App\Views\Fixture.html" />
-    <Content Include="App\Views\Posiciones.html" />
-    <Content Include="App\Views\TabsPage.html" />
-    <Content Include="App\Views\Torneo.html" />
-    <Content Include="App\Views\TorneosNuevo.html" />
+    <Content Include="app\app.js" />
+    <Content Include="app\components\main\main.html" />
+    <Content Include="app\components\main\main.js" />
+    <Content Include="app\Services\appService.js" />
+    <Content Include="app\Views\Fixture.html" />
+    <Content Include="app\Views\Posiciones.html" />
+    <Content Include="app\Views\TabsPage.html" />
+    <Content Include="app\Views\Torneo.html" />
+    <Content Include="app\Views\TorneosNuevo.html" />
     <Content Include="Content\angular-material.css" />
     <Content Include="Content\angular-material.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Global.asax" />
-    <Content Include="Index.html" />
+    <Content Include="app\Index.html" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -105,6 +107,8 @@
     <Content Include="Scripts\angular-ui-router.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\router.es5.js" />
+    <Content Include="Scripts\router.es5.min.js" />
     <Content Include="Scripts\ui-bootstrap-tpls.js" />
     <Content Include="Scripts\ui-bootstrap-tpls.min.js" />
     <Content Include="Scripts\ui-bootstrap.js" />

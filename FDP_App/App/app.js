@@ -2,8 +2,24 @@
 (function () {
     
 
-    var app = angular.module('FDPApp', ['ui.router', 'ui.bootstrap', 'appService', 'ngMaterial']);
+    var app = angular.module('FDPApp', ['ngNewRouter', 'ui.bootstrap', 'appService', 'ngMaterial', 'FDPApp.main']);
 
+    app.controller('AppController', ['$router', AppController]);
+
+    function AppController($router) {
+        $router.config([
+            {
+                path: '/',
+                components: { 'mainPage': 'main' }
+            },
+            {
+                path: '/torneoNuevo',
+                components: { 'crearTorneoPage': '', 'crearFixturePage': ''  }
+            }
+        ]);
+    }
+
+    /*
     app.config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('nuevoTorneo', {
@@ -31,11 +47,11 @@
             })
         $urlRouterProvider.otherwise('/');
     });
-
-    app.controller('NavController', ['leaguesData', 'teamsData', function (leagueData, teamsData) {
+    */
+    /*app.controller('NavController', ['leaguesData', 'teamsData', function (leagueData, teamsData) {
         this.torneos = leagueData.query();
         this.equipos = teamsData.query();
-    }]);
+    }]);*/
 
     app.controller('TorneoNuevoController', ['$scope', '$location', 'leaguesData', 'teamsData', 'tempData', function ($scope, $location, leaguesData, teamsData, tempData) {
 
@@ -276,7 +292,7 @@
     app.controller('FixtureController', ['$stateParams', 'tempData', function ($stateParams, tempData) {
 
         this.fixture = tempData.getTorneosByIdFixture($stateParams.id);
-        console.log("asd");
+        
     }]);
 
     app.controller('PosicionesController', ['$stateParams', 'leaguesData', function ($stateParams, leaguesData) {

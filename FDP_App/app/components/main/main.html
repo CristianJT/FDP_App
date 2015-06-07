@@ -1,0 +1,37 @@
+﻿<md-sidenav class="md-sidenav-left md-whiteframe-z2 md-closed md-locked-open" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+    <md-toolbar class="md-tall md-hue-2"></md-toolbar>
+    <md-content flex md-scroll-y>
+        <md-list>
+            <md-button layout-fill><div layout="row" style="margin-left:10px"><h3>En Progreso</h3></div></md-button>
+            <md-list-item class="md-2-line" ng-repeat="item in main.torneos | filter: {isCurrent:true}">
+                <md-button ui-sref="torneo({id: item.leagueId})" layout-fill><div layout=row style="margin-left:50px">{{item.name}} {{item.season}}</div></md-button>
+            </md-list-item>
+            <md-divider></md-divider>
+
+            <md-button layout-fill><div layout="row" style="margin-left:10px"><h3>Anteriores</h3></div></md-button>
+            <md-list-item class="md-2-line" ng-repeat="item in main.torneos | filter: {isCurrent:false} | orderBy:'-finishDate'">
+                <md-button layout-fill><div layout=row style="margin-left:50px">{{item.name}} {{item.season}}</div></md-button>
+            </md-list-item>
+            <md-divider></md-divider>
+
+            <md-button layout-fill><div layout="row" style="margin-left:10px"><h3>Campeones</h3></div></md-button>
+            <md-list-item class="md-2-line" ng-repeat="item in main.torneos | filter: {isCurrent:false} | orderBy:'-finishDate'">
+                <md-button layout-fill><div layout=row style="margin-left:50px">{{item.champion}}</div></md-button>
+            </md-list-item>
+            <md-divider></md-divider>
+
+            <md-button layout-fill><div layout="row" style="margin-left:10px"><h3>Estadísticas</h3></div></md-button>
+            <md-divider></md-divider>
+            <md-button ui-sref="nuevoTorneo" layout-fill><div layout="row" style="margin-left:10px"><h3>Nuevo Torneo</h3></div></md-button>
+        </md-list>
+    </md-content>
+</md-sidenav>
+<div layout="column" flex>
+    <md-toolbar class="md-tall md-hue-2">
+        <span flex></span>
+        <h1 class="md-toolbar-tools-bottom" layout-margin style="margin-left:80px"><span class="md-flex">Fútbol de Primera</span></h1>
+    </md-toolbar>
+    <md-content flex md-scroll-y ui-view>
+
+    </md-content>
+</div>
