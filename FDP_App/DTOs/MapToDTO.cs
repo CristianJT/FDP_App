@@ -25,9 +25,9 @@ namespace FDP_App.DTOs
             return teams.AsEnumerable();
         }
 
-        public TeamsDTO GetTeamAsDTO(Team t)
+        public TeamsDetailDTO GetTeamAsDTO(Team t)
         {
-            return new TeamsDTO(t);
+            return new TeamsDetailDTO(t);
         }
 
     }

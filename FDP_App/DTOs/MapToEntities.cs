@@ -64,5 +64,14 @@ namespace FDP_App.DTOs
                 league.Fixture.Games.Add(game);
             }
         }
+
+        public void TeamDTOtoEntity(ref Team team, TeamsDTO teamDTO)
+        {
+            team.TeamId = teamDTO.TeamId;
+            team.Name = teamDTO.Name;
+            team.Stadium = teamDTO.Stadium;
+            team.City = teamDTO.City;
+            team.IsTopDivision = teamDTO.IsTopDivision;
+        }
     }
 }

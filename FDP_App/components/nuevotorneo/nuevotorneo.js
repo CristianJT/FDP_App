@@ -1,5 +1,5 @@
 ﻿(function () {
-    'use strict';
+    //'use strict';
 
     angular.module('FDPApp.nuevoTorneo', [])
         .controller('NuevotorneoController', ['leaguesData', 'teamsData', '$mdSidenav', '$location' , NuevotorneoController]);

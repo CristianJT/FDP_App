@@ -17,8 +17,10 @@ namespace FDP_App.Controllers
     [RoutePrefix("api/teams")]
     public class TeamsController : ApiController
     {
+        /* Iniciar Servicios */
         private readonly TeamService _teamService = new TeamService();
         private readonly MapToDTO _asDto = new MapToDTO();
+        private readonly MapToEntities _asEntity = new MapToEntities();
 
         /* GET: api/teams */
         [Route("")]
@@ -42,6 +44,7 @@ namespace FDP_App.Controllers
             return Ok(_asDto.GetTeamAsDTO(team));
         }
 
+        /* PUT: api/teams/{id} */
         [Route("{id}")]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutTeam(int id, Team team)
@@ -75,19 +78,25 @@ namespace FDP_App.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        /* POST: api/teams */
         [Route("")]
-        [ResponseType(typeof(Team))]
-        public IHttpActionResult PostTeam(Team team)
+        [ResponseType(typeof(TeamsDTO))]
+        public IHttpActionResult PostTeam(TeamsDTO teamDTO)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            Team team = new Team();
+            _asEntity.TeamDTOtoEntity(ref team, teamDTO);
             _teamService.Add(team);
-            return CreatedAtRoute("GetTeamById", new { id = team.TeamId }, team);
+
+            teamDTO.TeamId = team.TeamId;
+            return CreatedAtRoute("GetTeamById", new { id = team.TeamId }, teamDTO);
         }
 
+        /* DELETE: api/teams/{id} */
         [Route("{id}")]
         [ResponseType(typeof(Team))]
         public IHttpActionResult DeleteTeam(int id)
