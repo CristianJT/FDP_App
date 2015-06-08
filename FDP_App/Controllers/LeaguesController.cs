@@ -23,7 +23,7 @@ namespace FDP_App.Controllers
         /* GET: api/leagues */
         [Route("")]
         [HttpGet]
-        public IEnumerable<LeaguesDTO> GetLeagues()
+        public IEnumerable<LeaguesDetailDTO> GetLeagues()
         {
             var leagues = _leagueService.GetAll();
             return _asDto.GetAllLeaguesAsDTO(leagues);

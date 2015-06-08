@@ -1,0 +1,181 @@
+﻿
+<div layout="row" layout-margin layout-wrap layout-align ="center center" ng-hide="nuevotorneo.confirmado == true">
+    <div flex="60" flex-sm="90">
+        <form layout="column" name="formCrearTorneo" novalidate>
+            
+            <div>
+                <!--TORNEO/TEMPORADA-->
+                <div layout="row" layout-sm="column" layout-padding>
+                    <md-input-container flex>
+                        <label>Torneo</label>
+                        <input ng-model="nuevotorneo.torneo.name" required name="nombre"/>
+                    </md-input-container>
+                    <md-input-container flex>
+                        <label>Temporada</label>
+                        <input type="number" ng-model="nuevotorneo.torneo.season" min="2010" max="2050" required/>
+                    </md-input-container>
+                </div>
+               
+                <!--FECHA INICIO/FIN-->
+                <div layout="row" layout-sm="column" layout-align="space-between center" layout-padding>
+                    <div flex="40" flex-sm="90" layout="row">
+                        <input type="date" class="form-control" ng-model="nuevotorneo.torneo.startDate" placeholder="FECHA INICIO"/> <!-- datepicker-popup="dd - MM - yyyy"  is-open="opened1" show-button-bar="false"--> 
+                        <!--<button type="button" class="btn btn-default" ng-click="nuevotorneo.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>-->
+                    </div>
+                    <div flex="40" flex-sm="90" layout="row">
+                        <input type="date" class="form-control" ng-model="nuevotorneo.torneo.finishDate" placeholder="FECHA FINALIZACIÓN" min="{{nuevotorneo.torneo.startDate}}"/> <!-- datepicker-popup="dd - MM - yyyy" is-open="opened2" show-button-bar="false" min-date="nuevotorneo.torneo.startDate" --> 
+                        <!--<button type="button" class="btn btn-default" ng-click="nuevotorneo.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>-->
+                    </div>
+                </div>
+            </div>
+            <span layout-padding flex></span>
+           
+             <div>
+                <h2>Fixture</h2>
+                <md-divider></md-divider>
+
+                 <!--TOTAL FECHAS/FECHA ESPECIAL/NÚMERO FECHA ESPECIAL-->
+                <div layout="row" layout-sm="column"  layout-padding>
+                    <md-input-container flex>
+                        <label>Cantidad de Fechas</label>
+                        <input type="number" ng-model="nuevotorneo.totalFechas" ng-change="nuevotorneo.cantidadFechasEquipos()" min="{{nuevotorneo.totalEquiposPrimera - 1}}" max="40" required />
+                    </md-input-container>
+                    <div flex layout="column">
+                        <span flex></span>
+                        <md-checkbox ng-change="nuevotorneo.cantidadFechasEquipos()" ng-model="nuevotorneo.fechaEspecial" >Fecha especial</md-checkbox>
+                        <span flex></span>
+                    </div>
+                    <md-input-container ng-show="nuevotorneo.fechaEspecial && nuevotorneo.totalFechas" flex >
+                        <label>Número de fecha</label>
+                        <input type="number" ng-model="nuevotorneo.fechaEspecialNum" min="1" max="{{nuevotorneo.totalFechas}}" />
+                    </md-input-container>
+                </div>
+            </div>
+            <span layout-padding flex></span>
+
+            <!--EQUIPOS-->
+            <div>
+                <h2>Equipos</h2>
+                <md-divider></md-divider>
+                <div layout="row" layout-padding>
+                    <md-input-container flex="50" flex-sm="100">
+                        <label>Descensos</label>
+                        <input type="number" ng-model="nuevotorneo.torneo.relegatedTeams" min="0" max="10" />
+                    </md-input-container>
+                </div>  
+                <div layout="row" layout-padding ng-show="nuevotorneo.totalFechas">
+                    <div><b layout-padding>Número de Equipos:</b>{{nuevotorneo.totalEquipos}}</div>
+                </div>
+                <div ng-show="nuevotorneo.totalEquipos > nuevotorneo.totalEquiposPrimera" layout="row" layout-sm="column" layout-padding>
+                    <div>
+                        <md-checkbox ng-disabled="true" ng-checked="nuevotorneo.totalEquiposAscendidos == nuevotorneo.equiposSelec.length"><b> Equipos ascendidos:</b> {{nuevotorneo.totalEquiposAscendidos}}</md-checkbox>
+                    </div>
+                    <span flex></span>
+                    <md-select flex="50" flex-sm="80" layout-padding layout-fill ng-model="nuevotorneo.equiposSelec" placeholder="Seleccione Equipo" multiple>
+                        <md-checkbox ng-repeat="equipo in nuevotorneo.equipos | filter: {isTopDivision:false} | orderBy: 'name'" ng-click="nuevotorneo.seleccion(equipo.name)">{{equipo.name}}</md-checkbox>
+                    </md-select>
+                </div>
+            </div>
+            <span layout-padding flex></span>    
+            <div layout="row" layout-padding>
+                <md-button ng-click="nuevotorneo.reset()" style="margin-right: 20px">Limpiar</md-button>
+                <md-button ng-click="nuevotorneo.confirmarTorneo()" ng-disabled="formCrearTorneo.$invalid" class="md-raised md-primary">Confirmar</md-button>
+            </div>
+        </form>      
+    </div>
+</div>
+
+<div layout="column" ng-show="nuevotorneo.confirmado == true">
+<form name="formCrearFixture" novalidate>
+    <md-content layout="column" layout-padding>
+        <p class="text-center">Crear fixture</p>
+        <md-divider></md-divider>
+
+        <!--EQUIPO DISTINTO-->
+        <div layout="row" layout-padding>
+            <div flex="40" layout="row">
+                <label layout-fill layout-margin>Equipo Distinto:</label>
+                <md-select layout-fill layout-margin ng-model="nuevotorneo.equipoDistinto" placeholder="Seleccione Equipo" required>
+                    <md-option ng-value="equipo.name" ng-repeat="equipo in nuevotorneo.torneo.teams | orderBy:'name'">{{equipo.name}}</md-option>
+                </md-select>
+            </div>
+            <span flex></span>
+            <div ng-show="nuevotorneo.equipoDistinto" flex="50" layout="row">
+                <div flex="50"><label>Equipo:</label> {{nuevotorneo.equipoDistinto}}</div>
+                <md-checkbox flex="40" layout-fill layout-margin ng-model="nuevotorneo.esLocalDistinto" aria-label="Local" ng-true-value="'Local'" ng-false-value="'Visitante'"><label>1º fecha:</label><span ng-show="nuevotorneo.esLocalDistinto == null"> Visitante</span><span ng-hide="nuevotorneo.esLocalDistinto == null"> {{nuevotorneo.esLocalDistinto}}</span></md-checkbox>
+            </div>
+            <span flex></span>
+        </div>
+        <md-divider></md-divider>
+
+        <!--EQUIPO PAREJA-->
+        <div layout="row" layout-padding>
+            <div flex="40" layout="row">
+                <label layout-fill layout-margin>Equipo Pareja:</label>
+                <md-select layout-fill layout-margin ng-model="nuevotorneo.equipoPareja" placeholder="Seleccione Equipo" required>
+                    <md-option ng-value="equipo.name" ng-repeat="equipo in nuevotorneo.torneo.teams | orderBy:'name' | filter: {name: '!' + nuevotorneo.equipoDistinto} ">{{equipo.name}}</md-option>
+                </md-select>
+            </div>
+            <span flex></span>
+            <div ng-show="nuevotorneo.equipoPareja" flex="50"><label>Equipo:</label> {{nuevotorneo.equipoPareja}}</div>
+            <span flex></span>
+        </div>
+        <md-divider></md-divider>
+
+        <!--EQUIPO SELECCIONADO-->
+        <div layout="row" layout-padding>
+            <div flex="40" layout="row">
+                <label layout-fill layout-margin>Equipo Elegido:</label>
+                <md-select layout-fill layout-margin ng-model="nuevotorneo.equipoElegido" placeholder="Seleccione Equipo" required>
+                    <md-option ng-value="equipo.name" ng-repeat="equipo in nuevotorneo.torneo.teams| orderBy:'name' | filter: {name: '!' + nuevotorneo.equipoDistinto}">{{equipo.name}}</md-option>
+                </md-select>
+            </div>
+            <span flex></span>
+            <div ng-show="nuevotorneo.equipoElegido" flex="50" layout="row">
+                <div flex="50"><label>Equipo:</label> {{nuevotorneo.equipoElegido}}</div>
+                <md-checkbox flex="40" layout-fill layout-margin ng-model="nuevotorneo.esLocalElegido" aria-label="Local" ng-true-value="'Local'" ng-false-value="'Visitante'"><label>1º fecha:</label><span ng-show="nuevotorneo.esLocalElegido == null"> Visitante</span><span ng-hide="nuevotorneo.esLocalElegido == null"> {{nuevotorneo.esLocalElegido}}</span></md-checkbox>
+            </div>
+            <span flex></span>
+        </div>
+        <md-divider></md-divider>
+
+        <!--CARGAR PARTIDOS EQUIPO SELECCIONADO-->
+        <div layout="row" layout-padding>
+            <div flex="40" layout="row">
+                <label layout-fill layout-margin>Partidos de {{nuevotorneo.equipoElegido}}:</label>
+                <md-select layout-fill layout-margin ng-model="nuevotorneo.partidosEquipo" placeholder="Seleccione Equipo" multiple>
+                    <md-checkbox aria-label="Seleccion" ng-repeat="equipo in nuevotorneo.torneo.teams | orderBy:'name' | filter: {name: '!' + nuevotorneo.equipoElegido}" ng-click="nuevotorneo.selection(equipo.name)">
+                        {{equipo.name}}
+                    </md-checkbox>
+                </md-select>
+            </div>
+            <span flex></span>
+            <div ng-show="nuevotorneo.partidosEquipo.length > 0" flex="50">
+                <md-button class="md-raised" ng-click="nuevotorneo.open()">Ver partidos</md-button>
+            </div>
+            <span flex></span>
+        </div>
+        <md-divider></md-divider>
+    </md-content>
+    <md-button class="md-raised md-primary" ng-click="nuevotorneo.armarFixture()" ng-disabled="nuevotorneo.partidosEquipo.length != nuevotorneo.torneo.teams.length - 1">Crear Fixture</md-button>
+</form>
+
+<!--SIDENAV DE PARTIDOS DEL EQUIPO SELECCIONADO-->
+<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="partidos">
+    <md-toolbar layout="column">
+        <span flex></span>
+        <div layout="row" layout-align="center center">{{nuevotorneo.equipoElegido | uppercase}}</div>
+        <span flex></span>
+    </md-toolbar>
+    <md-content>
+        <md-list-item ng-repeat="partido in nuevotorneo.partidosEquipo">
+            <div layout-padding layout-margin><label>{{$index + 1 + 'º' + ' FECHA:'}}</label>  {{partido}}</div>
+            <md-divider></md-divider>
+        </md-list-item>
+        <md-button ng-click="nuevotorneo.close()">Cerrar</md-button>
+    </md-content>
+</md-sidenav>
+</div>
+
+
+

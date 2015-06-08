@@ -82,20 +82,24 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
-    <Content Include="app\components\main\main.html" />
-    <Content Include="app\components\main\main.js" />
+    <Content Include="components\fixture\fixture.js" />
+    <Content Include="components\main\main.html" />
+    <Content Include="components\main\main.js" />
+    <Content Include="components\nuevotorneo\nuevotorneo.js" />
     <Content Include="app\Services\appService.js" />
-    <Content Include="app\Views\Fixture.html" />
-    <Content Include="app\Views\Posiciones.html" />
+    <Content Include="components\fixture\fixture.html" />
+    <Content Include="components\posiciones\posiciones.html" />
     <Content Include="app\Views\TabsPage.html" />
-    <Content Include="app\Views\Torneo.html" />
-    <Content Include="app\Views\TorneosNuevo.html" />
+    <Content Include="components\nuevotorneo\nuevotorneo.html" />
+    <Content Include="components\posiciones\posiciones.js" />
+    <Content Include="components\torneo\torneo.html" />
+    <Content Include="components\torneo\torneo.js" />
     <Content Include="Content\angular-material.css" />
     <Content Include="Content\angular-material.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Global.asax" />
-    <Content Include="app\Index.html" />
+    <Content Include="Index.html" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -104,7 +108,6 @@
     <Content Include="Scripts\angular-material.min.js" />
     <Content Include="Scripts\angular-resource.js" />
     <Content Include="Scripts\angular-resource.min.js" />
-    <Content Include="Scripts\angular-ui-router.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\router.es5.js" />
