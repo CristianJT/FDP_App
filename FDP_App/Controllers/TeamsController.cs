@@ -20,6 +20,7 @@ namespace FDP_App.Controllers
         private readonly TeamService _teamService = new TeamService();
         private readonly MapToDTO _asDto = new MapToDTO();
 
+        /* GET: api/teams */
         [Route("")]
         public IEnumerable<TeamsDTO> GetTeams()
         {
@@ -27,8 +28,9 @@ namespace FDP_App.Controllers
             return _asDto.GetAllTeamsAsDTO(teams);
         }
 
+        /* GET: api/teams/{id} */
         [Route("{id}", Name = "GetTeamByIdRoute")]
-        [ResponseType(typeof(Team))]
+        [ResponseType(typeof(TeamsDetailDTO))]
         public IHttpActionResult GetTeam(int id)
         {
             Team team = _teamService.GetById(id);
@@ -37,7 +39,7 @@ namespace FDP_App.Controllers
                 return NotFound();
             }
 
-            return Ok(team);
+            return Ok(_asDto.GetTeamAsDTO(team));
         }
 
         [Route("{id}")]

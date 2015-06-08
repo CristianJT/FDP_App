@@ -2,10 +2,10 @@
     'use strict';
 
     angular.module('FDPApp.fixture', [])
-        .controller('FixtureController', ['$routeParams', 'tempData', FixtureController]);
+        .controller('FixtureController', ['$routeParams', 'leaguesData', FixtureController]);
 
-    function FixtureController($routeParams, tempData) {
+    function FixtureController($routeParams, leaguesData) {
         var vm = this;
-        vm.fixtureTorneo = tempData.getTorneosByIdFixture($routeParams.id)
+        vm.torneo = leaguesData.get({ id: $routeParams.id });
     }
 })();

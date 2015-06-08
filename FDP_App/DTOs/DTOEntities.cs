@@ -27,70 +27,6 @@ namespace FDP_App.DTOs
         public string Champion { get; set; }
         public int RelegatedTeams { get; set; }
     }
-
-    public class LeaguesDetailDTO
-    {
-        public LeaguesDetailDTO(League l)
-        {
-            this.LeagueId = l.LeagueId;
-            this.Name = l.Name;
-            this.Season = l.Season;
-            this.StartDate = l.StartDate;
-            this.FinishDate = l.FinishDate;
-            this.IsCurrent = l.IsCurrent;
-            this.Champion = l.Champion;
-            this.RelegatedTeams = l.RelegatedTeams;
-
-            List<TeamsLeagueDTO> teamList = new List<TeamsLeagueDTO>();
-            foreach (LeagueTeam t in l.Teams)
-            {
-                teamList.Add(new TeamsLeagueDTO(t));
-            }
-            this.Teams = teamList.ToArray();
-
-            this.Fixture = new FixtureLeagueDTO(l.Fixture);
-        }
-
-        public int LeagueId { get; set; }
-        public string Name { get; set; }
-        public int Season { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime FinishDate { get; set; }
-        public bool IsCurrent { get; set; }
-        public string Champion { get; set; }
-        public int RelegatedTeams { get; set; }
-        public TeamsLeagueDTO[] Teams { get; set; }
-        public FixtureLeagueDTO Fixture { get; set; }
-    }
-
-    public class TeamsLeagueDTO
-    {
-        public TeamsLeagueDTO(LeagueTeam tl)
-        {
-            this.TeamId = tl.TeamId;
-            this.Name = tl.Team.Name;
-            this.Points = tl.Points;
-            this.Played = tl.Played;
-            this.Won = tl.Won;
-            this.Draws = tl.Draws;
-            this.Lost = tl.Lost;
-            this.GoalsFor = tl.GoalsFor;
-            this.GoalsAgainst = tl.GoalsAgainst;
-            this.GoalDifference = tl.GoalDifference;
-        }
-
-        public int TeamId { get; set; }
-        public string Name { get; set; }
-        public int Points { get; set; }
-        public int Played { get; set; }
-        public int Won { get; set; }
-        public int Draws { get; set; }
-        public int Lost { get; set; }
-        public int GoalsFor { get; set; }
-        public int GoalsAgainst { get; set; }
-        public int GoalDifference { get; set; }
-    }
-
     public class TeamsDTO
     {
         public TeamsDTO(Team t)
@@ -109,19 +45,93 @@ namespace FDP_App.DTOs
         public bool IsTopDivision { get; set; }
     }
 
+    public class LeaguesDetailDTO
+    {
+        public LeaguesDetailDTO(League l)
+        {
+            if (l != null)
+            {
+                this.LeagueId = l.LeagueId;
+                this.Name = l.Name;
+                this.Season = l.Season;
+                this.StartDate = l.StartDate;
+                this.FinishDate = l.FinishDate;
+                this.IsCurrent = l.IsCurrent;
+                this.Champion = l.Champion;
+                this.RelegatedTeams = l.RelegatedTeams;
+
+                List<TeamsLeagueDTO> teamList = new List<TeamsLeagueDTO>();
+                foreach (LeagueTeam t in l.Teams)
+                {
+                    teamList.Add(new TeamsLeagueDTO(t));
+                }
+                this.Teams = teamList.ToArray();
+
+                this.Fixture = new FixtureLeagueDTO(l.Fixture);
+            }
+        }
+
+        public int LeagueId { get; set; }
+        public string Name { get; set; }
+        public int Season { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime FinishDate { get; set; }
+        public bool IsCurrent { get; set; }
+        public string Champion { get; set; }
+        public int RelegatedTeams { get; set; }
+        public TeamsLeagueDTO[] Teams { get; set; }
+        public FixtureLeagueDTO Fixture { get; set; }
+    }
+
+    public class TeamsLeagueDTO
+    {
+        public TeamsLeagueDTO(LeagueTeam tl)
+        {
+            if (tl != null)
+            {
+                this.TeamId = tl.TeamId;
+                this.LeagueId = tl.LeagueId;
+                this.Name = tl.Team.Name;
+                this.Points = tl.Points;
+                this.Played = tl.Played;
+                this.Won = tl.Won;
+                this.Draws = tl.Draws;
+                this.Lost = tl.Lost;
+                this.GoalsFor = tl.GoalsFor;
+                this.GoalsAgainst = tl.GoalsAgainst;
+                this.GoalDifference = tl.GoalDifference;
+            }
+        }
+
+        public int TeamId { get; set; }
+        public int LeagueId { get; set; }
+        public string Name { get; set; }
+        public int Points { get; set; }
+        public int Played { get; set; }
+        public int Won { get; set; }
+        public int Draws { get; set; }
+        public int Lost { get; set; }
+        public int GoalsFor { get; set; }
+        public int GoalsAgainst { get; set; }
+        public int GoalDifference { get; set; }
+    }
+
     public class FixtureLeagueDTO
     {
         public FixtureLeagueDTO(Fixture f)
         {
-            this.LeagueId = f.LeagueId;
-            this.TotalGames = f.TotalGames;
-            this.SpecialGame = f.SpecialGame;
-            List<GameDTO> gameList = new List<GameDTO>();
-            foreach (Game g in f.Games)
+            if (f != null)
             {
-                gameList.Add(new GameDTO(g));
+                this.LeagueId = f.LeagueId;
+                this.TotalGames = f.TotalGames;
+                this.SpecialGame = f.SpecialGame;
+                List<GameDTO> gameList = new List<GameDTO>();
+                foreach (Game g in f.Games)
+                {
+                    gameList.Add(new GameDTO(g));
+                }
+                this.Games = gameList.ToArray();
             }
-            this.Games = gameList.ToArray();
         }
         public int LeagueId { get; set; }
         public int TotalGames { get; set; }
@@ -133,17 +143,22 @@ namespace FDP_App.DTOs
     {
         public GameDTO(Game g)
         {
-            this.GameId = g.GameId;
-            this.IsSpecialGame = g.IsSpecialGame;
-            List<MatchDTO> matchList = new List<MatchDTO>();
-            foreach (Match m in g.Matches)
+            if (g != null)
             {
-                matchList.Add(new MatchDTO(m));
+                this.GameId = g.GameId;
+                this.LeagueId = g.LeagueId;
+                this.IsSpecialGame = g.IsSpecialGame;
+                List<MatchDTO> matchList = new List<MatchDTO>();
+                foreach (Match m in g.Matches)
+                {
+                    matchList.Add(new MatchDTO(m));
+                }
+                this.Matches = matchList.ToArray();
             }
-            this.Matches = matchList.ToArray();
         }
 
         public int GameId { get; set; }
+        public int LeagueId { get; set; }
         public bool IsSpecialGame { get; set; }
         public MatchDTO[] Matches { get; set; }
     }
@@ -152,17 +167,58 @@ namespace FDP_App.DTOs
     {
         public MatchDTO(Match m)
         {
-            this.MatchId = m.MatchId;
-            this.HomeTeam = m.HomeTeam;
-            this.AwayTeam = m.AwayTeam;
-            this.HomeResult = m.HomeResult;
-            this.AwayResult = m.AwayResult;
+            if (m != null)
+            {
+                this.MatchId = m.MatchId;
+                this.GameId = m.GameId;
+                this.HomeTeam = m.HomeTeam;
+                this.AwayTeam = m.AwayTeam;
+                this.HomeResult = m.HomeResult;
+                this.AwayResult = m.AwayResult;
+            }
         }
 
         public int MatchId { get; set; }
+        public int GameId { get; set; }
         public string HomeTeam { get; set; }
         public string AwayTeam { get; set; }
         public int HomeResult { get; set; }
         public int AwayResult { get; set; }
+    }
+
+    public class TeamsDetailDTO
+    {
+        public TeamsDetailDTO(Team t)
+        {
+            this.TeamId = t.TeamId;
+            this.Name = t.Name;
+            this.Stadium = t.Stadium;
+            this.City = t.City;
+            this.IsTopDivision = t.IsTopDivision;
+        }
+        public int TeamId { get; set; }
+        public string Name { get; set; }
+        public string Stadium { get; set; }
+        public string City { get; set; }
+        public bool IsTopDivision { get; set; }
+        public LeaguesTeamDTO[] Leagues { get; set; }
+    }
+
+    public class LeaguesTeamDTO
+    {
+        public LeaguesTeamDTO(LeagueTeam lt)
+        {
+            this.LeagueId = lt.LeagueId;
+            this.TeamId = lt.TeamId;
+            this.Name = lt.League.Name;
+            this.Played = lt.Played;
+            this.Points = lt.Points;
+        }
+
+        public int TeamId { get; set; }
+        public int LeagueId { get; set; }
+        public string Name { get; set; }
+        public int Points { get; set; }
+        public int Played { get; set; }
     }
 }

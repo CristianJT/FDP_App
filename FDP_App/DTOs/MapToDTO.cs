@@ -6,10 +6,10 @@ namespace FDP_App.DTOs
 {
     public class MapToDTO
     {
-        public IEnumerable<LeaguesDetailDTO> GetAllLeaguesAsDTO(IEnumerable<League> l)
+        public IEnumerable<LeaguesDTO> GetAllLeaguesAsDTO(IEnumerable<League> l)
         {
             var leagues = from x in l
-                          select new LeaguesDetailDTO(x);
+                          select new LeaguesDTO(x);
             return leagues.AsEnumerable();
         }
 
@@ -23,6 +23,11 @@ namespace FDP_App.DTOs
             var teams = from x in t
                         select new TeamsDTO(x);
             return teams.AsEnumerable();
+        }
+
+        public TeamsDTO GetTeamAsDTO(Team t)
+        {
+            return new TeamsDTO(t);
         }
 
     }

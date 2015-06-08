@@ -1,17 +1,18 @@
 ﻿(function () {
-    //'use strict';
+    'use strict';
 
     angular.module('FDPApp.nuevoTorneo', [])
-        .controller('NuevotorneoController', ['leaguesData', 'teamsData', '$mdSidenav', NuevotorneoController]);
+        .controller('NuevotorneoController', ['leaguesData', 'teamsData', '$mdSidenav', '$location' , NuevotorneoController]);
 
-    function NuevotorneoController(leaguesData, teamsData, $mdSidenav) {
+    function NuevotorneoController(leaguesData, teamsData, $mdSidenav, $location) {
 
         var vm = this;
 
         /*Obtener datos de 'appService'*/
-        vm.torneos = leaguesData.query();
         vm.equipos = teamsData.query();
    
+        /* --- DATOS DEL TORNEO --- */
+
         /*Array: Cargar equipos ascendidos*/
         vm.equiposSelec = [];
         vm.seleccion = function (nombreEquipo) {
@@ -44,15 +45,12 @@
             vm.totalEquiposAscendidos = vm.totalEquipos - vm.totalEquiposPrimera;
         };
 
-        /*Función: Crear torneo*/
+        /*Función: Confirmar datos torneo*/
         vm.torneo = new leaguesData()
         vm.confirmado = false;
 
         vm.confirmarTorneo = function () {
-            var lastId = 0;
-            if (vm.torneos.length != 0)
-                lastId = vm.torneos[vm.torneos.length - 1].leagueId;
-            vm.torneo.leagueId = lastId + 1;
+
             vm.torneo.isCurrent = true;
             vm.torneo.champion = null;
             vm.torneo.teams = [];
@@ -68,6 +66,7 @@
             for (i = 0; i < vm.equipos.length; i++) {
                 if (vm.equiposSelec.indexOf(vm.equipos[i].name) > -1) {
                     vm.equipos[i].isTopDivision = true;
+                    //modeificar la division del equipo con PUT
                 }
                 if (vm.equipos[i].isTopDivision) {
                     vm.torneo.teams.push(vm.equipos[i]);
@@ -227,7 +226,7 @@
                 vm.torneo.fixture.games.push(fecha);
             }
 
-            vm.torneo.$save();
+            vm.torneo.$save(function () { $location.path("/torneo/" + vm.torneo.leagueId); });
         }
 
     }

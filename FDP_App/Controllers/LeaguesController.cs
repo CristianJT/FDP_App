@@ -17,13 +17,15 @@ namespace FDP_App.Controllers
     [RoutePrefix("api/leagues")]
     public class LeaguesController : ApiController
     {
+        /* Iniciar Servicios */
         private readonly LeagueService _leagueService = new LeagueService();
         private readonly MapToDTO _asDto = new MapToDTO();
+        private readonly MapToEntities _asEntity = new MapToEntities();
 
         /* GET: api/leagues */
         [Route("")]
         [HttpGet]
-        public IEnumerable<LeaguesDetailDTO> GetLeagues()
+        public IEnumerable<LeaguesDTO> GetLeagues()
         {
             var leagues = _leagueService.GetAll();
             return _asDto.GetAllLeaguesAsDTO(leagues);
@@ -76,16 +78,20 @@ namespace FDP_App.Controllers
         /* POST: api/leagues */
         [Route("")]
         [HttpPost]
-        [ResponseType(typeof(League))]
-        public IHttpActionResult PostLeague(League league)
+        [ResponseType(typeof(LeaguesDetailDTO))]
+        public IHttpActionResult PostLeague(LeaguesDetailDTO leagueDTO)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            League league = new League();
+            _asEntity.LeagueDTOtoEntity(ref league, leagueDTO);
             _leagueService.Add(league);
-            return CreatedAtRoute("GetLeagueByIdRoute", new { id = league.LeagueId }, league);
+
+            leagueDTO.LeagueId = league.LeagueId;
+            return CreatedAtRoute("GetLeagueByIdRoute", new { id = league.LeagueId }, leagueDTO);
         }
 
         /* DELETE: api/leagues/{id} */
@@ -103,6 +109,7 @@ namespace FDP_App.Controllers
             _leagueService.Delete(id);
             return Ok(_asDto.GetLeagueAsDTO(league));
         }
+
 
     }
 }

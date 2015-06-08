@@ -2,13 +2,13 @@
     'use strict';
 
     angular.module('FDPApp.posiciones', [])
-        .controller('PosicionesController', ['$routeParams', 'tempData', PosicionesController]);
+        .controller('PosicionesController', ['$routeParams', 'leaguesData', PosicionesController]);
 
-    function PosicionesController($routeParams, tempData) {
+    function PosicionesController($routeParams, leaguesData) {
         var vm = this;
-        vm.equipos = tempData.getTorneosByIdEquipos($routeParams.id);
+        vm.torneo = leaguesData.get({id: $routeParams.id});
         
-        /*--- FECHA ANTERIOR/ACTUAL ---*/
+        /*--- FECHA ANTERIOR/ACTUAL ---
 
         var actualFechaId = 1;
         vm.anteriorFechaId = 0;
@@ -20,6 +20,6 @@
             actualFechaId++;
             vm.fechaAnterior = vm.fechaActual;
             vm.fechaActual = tempData.getFechaById($routeParams.id, actualFechaId);
-        }
+        }*/
     }
 })();
