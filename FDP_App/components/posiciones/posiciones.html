@@ -1,4 +1,13 @@
-﻿<div><tabs-page></tabs-page></div>
+﻿<md-toolbar>
+    <div class="md-toolbar-tools" layout-align="space-around center">
+        <md-button ng-link="torneo({id: posiciones.id })">Torneo</md-button>
+        <md-button ng-link="posiciones({id: posiciones.id })">Posiciones</md-button>
+        <md-button ng-disabled="true">Promedios</md-button>
+        <md-button ng-link="fixture({ id: posiciones.id })">Fixture</md-button>
+        <md-button ng-disabled="true">Equipos</md-button>
+        <md-button ng-disabled="true">A las Copas</md-button>
+    </div>
+</md-toolbar>
 
 <div layout="row" layout-align="space-around start">
     <div flex="45" layout-padding>
@@ -32,10 +41,10 @@
         </table>
     </div> 
     <div flex="45" layout="column">
-        <div layout-padding ng-show="posiciones.fechaActual != null">
-            <h2>FECHA {{posiciones.fechaActual.gameId}}</h2>
+        <div layout-padding ng-repeat="fecha in posiciones.torneo.fixture.games | filter: {isCurrent: true}">
+            <h2>FECHA {{fecha.gameId}}</h2>
             <md-divider></md-divider>
-            <md-list-item ng-repeat="partido in posiciones.fechaActual.matches" layout="row">
+            <md-list-item ng-repeat="partido in fecha.matches" layout="row">
                 <div flex="25" layout="column">
                     <div>FECHA</div>
                     <div>HORA</div>

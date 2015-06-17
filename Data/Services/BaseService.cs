@@ -31,7 +31,8 @@ namespace Data.Services
             T existingItem = GetById(id);
             if (existingItem != null)
             {
-                context.Entry(existingItem).State = EntityState.Modified; 
+                //context.Entry(existingItem).State = EntityState.Modified; 
+                context.Entry(existingItem).CurrentValues.SetValues(item);
                 context.SaveChanges();
             }
             return existingItem;

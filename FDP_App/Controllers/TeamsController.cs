@@ -59,8 +59,11 @@ namespace FDP_App.Controllers
                 return BadRequest();
             }
 
+            //Team team = _teamService.GetById(id);
+
             try
             {
+               // _asEntity.TeamDTOtoEntity(ref team, teamDTO);
                 _teamService.Update(team, id);
             }
             catch (DbUpdateConcurrencyException)

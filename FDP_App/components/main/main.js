@@ -2,12 +2,10 @@
     'use strict';
 
     angular.module('FDPApp.main', [])
-        .controller('MainController', [MainController])
+        .controller('MainController', ['teamsData', MainController])
 
-    function MainController() {
+    function MainController(teamsData) {
         var vm = this;
         vm.title = 'main';
-
-       
     }
 })();

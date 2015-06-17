@@ -3,8 +3,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>FDPApp</title>
-    <link href="/Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="/Content/angular-material.min.css" rel="stylesheet" />
+    <link href="/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Content/css/angular-material.min.css" rel="stylesheet" />
 </head>
 
 <body ng-controller="AppController as app" layout="row" layout-fill>
@@ -12,16 +12,16 @@
     <md-sidenav class="md-sidenav-left md-whiteframe-z2 md-closed md-locked-open" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
     <md-toolbar class="md-tall md-hue-2"></md-toolbar>
     <md-content flex md-scroll-y>
-        <md-list>
-            <md-button layout-fill><div layout="row" style="margin-left:10px"><h3>En Progreso</h3></div></md-button>
-            <md-list-item class="md-2-line" ng-repeat="item in app.torneos | filter: {isCurrent:true}">
+        <md-list id="according" aria-multiselectable="true">
+            <md-button data-toggle="collapse" data-parent="#according" data-target="#progreso" layout-fill><div layout="row" style="margin-left:10px"><h3>En Progreso</h3></div></md-button>
+            <md-list-item id="progreso" class="md-2-line collapse" ng-repeat="item in app.torneos | filter: {isCurrent:true}">
                 <md-button ng-link="torneo({ id: item.leagueId })" layout-fill><div layout=row style="margin-left:50px">{{item.name}} {{item.season}}</div></md-button>
             </md-list-item>
             <md-divider></md-divider>
 
-            <md-button layout-fill><div layout="row" style="margin-left:10px"><h3>Anteriores</h3></div></md-button>
-            <md-list-item class="md-2-line" ng-repeat="item in app.torneos | filter: {isCurrent:false} | orderBy:'-finishDate'">
-                <md-button layout-fill><div layout=row style="margin-left:50px">{{item.name}} {{item.season}}</div></md-button>
+            <md-button data-toggle="collapse" data-parent="#according" data-target="#anteriores" layout-fill><div layout="row" style="margin-left:10px"><h3>Anteriores</h3></div></md-button>
+            <md-list-item id="anteriores" class="md-2-line collapse" ng-repeat="item in app.torneos | filter: {isCurrent:false} | orderBy:'-finishDate'">
+                <md-button ng-link="torneo({ id: item.leagueId })" layout-fill><div layout=row style="margin-left:50px">{{item.name}} {{item.season}}</div></md-button>
             </md-list-item>
             <md-divider></md-divider>
 
@@ -46,17 +46,24 @@
             <div ng-viewport></div>
         </md-content>
     </div>
-       
+      
+    
+
+    
+     
     <script src="Scripts/angular.js"></script>
     <script src="Scripts/router.es5.js"></script>
     <script src="Scripts/angular-animate.min.js"></script>
     <script src="Scripts/angular-aria.min.js"></script>
     <script src="Scripts/angular-resource.min.js"></script>
-    <script src="Scripts/angular-material.min.js"></script>
-
+    <script src="Content/js/angular-material.min.js"></script>
+    <script src="Content/js/jquery-2.1.4.min.js"></script>
+    <script src="Content/js/bootstrap.min.js"></script>
+    
 
     <script src="app/app.js"></script>
-    <script src="app/Services/appService.js"></script>    
+    <script src="app/Services/appService.js"></script>   
+    <!--<script src="app/Directives/tabsPage.js"></script> -->
        
     <script src="/components/main/main.js"></script>
     <script src="/components/nuevotorneo/nuevotorneo.js"></script>

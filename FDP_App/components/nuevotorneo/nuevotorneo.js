@@ -9,6 +9,7 @@
         var vm = this;
 
         /*Obtener datos de 'appService'*/
+        vm.torneos = leaguesData.query();
         vm.equipos = teamsData.query();
    
         /* --- DATOS DEL TORNEO --- */
@@ -66,7 +67,7 @@
             for (i = 0; i < vm.equipos.length; i++) {
                 if (vm.equiposSelec.indexOf(vm.equipos[i].name) > -1) {
                     vm.equipos[i].isTopDivision = true;
-                    //modeificar la division del equipo con PUT
+                    vm.equipos[i].$update({id: vm.equipos[i].teamId});
                 }
                 if (vm.equipos[i].isTopDivision) {
                     vm.torneo.teams.push(vm.equipos[i]);
@@ -222,11 +223,12 @@
 
                     if (i != posicionDistinto)
                         vm.esLocalElegido = !vm.esLocalElegido;
-                }
+                } 
+
                 vm.torneo.fixture.games.push(fecha);
             }
-
-            vm.torneo.$save(function () { $location.path("/torneo/" + vm.torneo.leagueId); });
+            vm.torneo.fixture.games[0].isCurrent = true;
+            vm.torneo.$save(function () { $location.path("/torneo/" + vm.torneo.leagueId); vm.torneos.push(vm.torneo);});
         }
 
     }

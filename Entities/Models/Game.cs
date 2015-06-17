@@ -13,6 +13,7 @@ namespace Entities.Models
         public int GameId { get; set; }
         public int LeagueId { get; set; }
         public bool IsSpecialGame { get; set; }
+        public bool IsCurrent { get; set; }
 
         public virtual Fixture Fixture { get; set; }
         public virtual ICollection<Match> Matches { get; set; }

@@ -7,5 +7,7 @@
     function FixtureController($routeParams, leaguesData) {
         var vm = this;
         vm.torneo = leaguesData.get({ id: $routeParams.id });
+        vm.id = $routeParams.id;
+     
     }
 })();

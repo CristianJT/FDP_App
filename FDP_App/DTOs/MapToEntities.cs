@@ -45,6 +45,8 @@ namespace FDP_App.DTOs
                 Game game = new Game();
                 game.GameId = gameDTO.GameId;
                 game.Fixture = league.Fixture;
+                game.IsSpecialGame = gameDTO.IsSpecialGame;
+                game.IsCurrent = gameDTO.IsCurrent;
 
                 game.Matches = new List<Match>();
                 foreach (var matchDTO in gameDTO.Matches)
