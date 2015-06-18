@@ -12,6 +12,7 @@ namespace Entities.Models
 
         public int GameId { get; set; }
         public int LeagueId { get; set; }
+        public int GameNumber { get; set; }
         public bool IsSpecialGame { get; set; }
         public bool IsCurrent { get; set; }
 

@@ -130,6 +130,7 @@ namespace FDP_App.DTOs
             {
                 this.GameId = g.GameId;
                 this.LeagueId = g.LeagueId;
+                this.GameNumber = g.GameNumber;
                 this.IsSpecialGame = g.IsSpecialGame;
                 this.IsCurrent = g.IsCurrent;
                 List<MatchDTO> matchList = new List<MatchDTO>();
@@ -143,6 +144,7 @@ namespace FDP_App.DTOs
 
         public int GameId { get; set; }
         public int LeagueId { get; set; }
+        public int GameNumber { get; set; }
         public bool IsSpecialGame { get; set; }
         public bool IsCurrent { get; set; }
         public MatchDTO[] Matches { get; set; }

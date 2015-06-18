@@ -79,10 +79,15 @@
     <Compile Include="Migrations\201506171252400_updateGame.Designer.cs">
       <DependentUpon>201506171252400_updateGame.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506181625498_updateGame1.cs" />
+    <Compile Include="Migrations\201506181625498_updateGame1.Designer.cs">
+      <DependentUpon>201506181625498_updateGame1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BaseInterface.cs" />
     <Compile Include="Services\BaseService.cs" />
+    <Compile Include="Services\GameService.cs" />
     <Compile Include="Services\LeagueService.cs" />
     <Compile Include="Services\TeamService.cs" />
   </ItemGroup>
@@ -117,6 +122,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506171252400_updateGame.resx">
       <DependentUpon>201506171252400_updateGame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506181625498_updateGame1.resx">
+      <DependentUpon>201506181625498_updateGame1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

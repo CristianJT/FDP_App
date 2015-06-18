@@ -18,42 +18,16 @@ appService.factory('teamsData', ['$resource', function ($resource) {
 
 }]);
 
-appService.factory('tempData', ['leaguesData', function (leaguesData) {
+appService.factory('gamesLeagueData', ['$resource', function ($resource) {
 
-    var torneos = leaguesData.query();
-
-    return {
-        getTorneosById: function (torneoId) {
-            for (i = 0; i < torneos.length; i++) {
-                if (torneos[i].leagueId == torneoId)
-                    return torneos[i];
-            }
-        },
-        getTorneosByIdFixture: function (torneoId) {
-            for (i = 0; i < torneos.length; i++) {
-                if (torneos[i].leagueId == torneoId)
-                    return torneos[i].fixture;
-            }
-        },
-        getTorneosByIdEquipos: function (torneoId) {
-            for (i = 0; i < torneos.length; i++) {
-                if (torneos[i].leagueId == torneoId)
-                    return torneos[i].teams;
-            }
-        },  
-        getFechaById: function (torneoId, fechaId) {
-            for (i = 0; i < torneos.length; i++) {
-                if (torneos[i].leagueId == torneoId) {
-                    for (j = 0; j < torneos[i].fixture.games.length; j++) {
-                        if (torneos[i].fixture.games[j].gameId == fechaId)
-                            return torneos[i].fixture.games[j];
-                    }
-                }
-            }
-        }
-
-    }
+    return $resource("/api/leagues/:id/games");
 
 }]);
 
+appService.factory('gamesData', ['$resource', function ($resource) {
 
+    return $resource("/api/games/:id", null,
+        {
+            'update': { method: 'PUT' }
+        });
+}]);

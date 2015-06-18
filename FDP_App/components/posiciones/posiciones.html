@@ -41,10 +41,10 @@
         </table>
     </div> 
     <div flex="45" layout="column">
-        <div layout-padding ng-repeat="fecha in posiciones.torneo.fixture.games | filter: {isCurrent: true}">
-            <h2>FECHA {{fecha.gameId}}</h2>
+        <div layout-padding ng-show="posiciones.numeroFecha <= posiciones.fechas.length">
+            <h2>Fecha {{posiciones.numeroFecha}}</h2>
             <md-divider></md-divider>
-            <md-list-item ng-repeat="partido in fecha.matches" layout="row">
+            <md-list-item ng-repeat="partido in posiciones.fechaActual.matches" layout="row">
                 <div flex="25" layout="column">
                     <div>FECHA</div>
                     <div>HORA</div>
@@ -55,7 +55,7 @@
                 <div flex="30">{{partido.awayTeam}}</div>
                 <md-divider></md-divider>
             </md-list-item>
-            <md-button ng-click="posiciones.finalizarFecha()">Finalizar Fecha</md-button>
+            <md-button ng-click="posiciones.finalizarFecha(posiciones.fechaActual.gameId)">Finalizar Fecha</md-button>
         </div>
         <span flex></span>
         <div layout-padding ng-show="posiciones.anteriorFechaId != 0">

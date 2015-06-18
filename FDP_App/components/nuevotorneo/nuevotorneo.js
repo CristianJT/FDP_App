@@ -130,9 +130,9 @@
 
 
         /*Función: cargar partidos por fecha*/
-        function cargarPartido(ini, fin, aux, id, partido) {
+        function cargarPartido(ini, fin, aux, partido) {
+
             var partido = {};
-            partido.matchId = id;
 
             if (ini == fin) {
                 if (vm.esLocalDistinto) {
@@ -160,33 +160,32 @@
 
             for (i = 0; i < vm.torneo.fixture.totalGames; i++) {
                 var fecha = {};
-                fecha.gameId = i + 1;
+                fecha.gameNumber = i + 1;
                 fecha.matches = [];
 
-                if (vm.torneo.fixture.specialGame != fecha.gameId) {
+                if (vm.torneo.fixture.specialGame != fecha.gameNumber) {
 
                     var posicionDistinto = buscarPosicion(vm.equipoDistinto, vm.partidosEquipo);
                     /*Recorro aux1*/
                     var aux1Fin = aux1.length - 1;
                     var aux1Inicio = 0;
-                    var partidoId = 1;
+                  
                     while (aux1Inicio <= aux1Fin) {
                         if (i <= posicionDistinto) {
                             if (vm.esLocalElegido)
-                                partido = cargarPartido(aux1Fin, aux1Inicio, aux1, partidoId, i);
+                                partido = cargarPartido(aux1Fin, aux1Inicio, aux1, i);
                             else
-                                partido = cargarPartido(aux1Inicio, aux1Fin, aux1, partidoId, i);
+                                partido = cargarPartido(aux1Inicio, aux1Fin, aux1, i);
                         } else {
                             if (vm.esLocalElegido)
-                                partido = cargarPartido(aux1Inicio, aux1Fin, aux1, partidoId, i);
+                                partido = cargarPartido(aux1Inicio, aux1Fin, aux1, i);
                             else
-                                partido = cargarPartido(aux1Fin, aux1Inicio, aux1, partidoId, i);
+                                partido = cargarPartido(aux1Fin, aux1Inicio, aux1, i);
                         }
 
                         fecha.matches.push(partido);
                         aux1Inicio++;
                         aux1Fin--;
-                        partidoId++;
                     }
 
                     /*Recorro aux2*/
@@ -195,20 +194,19 @@
                     while (aux2Inicio <= aux2Fin) {
                         if (i <= posicionDistinto) {
                             if (vm.esLocalElegido)
-                                partido = cargarPartido(aux2Inicio, aux2Fin, aux2, partidoId, i);
+                                partido = cargarPartido(aux2Inicio, aux2Fin, aux2, pi);
                             else
-                                partido = cargarPartido(aux2Fin, aux2Inicio, aux2, partidoId, i);
+                                partido = cargarPartido(aux2Fin, aux2Inicio, aux2, i);
                         } else {
                             if (vm.esLocalElegido)
-                                partido = cargarPartido(aux2Fin, aux2Inicio, aux2, partidoId, i);
+                                partido = cargarPartido(aux2Fin, aux2Inicio, aux2, i);
                             else
-                                partido = cargarPartido(aux2Inicio, aux2Fin, aux2, partidoId, i);
+                                partido = cargarPartido(aux2Inicio, aux2Fin, aux2, i);
                         }
 
                         fecha.matches.push(partido);
                         aux2Inicio++;
                         aux2Fin--;
-                        partidoId++;
                     }
 
                     if (aux1.length > 1) {
@@ -225,10 +223,11 @@
                         vm.esLocalElegido = !vm.esLocalElegido;
                 } 
 
+                vm.torneo.fixture.games[i].gameNumber = i + 1;
                 vm.torneo.fixture.games.push(fecha);
             }
             vm.torneo.fixture.games[0].isCurrent = true;
-            vm.torneo.$save(function () { $location.path("/torneo/" + vm.torneo.leagueId); vm.torneos.push(vm.torneo);});
+            vm.torneo.$save(function () { $location.path("/torneo/" + vm.torneo.leagueId) });
         }
 
     }

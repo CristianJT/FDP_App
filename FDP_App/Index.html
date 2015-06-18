@@ -14,7 +14,7 @@
     <md-content flex md-scroll-y>
         <md-list id="according" aria-multiselectable="true">
             <md-button data-toggle="collapse" data-parent="#according" data-target="#progreso" layout-fill><div layout="row" style="margin-left:10px"><h3>En Progreso</h3></div></md-button>
-            <md-list-item id="progreso" class="md-2-line collapse" ng-repeat="item in app.torneos | filter: {isCurrent:true}">
+            <md-list-item id="progreso" class="md-2-line collapse in" ng-repeat="item in app.torneos | filter: {isCurrent:true}">
                 <md-button ng-link="torneo({ id: item.leagueId })" layout-fill><div layout=row style="margin-left:50px">{{item.name}} {{item.season}}</div></md-button>
             </md-list-item>
             <md-divider></md-divider>

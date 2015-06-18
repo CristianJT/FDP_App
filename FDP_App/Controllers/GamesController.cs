@@ -10,33 +10,50 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Data;
 using Entities.Models;
+using Data.Services;
+using FDP_App.DTOs;
 
 namespace FDP_App.Controllers
 {
+    [RoutePrefix("api/games")]
     public class GamesController : ApiController
     {
-        private FDPAppContext db = new FDPAppContext();
+        /* Iniciar Servicios */
+        private readonly GameService _gameService = new GameService();
+        private readonly MapToDTO _asDto = new MapToDTO();
 
-        // GET: api/Games
-        public IQueryable<Game> GetGames()
+        /* GET: api/games */
+        [Route("")]
+        public IEnumerable<GameDTO> GetGames(int id)
         {
-            return db.Games;
+            var games = _gameService.GetAll();
+            return _asDto.GetAllGamesAsDTO(games);
         }
 
-        // GET: api/Games/5
-        [ResponseType(typeof(Game))]
+        /* GET: api/leagues/:id/games */
+        [Route("~/api/leagues/{id}/games")]
+        public IEnumerable<GameDTO> GetLeagueGames(int id)
+        {
+            var games = _gameService.GetAll().Where(g => g.LeagueId == id );
+            return _asDto.GetAllGamesAsDTO(games);
+        }
+
+        /* GET: api/games/{id} */
+        [Route("{id}")]
+        [ResponseType(typeof(GameDTO))]
         public IHttpActionResult GetGame(int id)
         {
-            Game game = db.Games.Find(id);
+            Game game = _gameService.GetById(id);
             if (game == null)
             {
                 return NotFound();
             }
 
-            return Ok(game);
+            return Ok(_asDto.GetGameAsDTO(game));
         }
 
-        // PUT: api/Games/5
+        /* PUT: api/games/{id} */
+        [Route("{id}")]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutGame(int id, Game game)
         {
@@ -45,20 +62,13 @@ namespace FDP_App.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != game.GameId)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(game).State = EntityState.Modified;
-
             try
             {
-                db.SaveChanges();
+                _gameService.Update(game, id);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!GameExists(id))
+                if (!_gameService.Exists(id))
                 {
                     return NotFound();
                 }
@@ -70,50 +80,6 @@ namespace FDP_App.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
-
-        // POST: api/Games
-        [ResponseType(typeof(Game))]
-        public IHttpActionResult PostGame(Game game)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Games.Add(game);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = game.GameId }, game);
-        }
-
-        // DELETE: api/Games/5
-        [ResponseType(typeof(Game))]
-        public IHttpActionResult DeleteGame(int id)
-        {
-            Game game = db.Games.Find(id);
-            if (game == null)
-            {
-                return NotFound();
-            }
-
-            db.Games.Remove(game);
-            db.SaveChanges();
-
-            return Ok(game);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool GameExists(int id)
-        {
-            return db.Games.Count(e => e.GameId == id) > 0;
-        }
+        
     }
 }

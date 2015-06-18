@@ -30,5 +30,16 @@ namespace FDP_App.DTOs
             return new TeamsDetailDTO(t);
         }
 
+        public IEnumerable<GameDTO> GetAllGamesAsDTO(IEnumerable<Game> g)
+        {
+            var games = from x in g
+                        select new GameDTO(x);
+            return games.AsEnumerable();
+        }
+
+        public GameDTO GetGameAsDTO(Game g)
+        {
+            return new GameDTO(g);
+        }
     }
 }
