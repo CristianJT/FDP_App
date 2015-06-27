@@ -194,7 +194,7 @@
                     while (aux2Inicio <= aux2Fin) {
                         if (i <= posicionDistinto) {
                             if (vm.esLocalElegido)
-                                partido = cargarPartido(aux2Inicio, aux2Fin, aux2, pi);
+                                partido = cargarPartido(aux2Inicio, aux2Fin, aux2, i);
                             else
                                 partido = cargarPartido(aux2Fin, aux2Inicio, aux2, i);
                         } else {
@@ -223,7 +223,6 @@
                         vm.esLocalElegido = !vm.esLocalElegido;
                 } 
 
-                vm.torneo.fixture.games[i].gameNumber = i + 1;
                 vm.torneo.fixture.games.push(fecha);
             }
             vm.torneo.fixture.games[0].isCurrent = true;

@@ -8,11 +8,11 @@
                 <div layout="row" layout-sm="column" layout-padding>
                     <md-input-container flex>
                         <label>Torneo</label>
-                        <input ng-model="nuevotorneo.torneo.name" required name="nombre"/>
+                        <input ng-model="nuevotorneo.torneo.name" name="nombre"/>
                     </md-input-container>
                     <md-input-container flex>
                         <label>Temporada</label>
-                        <input type="number" ng-model="nuevotorneo.torneo.season" min="2010" max="2050" required/>
+                        <input type="number" ng-model="nuevotorneo.torneo.season" min="2010" max="2050"/>
                     </md-input-container>
                 </div>
                
@@ -38,7 +38,7 @@
                 <div layout="row" layout-sm="column"  layout-padding>
                     <md-input-container flex>
                         <label>Cantidad de Fechas</label>
-                        <input type="number" ng-model="nuevotorneo.totalFechas" ng-change="nuevotorneo.cantidadFechasEquipos()" min="{{nuevotorneo.totalEquiposPrimera - 1}}" max="40" required />
+                        <input type="number" ng-model="nuevotorneo.totalFechas" ng-change="nuevotorneo.cantidadFechasEquipos()" min="{{nuevotorneo.totalEquiposPrimera - 1}}" max="40"/>
                     </md-input-container>
                     <div flex layout="column">
                         <span flex></span>
@@ -94,15 +94,27 @@
         <!--EQUIPO DISTINTO-->
         <div layout="row" layout-padding>
             <div flex="40" layout="row">
-                <label layout-fill layout-margin>Equipo Distinto:</label>
+                <div flex="50" layout="column">
+                    <span flex></span>
+                    <label>Equipo Distinto:</label>
+                    <span flex></span>
+                </div>
                 <md-select layout-fill layout-margin ng-model="nuevotorneo.equipoDistinto" placeholder="Seleccione Equipo" required>
                     <md-option ng-value="equipo.name" ng-repeat="equipo in nuevotorneo.torneo.teams | orderBy:'name'">{{equipo.name}}</md-option>
                 </md-select>
             </div>
             <span flex></span>
             <div ng-show="nuevotorneo.equipoDistinto" flex="50" layout="row">
-                <div flex="50"><label>Equipo:</label> {{nuevotorneo.equipoDistinto}}</div>
-                <md-checkbox flex="40" layout-fill layout-margin ng-model="nuevotorneo.esLocalDistinto" aria-label="Local" ng-true-value="'Local'" ng-false-value="'Visitante'"><label>1º fecha:</label><span ng-show="nuevotorneo.esLocalDistinto == null"> Visitante</span><span ng-hide="nuevotorneo.esLocalDistinto == null"> {{nuevotorneo.esLocalDistinto}}</span></md-checkbox>
+                <div flex="50" layout="column">
+                    <span flex></span>
+                    <div><label>Equipo:</label> {{nuevotorneo.equipoDistinto}}</div>
+                    <span flex></span>
+                </div>
+                <div flex layout="column">
+                    <span flex></span>
+                    <md-checkbox ng-model="nuevotorneo.esLocalDistinto" aria-label="Local" ng-true-value="'Local'" ng-false-value="'Visitante'">1º fecha:<span ng-show="nuevotorneo.esLocalDistinto == null">Visitante</span><span ng-hide="nuevotorneo.esLocalDistinto == null"> {{nuevotorneo.esLocalDistinto}}</span></md-checkbox>
+                    <span flex></span>
+                </div>        
             </div>
             <span flex></span>
         </div>
@@ -111,13 +123,21 @@
         <!--EQUIPO PAREJA-->
         <div layout="row" layout-padding>
             <div flex="40" layout="row">
-                <label layout-fill layout-margin>Equipo Pareja:</label>
+                <div flex="50" layout="column">
+                    <span flex></span>
+                    <label>Equipo Pareja:</label>
+                    <span flex></span>
+                </div>
                 <md-select layout-fill layout-margin ng-model="nuevotorneo.equipoPareja" placeholder="Seleccione Equipo" required>
                     <md-option ng-value="equipo.name" ng-repeat="equipo in nuevotorneo.torneo.teams | orderBy:'name' | filter: {name: '!' + nuevotorneo.equipoDistinto} ">{{equipo.name}}</md-option>
                 </md-select>
             </div>
             <span flex></span>
-            <div ng-show="nuevotorneo.equipoPareja" flex="50"><label>Equipo:</label> {{nuevotorneo.equipoPareja}}</div>
+            <div flex="50" layout="column" ng-show="nuevotorneo.equipoPareja">
+                <span flex></span>
+                <div><label>Equipo:</label> {{nuevotorneo.equipoPareja}}</div>
+                <span flex></span>
+            </div>          
             <span flex></span>
         </div>
         <md-divider></md-divider>
@@ -125,15 +145,27 @@
         <!--EQUIPO SELECCIONADO-->
         <div layout="row" layout-padding>
             <div flex="40" layout="row">
-                <label layout-fill layout-margin>Equipo Elegido:</label>
+                <div flex="50" layout="column">
+                    <span flex></span>
+                    <label>Equipo Elegido:</label>
+                    <span flex></span>
+                </div>
                 <md-select layout-fill layout-margin ng-model="nuevotorneo.equipoElegido" placeholder="Seleccione Equipo" required>
                     <md-option ng-value="equipo.name" ng-repeat="equipo in nuevotorneo.torneo.teams| orderBy:'name' | filter: {name: '!' + nuevotorneo.equipoDistinto}">{{equipo.name}}</md-option>
                 </md-select>
             </div>
             <span flex></span>
             <div ng-show="nuevotorneo.equipoElegido" flex="50" layout="row">
-                <div flex="50"><label>Equipo:</label> {{nuevotorneo.equipoElegido}}</div>
-                <md-checkbox flex="40" layout-fill layout-margin ng-model="nuevotorneo.esLocalElegido" aria-label="Local" ng-true-value="'Local'" ng-false-value="'Visitante'"><label>1º fecha:</label><span ng-show="nuevotorneo.esLocalElegido == null"> Visitante</span><span ng-hide="nuevotorneo.esLocalElegido == null"> {{nuevotorneo.esLocalElegido}}</span></md-checkbox>
+                <div flex="50" layout="column">
+                    <span flex></span>
+                    <div><label>Equipo:</label> {{nuevotorneo.equipoElegido}}</div>
+                    <span flex></span>
+                </div>
+                <div flex layout="column">
+                    <span flex></span>
+                    <md-checkbox ng-model="nuevotorneo.esLocalElegido" aria-label="Local" ng-true-value="'Local'" ng-false-value="'Visitante'">1º fecha:<span ng-show="nuevotorneo.esLocalElegido == null">Visitante</span><span ng-hide="nuevotorneo.esLocalElegido == null"> {{nuevotorneo.esLocalElegido}}</span></md-checkbox>
+                    <span flex></span>
+                </div>            
             </div>
             <span flex></span>
         </div>
@@ -142,7 +174,12 @@
         <!--CARGAR PARTIDOS EQUIPO SELECCIONADO-->
         <div layout="row" layout-padding>
             <div flex="40" layout="row">
-                <label layout-fill layout-margin>Partidos de {{nuevotorneo.equipoElegido}}:</label>
+                <div flex="50" layout="column">
+                    <span flex></span>
+                    <label>Partidos de:</label>
+                    <div>{{nuevotorneo.equipoElegido}}</div>
+                    <span flex></span>
+                </div>
                 <md-select layout-fill layout-margin ng-model="nuevotorneo.partidosEquipo" placeholder="Seleccione Equipo" multiple>
                     <md-checkbox aria-label="Seleccion" ng-repeat="equipo in nuevotorneo.torneo.teams | orderBy:'name' | filter: {name: '!' + nuevotorneo.equipoElegido}" ng-click="nuevotorneo.selection(equipo.name)">
                         {{equipo.name}}
