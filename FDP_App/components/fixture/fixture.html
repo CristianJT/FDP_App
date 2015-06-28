@@ -12,7 +12,7 @@
 <div layout="row" layout-align="center center">
     <div flex="90">
         <md-tabs md-dynamic-height md-border-bottom>
-            <md-tab ng-repeat="item in fixture.torneo.fixture.games" label="Fecha {{$index + 1}}">
+            <md-tab ng-repeat="item in fixture.torneo.fixture.games" label="Fecha {{item.gameNumber}}">
                 <md-content flex md-scroll-y class="md-padding">
                     <md-list-item ng-repeat="partido in item.matches">
                         <div>{{partido.homeTeam}} vs. {{partido.awayTeam}}</div>

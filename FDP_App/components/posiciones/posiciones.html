@@ -9,70 +9,103 @@
     </div>
 </md-toolbar>
 
-<div layout="row" layout-align="space-around start">
-    <div flex="45" layout-padding>
-        <table class="table table-condensed">
-            <thead>
-                <tr>
-                    <th>Equipo</th>
-                    <th class="col-md-1">Pts</th>
-                    <th class="col-md-1">J</th>
-                    <th class="col-md-1">G</th>
-                    <th class="col-md-1">E</th>
-                    <th class="col-md-1">P</th>
-                    <th class="col-md-1">GF</th>
-                    <th class="col-md-1">GC</th>
-                    <th class="col-md-1">Dif</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="equipo in posiciones.torneo.teams">
-                    <td>{{equipo.name}}</td>
-                    <td class="col-md-1">{{equipo.points}}</td>
-                    <td class="col-md-1">{{equipo.played}}</td>
-                    <td class="col-md-1">{{equipo.won}}</td>
-                    <td class="col-md-1">{{equipo.draws}}</td>
-                    <td class="col-md-1">{{equipo.lost}}</td>
-                    <td class="col-md-1">{{equipo.goalsFor}}</td>
-                    <td class="col-md-1">{{equipo.goalsAgainst}}</td>
-                    <td class="col-md-1">{{equipo.goalDifference}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div> 
-    <div flex="45" layout="column">
-        <div layout-padding ng-show="posiciones.fechaActual.gameNumber <= posiciones.fechas.length">
-            <h2>Fecha {{posiciones.fechaActual.gameNumber}}</h2>
-            <md-divider></md-divider>
-            <md-list-item ng-repeat="partido in posiciones.fechaActual.matches" layout="row">
-                <div flex="25" layout="column">
-                    <div>FECHA</div>
-                    <div>HORA</div>
-                </div>
-                <div flex="30">{{partido.homeTeam}}</div>
-                <div flex="5">{{partido.homeResult}}</div>
-                <div flex="5">{{partido.awayResult}}</div>
-                <div flex="30">{{partido.awayTeam}}</div>
-                <md-divider></md-divider>
-            </md-list-item>
-            <md-button ng-click="posiciones.finalizarFecha(posiciones.fechaActual.gameId, posiciones.fechaActual.gameNumber)">Finalizar Fecha</md-button>
+<div layout="column">
+
+    <div layout="row" layout-align="space-around start">
+        <div flex="45" layout-padding>
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Equipo</th>
+                        <th class="col-md-1">Pts</th>
+                        <th class="col-md-1">J</th>
+                        <th class="col-md-1">G</th>
+                        <th class="col-md-1">E</th>
+                        <th class="col-md-1">P</th>
+                        <th class="col-md-1">GF</th>
+                        <th class="col-md-1">GC</th>
+                        <th class="col-md-1">Dif</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="equipo in posiciones.torneo.teams">
+                        <td>{{equipo.name}}</td>
+                        <td class="col-md-1">{{equipo.points}}</td>
+                        <td class="col-md-1">{{equipo.played}}</td>
+                        <td class="col-md-1">{{equipo.won}}</td>
+                        <td class="col-md-1">{{equipo.draws}}</td>
+                        <td class="col-md-1">{{equipo.lost}}</td>
+                        <td class="col-md-1">{{equipo.goalsFor}}</td>
+                        <td class="col-md-1">{{equipo.goalsAgainst}}</td>
+                        <td class="col-md-1">{{equipo.goalDifference}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <span flex></span>
-        <div layout-padding ng-show="posiciones.fechaAnterior != null">
-            <h2>Última fecha</h2>
-            <md-divider></md-divider>
-            <md-list-item ng-repeat="partido in posiciones.fechaAnterior.matches" layout="row">
-                <div flex="30">{{partido.homeTeam}}</div>
-                <div flex="5">{{partido.homeResult}}</div>
-                <div flex="5">{{partido.awayResult}}</div>
-                <div flex="30">{{partido.awayTeam}}</div>
-            </md-list-item>
-            <div ng-show="posiciones.fechaAnterior.gameNumber == posiciones.torneo.fixture.totalGames">
-                <md-button ng-click="posiciones.finalizarTorneo()">Finalizar Torneo</md-button>
+        <div flex="45" layout="column" layout-fill>
+            <div ng-show="posiciones.fechaAnterior != null">
+                <h2>Última fecha</h2>
+                <md-divider></md-divider>
+                <br />
+                <md-content layout-padding layout-margin class="md-whiteframe-z1">
+                    <div ng-repeat="partido in posiciones.fechaAnterior.matches" layout="row">
+                        <div flex="30">{{partido.homeTeam}}</div>
+                        <span flex></span>
+                        <div flex="5">{{partido.homeResult}}</div>
+                        <div flex="5">-</div>
+                        <div flex="5">{{partido.awayResult}}</div>
+                        <span flex></span>
+                        <div flex="30">{{partido.awayTeam}}</div>
+                    </div>
+                </md-content>
             </div>
-        </div>       
+        
+            <div ng-show="posiciones.fechaSiguiente != null">
+                <h2>Próxima fecha</h2>
+                <md-divider></md-divider>
+                <br />
+                <md-content layout-padding layout-margin class="md-whiteframe-z1">
+                    <div ng-repeat="partido in posiciones.fechaSiguiente.matches" layout="row">
+                        <div flex="30">{{partido.homeTeam}}</div>
+                        <span flex></span>
+                        <div flex="5">vs</div>
+                        <span flex></span>
+                        <div flex="30">{{partido.awayTeam}}</div>
+                    </div>
+                </md-content>               
+            </div>
+        </div>
+    </div> 
+
+    <div layout-padding layout-margin ng-show="posiciones.fechaActual.gameNumber <= posiciones.fechas.length">
+        <h2>Fecha {{posiciones.fechaActual.gameNumber}}</h2>
+        <md-divider></md-divider>
+        <md-list-item ng-repeat="partido in posiciones.fechaActual.matches" layout="row">
+            <div flex="25" layout="column">
+                <div>FECHA</div>
+                <div>HORA</div>
+            </div>
+            <div flex="30">{{partido.homeTeam}}</div>
+            <div flex="5">{{partido.homeResult}}</div>
+            <div flex="5">{{partido.awayResult}}</div>
+            <div flex="30">{{partido.awayTeam}}</div>
+            <md-divider></md-divider>
+        </md-list-item>
+        <md-button ng-click="posiciones.finalizarFecha(posiciones.fechaActual.gameId, posiciones.fechaActual.gameNumber)">Finalizar Fecha</md-button>
     </div>
+
+    <div ng-show="posiciones.fechaAnterior.gameNumber == posiciones.torneo.fixture.totalGames">
+        <md-button ng-click="posiciones.finalizarTorneo()">Finalizar Torneo</md-button>
+    </div>
+
+</div>
+      
+    
+    
+        
+             
+    
         
       
-</div>
+
 

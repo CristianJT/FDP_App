@@ -10,10 +10,10 @@
         vm.id = $routeParams.id;
            
      
-        //vm.fecha = gamesData.get({ id: 20 }, function () {
-        //    vm.fecha.isCurrent = true;
-        //    vm.fecha.$update({ id: 20 });
-        //});
+        vm.fecha = gamesData.get({ id: 20 }, function () {
+            vm.fecha.isCurrent = true;
+            vm.fecha.$update({ id: 20 });
+        });
 
         /* Obtener todas las fechas del torneo */
         vm.fechas = gamesLeagueData.query({ id: $routeParams.id }, function () {
@@ -23,6 +23,8 @@
                     vm.fechaActual = vm.fechas[i];
                     if (i > 0)
                         vm.fechaAnterior = vm.fechas[i - 1];
+                    if (i < vm.fechas.length - 1)
+                        vm.fechaSiguiente = vm.fechas[i + 1];
                 } 
             }
             /* permite obtener la última fecha */
@@ -43,6 +45,10 @@
                     vm.fechaActual.isCurrent = true;
                     vm.fechaActual.$update({ id: fechaId + 1 });
                 });
+                if (fechaNumber < vm.fechas.length - 1)
+                    vm.fechaSiguiente = gamesData.get({ id: fechaId + 2 });
+                else
+                    vm.fechaSiguiente = null;
             } else
                 vm.fechaActual = null;
             
