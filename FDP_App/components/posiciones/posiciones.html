@@ -81,27 +81,38 @@
         <h2>Fecha {{posiciones.fechaActual.gameNumber}}</h2>
         <md-divider></md-divider>
         <md-list-item ng-repeat="partido in posiciones.fechaActual.matches" layout="row" layout-padding>
-            <div flex="25" layout="column">
-                <div ng-hide="posiciones.isConfirm" layout="row">
-                    <input flex="60" type="date" ng-model="posiciones.date" />
-                    <span flex></span>
-                    <timepicker ng-model="posiciones.time" minute-step="5" show-meridian="false" mousewheel="false"></timepicker>                     
-                </div>
-                <div ng-show="posiciones.isConfirm" layout="row">
-                    <div flex="45">FECHA</div>
-                    <span flex>-</span>
-                    <div flex="45">HORA</div>
-                </div>
-                <div ng-show="posiciones.isConfirm">
+
+            <!-- FECHA Y HORA SIN CONFIRMAR -->
+            <div ng-show="partido.isConfirm == false" layout="row" layout-fill>          
+                <div flex="20" layout="row" layout-align="center center"><div flex="60">{{partido.homeTeam | uppercase}}</div></div>
+                <div flex="5" layout="row" layout-align="center center"><div>vs</div></div>
+                <div flex="20" layout="row" layout-align="center center"><div flex="60">{{partido.awayTeam | uppercase}}</div></div>    
+                <span flex></span>
+                <div flex="20" layout="row" layout-align="center center"><input type="date" class="form-control" ng-model="fecha" /></div>
+                <timepicker layout-margin flex="20" ng-model="hora" minute-step="5" show-meridian="false" mousewheel="false"></timepicker> 
+                <span flex></span>
+                <div flex="5" layout="row" layout-align="center center"><button class="btn btn-default glyphicon glyphicon-ok" ng-click="posiciones.confirmarFechaHora(fecha, hora)"></button></div>
+            </div>
+
+            <!-- FECHA Y HORA CONFIRMADA  --> 
+            <div ng-show="partido.isConfirm == true" layout="row" layout-fill>
+                <div flex="25" layout="column" layout-margin>
+                    <div layout="row">
+                        <div>FECHA</div>
+                        <span> - </span>
+                        <div>HORA</div>
+                    </div>
                     <div ng-bind="posiciones.getEstadio(partido.homeTeam)"></div>
                     <div ng-bind="posiciones.getCiudad(partido.homeTeam)"></div>
-                </div>               
+                </div>
+                <div flex="25" layout="row" layout-align="center center"><div flex="60">{{partido.homeTeam | uppercase}}</div></div>
+                <div flex layout="row" layout-align="center center"><input type="number" min="0" max="15" ng-model="resLocal" /></div>
+                <div flex="5" layout="row" layout-align="center center"><div>-</div></div>
+                <div flex layout="row" layout-align="center center"><input type="number" min="0" max="15" ng-model="resVisitante" /></div>
+                <div flex="25" layout="row" layout-align="center center"><div flex="60">{{partido.awayTeam | uppercase}}</div></div>
+                <div flex="5" layout="row" layout-align="center center"><button class="btn btn-default glyphicon glyphicon-ok" ng-click="posiciones.confirmarResultado(resLocal, resVisitante)"></button></div>
             </div>
-            <div flex="30" layout="row"><span flex></span><div flex="60">{{partido.homeTeam | uppercase}}</div><span flex></span></div>
-            <div ng-show="posiciones.isConfirm"><input type="number" min="0" max="15" /></div>
-            <span flex>-</span>
-            <div ng-show="posiciones.isConfirm"><input type="number" min="0" max="15" /></div>
-            <div flex="30" layout="row"><span flex></span><div flex="60">{{partido.awayTeam | uppercase}}</div><span flex></span></div>
+          
             <md-divider></md-divider>
         </md-list-item>
         <md-button ng-click="posiciones.finalizarFecha(posiciones.fechaActual.gameId, posiciones.fechaActual.gameNumber)">Finalizar Fecha</md-button>

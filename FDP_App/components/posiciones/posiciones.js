@@ -76,14 +76,13 @@
             alert("El torneo: " + vm.torneo.name + " " + vm.torneo.season + " ha finalizado");
         }
        
-        vm.isConfirm = true;
-
-        vm.confirmar = function (date, time) {
-            var dateTime;
-            dateTime = new Date(date + ' ' + time);
-            alert(date.getMonth());
-        } 
+        vm.confirmarFechaHora = function (fecha, hora) {
+            alert("FECHA: " + fecha + " " + "HORA: " + hora);
+        }
         
+        vm.confirmarResultado = function (local, visitante) {
+            alert("LOCAL: " + local + " " + "VISITANTE: " + visitante);
+        }
 
     }
 })();
