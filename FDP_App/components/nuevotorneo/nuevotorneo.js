@@ -133,7 +133,7 @@
         function cargarPartido(ini, fin, aux, partido) {
 
             var partido = {};
-
+            partido.isConfirm = false;
             if (ini == fin) {
                 if (vm.esLocalDistinto) {
                     partido.homeTeam = vm.equipoDistinto;
@@ -226,7 +226,11 @@
                 vm.torneo.fixture.games.push(fecha);
             }
             vm.torneo.fixture.games[0].isCurrent = true;
-            vm.torneo.$save(function () { $location.path("/torneo/" + vm.torneo.leagueId) });
+            vm.torneo.$save(function () {
+                vm.torneo.startDate = new Date(vm.torneo.startDate);
+                vm.torneo.finishDate = new Date(vm.torneo.finishDate);
+                $location.path("/torneo/" + vm.torneo.leagueId);
+            });
         }
 
     }

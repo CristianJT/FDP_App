@@ -55,6 +55,8 @@ namespace FDP_App.DTOs
                     Match match = new Match();
                     match.MatchId = matchDTO.MatchId;
                     match.Game = game;
+                    match.MatchDate = matchDTO.MatchDate;
+                    match.IsConfirm = matchDTO.IsConfirm;
                     match.HomeTeam = matchDTO.HomeTeam;
                     match.AwayTeam = matchDTO.AwayTeam;
                     match.HomeResult = matchDTO.HomeResult;

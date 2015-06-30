@@ -12,15 +12,15 @@
     <md-sidenav class="md-sidenav-left md-whiteframe-z2 md-closed md-locked-open" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
     <md-toolbar class="md-tall md-hue-2"></md-toolbar>
     <md-content flex md-scroll-y>
-        <md-list id="according" aria-multiselectable="true">
-            <md-button data-toggle="collapse" data-parent="#according" data-target="#progreso" layout-fill><div layout="row" style="margin-left:10px"><h3>En Progreso</h3></div></md-button>
-            <md-list-item id="progreso" class="md-2-line collapse in" ng-repeat="item in app.torneos | filter: {isCurrent:true}">
+        <md-list>
+            <md-button layout-fill><div layout="row" style="margin-left:10px"><h3>En Progreso</h3></div></md-button>
+            <md-list-item class="md-2-line" ng-repeat="item in app.torneos | filter: {isCurrent:true}">
                 <md-button ng-link="torneo({ id: item.leagueId })" layout-fill><div layout=row style="margin-left:50px">{{item.name}} {{item.season}}</div></md-button>
             </md-list-item>
             <md-divider></md-divider>
 
-            <md-button data-toggle="collapse" data-parent="#according" data-target="#anteriores" layout-fill><div layout="row" style="margin-left:10px"><h3>Anteriores</h3></div></md-button>
-            <md-list-item id="anteriores" class="md-2-line collapse" ng-repeat="item in app.torneos | filter: {isCurrent:false} | orderBy:'-finishDate'">
+            <md-button layout-fill><div layout="row" style="margin-left:10px"><h3>Anteriores</h3></div></md-button>
+            <md-list-item class="md-2-line" ng-repeat="item in app.torneos | filter: {isCurrent:false} | orderBy:'-finishDate'">
                 <md-button ng-link="torneo({ id: item.leagueId })" layout-fill><div layout=row style="margin-left:50px">{{item.name}} {{item.season}}</div></md-button>
             </md-list-item>
             <md-divider></md-divider>
@@ -59,6 +59,7 @@
     <script src="Content/js/angular-material.min.js"></script>
     <script src="Content/js/jquery-2.1.4.min.js"></script>
     <script src="Content/js/bootstrap.min.js"></script>
+    <script src="Content/js/ui-bootstrap-tpls.min.js"></script>
     
 
     <script src="app/app.js"></script>

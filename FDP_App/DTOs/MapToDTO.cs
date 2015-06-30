@@ -41,5 +41,17 @@ namespace FDP_App.DTOs
         {
             return new GameDTO(g);
         }
+
+        public IEnumerable<MatchDTO> GetAllMatchesAsDTO(IEnumerable<Match> m)
+        {
+            var matches = from x in m
+                          select new MatchDTO(x);
+            return matches.AsEnumerable();
+        }
+
+        public MatchDTO GetMatchAsDTO(Match m)
+        {
+            return new MatchDTO(m);
+        }
     }
 }

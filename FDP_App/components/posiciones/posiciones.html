@@ -29,7 +29,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="equipo in posiciones.torneo.teams">
-                        <td>{{equipo.name}}</td>
+                        <td><md-tooltip md-direction="left">Proximo dos partidos</md-tooltip>{{equipo.name}}</td>
                         <td class="col-md-1">{{equipo.points}}</td>
                         <td class="col-md-1">{{equipo.played}}</td>
                         <td class="col-md-1">{{equipo.won}}</td>
@@ -80,15 +80,28 @@
     <div layout-padding layout-margin ng-show="posiciones.fechaActual.gameNumber <= posiciones.fechas.length">
         <h2>Fecha {{posiciones.fechaActual.gameNumber}}</h2>
         <md-divider></md-divider>
-        <md-list-item ng-repeat="partido in posiciones.fechaActual.matches" layout="row">
+        <md-list-item ng-repeat="partido in posiciones.fechaActual.matches" layout="row" layout-padding>
             <div flex="25" layout="column">
-                <div>FECHA</div>
-                <div>HORA</div>
+                <div ng-hide="posiciones.isConfirm" layout="row">
+                    <input flex="60" type="date" ng-model="posiciones.date" />
+                    <span flex></span>
+                    <timepicker ng-model="posiciones.time" minute-step="5" show-meridian="false" mousewheel="false"></timepicker>                     
+                </div>
+                <div ng-show="posiciones.isConfirm" layout="row">
+                    <div flex="45">FECHA</div>
+                    <span flex>-</span>
+                    <div flex="45">HORA</div>
+                </div>
+                <div ng-show="posiciones.isConfirm">
+                    <div ng-bind="posiciones.getEstadio(partido.homeTeam)"></div>
+                    <div ng-bind="posiciones.getCiudad(partido.homeTeam)"></div>
+                </div>               
             </div>
-            <div flex="30">{{partido.homeTeam}}</div>
-            <div flex="5">{{partido.homeResult}}</div>
-            <div flex="5">{{partido.awayResult}}</div>
-            <div flex="30">{{partido.awayTeam}}</div>
+            <div flex="30" layout="row"><span flex></span><div flex="60">{{partido.homeTeam | uppercase}}</div><span flex></span></div>
+            <div ng-show="posiciones.isConfirm"><input type="number" min="0" max="15" /></div>
+            <span flex>-</span>
+            <div ng-show="posiciones.isConfirm"><input type="number" min="0" max="15" /></div>
+            <div flex="30" layout="row"><span flex></span><div flex="60">{{partido.awayTeam | uppercase}}</div><span flex></span></div>
             <md-divider></md-divider>
         </md-list-item>
         <md-button ng-click="posiciones.finalizarFecha(posiciones.fechaActual.gameId, posiciones.fechaActual.gameNumber)">Finalizar Fecha</md-button>

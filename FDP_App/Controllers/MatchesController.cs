@@ -15,47 +15,39 @@ using FDP_App.DTOs;
 
 namespace FDP_App.Controllers
 {
-    [RoutePrefix("api/games")]
-    public class GamesController : ApiController
+    [RoutePrefix("api/matches")]
+    public class MatchesController : ApiController
     {
         /* Iniciar Servicios */
-        private readonly GameService _gameService = new GameService();
+        private readonly MatchService _matchService = new MatchService();
         private readonly MapToDTO _asDto = new MapToDTO();
 
-        /* GET: api/games */
+        /* GET: api/matches */
         [Route("")]
-        public IEnumerable<GameDTO> GetGames()
+        public IEnumerable<MatchDTO> GetMatches()
         {
-            var games = _gameService.GetAll();
-            return _asDto.GetAllGamesAsDTO(games);
+            var matches = _matchService.GetAll();
+            return _asDto.GetAllMatchesAsDTO(matches);
         }
 
-        /* GET: api/leagues/:id/games */
-        [Route("~/api/leagues/{id}/games")]
-        public IEnumerable<GameDTO> GetLeagueGames(int id)
-        {
-            var games = _gameService.GetAll().Where(g => g.LeagueId == id );
-            return _asDto.GetAllGamesAsDTO(games);
-        }
-
-        /* GET: api/games/{id} */
+        /* GET: api/matches/{id} */
         [Route("{id}")]
-        [ResponseType(typeof(GameDTO))]
-        public IHttpActionResult GetGame(int id)
+        [ResponseType(typeof(MatchDTO))]
+        public IHttpActionResult GetMatch(int id)
         {
-            Game game = _gameService.GetById(id);
-            if (game == null)
+            Match match = _matchService.GetById(id);
+            if (match == null)
             {
                 return NotFound();
             }
 
-            return Ok(_asDto.GetGameAsDTO(game));
+            return Ok(_asDto.GetMatchAsDTO(match));
         }
 
-        /* PUT: api/games/{id} */
+        /* PUT: api/Matches/{id} */
         [Route("{id}")]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutGame(int id, Game game)
+        public IHttpActionResult PutMatch(int id, Match match)
         {
             if (!ModelState.IsValid)
             {
@@ -64,11 +56,11 @@ namespace FDP_App.Controllers
 
             try
             {
-                _gameService.Update(game, id);
+                _matchService.Update(match, id);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_gameService.Exists(id))
+                if (!_matchService.Exists(id))
                 {
                     return NotFound();
                 }
@@ -80,6 +72,6 @@ namespace FDP_App.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
-        
+
     }
 }

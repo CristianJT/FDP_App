@@ -2,18 +2,35 @@
     'use strict';
 
     angular.module('FDPApp.posiciones', [])
-        .controller('PosicionesController', ['$routeParams', 'leaguesData', 'gamesLeagueData', 'gamesData', PosicionesController]);
+        .controller('PosicionesController', ['$routeParams', 'leaguesData', 'gamesLeagueData', 'gamesData', 'teamsData', PosicionesController]);
 
-    function PosicionesController($routeParams, leaguesData, gamesLeagueData, gamesData) {
+    function PosicionesController($routeParams, leaguesData, gamesLeagueData, gamesData, teamsData) {
         var vm = this;
         vm.torneo = leaguesData.get({ id: $routeParams.id });
+        vm.equipos = teamsData.query();
         vm.id = $routeParams.id;
-           
-     
-        vm.fecha = gamesData.get({ id: 20 }, function () {
-            vm.fecha.isCurrent = true;
-            vm.fecha.$update({ id: 20 });
-        });
+         
+        /* Función: obtener estadio del equipo local */
+        vm.getEstadio = function(teamName) {
+            var i;
+            for (i = 0; i < vm.equipos.length; i++) {
+                if (vm.equipos[i].name == teamName)
+                    return vm.equipos[i].stadium;
+            }
+        }
+
+        /* Función: obtener ciudad donde se desarrolla el partido */
+        vm.getCiudad = function (teamName) {
+            var i;
+            for (i = 0; i < vm.equipos.length; i++) {
+                if (vm.equipos[i].name == teamName)
+                    return vm.equipos[i].city;
+            }
+        }
+        //vm.fecha = gamesData.get({ id: 20 }, function () {
+        //    vm.fecha.isCurrent = true;
+        //    vm.fecha.$update({ id: 20 });
+        //});
 
         /* Obtener todas las fechas del torneo */
         vm.fechas = gamesLeagueData.query({ id: $routeParams.id }, function () {
@@ -58,5 +75,15 @@
         vm.finalizarTorneo = function () {
             alert("El torneo: " + vm.torneo.name + " " + vm.torneo.season + " ha finalizado");
         }
+       
+        vm.isConfirm = true;
+
+        vm.confirmar = function (date, time) {
+            var dateTime;
+            dateTime = new Date(date + ' ' + time);
+            alert(date.getMonth());
+        } 
+        
+
     }
 })();

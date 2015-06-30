@@ -8,8 +8,8 @@ namespace Data
     {
         public FDPAppContext() : base("name = FDPAppContext")
         {
-            //Database.SetInitializer(new ContextInitializer());
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<FDPAppContext, Migrations.Configuration>("FDPAppContext"));
+            Database.SetInitializer(new ContextInitializer());
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<FDPAppContext, Migrations.Configuration>("FDPAppContext"));
         }
 
         public DbSet<League> Leagues { get; set; }

@@ -2,7 +2,7 @@
 (function () {
     
 
-    var app = angular.module('FDPApp', ['ngNewRouter', 'appService', 'ngMaterial', 'FDPApp.main', 'FDPApp.nuevoTorneo', 'FDPApp.torneo', 'FDPApp.fixture', 'FDPApp.posiciones']);
+    var app = angular.module('FDPApp', ['ngNewRouter', 'appService', 'ngMaterial', 'FDPApp.main', 'FDPApp.nuevoTorneo', 'FDPApp.torneo', 'FDPApp.fixture', 'FDPApp.posiciones', 'ui.bootstrap']);
 
     app.controller('AppController', ['$router', 'leaguesData', 'teamsData', AppController]);
 
