@@ -55,7 +55,7 @@ namespace FDP_App.Controllers
                 return BadRequest();
             }
             DateTime date = matchDto.match_date.Date;
-            TimeSpan time = matchDto.match_time.TimeOfDay;
+            TimeSpan time = matchDto.match_time.ToLocalTime().TimeOfDay;
 
             Match match = new Match();
             match.MatchId = matchDto.match_id;
