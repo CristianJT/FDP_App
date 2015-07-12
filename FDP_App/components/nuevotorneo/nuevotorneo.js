@@ -133,21 +133,20 @@
         function cargarPartido(ini, fin, aux, partido) {
 
             var partido = {};
-            partido.isConfirm = false;
             if (ini == fin) {
                 if (vm.esLocalDistinto) {
-                    partido.homeTeam = vm.equipoDistinto;
-                    partido.awayTeam = aux[ini];
+                    partido.home_team = vm.equipoDistinto;
+                    partido.away_team = aux[ini];
                 } else {
-                    partido.homeTeam = aux[ini];
-                    partido.awayTeam = vm.equipoDistinto;
+                    partido.home_team = aux[ini];
+                    partido.away_team = vm.equipoDistinto;
                 }
                 if (aux[ini] != vm.equipoPareja)
                     vm.esLocalDistinto = !vm.esLocalDistinto;
             }
             else {
-                partido.homeTeam = aux[ini];
-                partido.awayTeam = aux[fin];
+                partido.home_team = aux[ini];
+                partido.away_team = aux[fin];
             }
             return partido;
         };

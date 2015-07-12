@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('FDPApp.posiciones', [])
-        .controller('PosicionesController', ['$routeParams', 'leaguesData', 'gamesLeagueData', 'gamesData', 'teamsData', PosicionesController]);
+        .controller('PosicionesController', ['$routeParams', 'leaguesData', 'gamesLeagueData', 'gamesData', 'teamsData', 'matchesData', PosicionesController]);
 
-    function PosicionesController($routeParams, leaguesData, gamesLeagueData, gamesData, teamsData) {
+    function PosicionesController($routeParams, leaguesData, gamesLeagueData, gamesData, teamsData, matchesData) {
         var vm = this;
         vm.torneo = leaguesData.get({ id: $routeParams.id });
         vm.equipos = teamsData.query();
@@ -76,8 +76,19 @@
             alert("El torneo: " + vm.torneo.name + " " + vm.torneo.season + " ha finalizado");
         }
        
-        vm.confirmarFechaHora = function (fecha, hora) {
-            alert("FECHA: " + fecha + " " + "HORA: " + hora);
+        
+        vm.confirmarFechaHora = function (matchId, fecha, hora) {
+            vm.partido = matchesData.get({ id: matchId }, function () {
+                vm.partido.match_date = fecha;
+                vm.partido.match_time = hora;
+                vm.partido.is_confirm = true;
+                vm.partido.$update({ id: matchId }, function () {
+                    
+                });
+            });
+            
+           
+            
         }
         
         vm.confirmarResultado = function (local, visitante) {

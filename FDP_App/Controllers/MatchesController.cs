@@ -21,13 +21,14 @@ namespace FDP_App.Controllers
         /* Iniciar Servicios */
         private readonly MatchService _matchService = new MatchService();
         private readonly MapToDTO _asDto = new MapToDTO();
+        protected FDPAppContext context = new FDPAppContext();
 
         /* GET: api/matches */
         [Route("")]
-        public IEnumerable<MatchDTO> GetMatches()
+        public IHttpActionResult GetMatches()
         {
             var matches = _matchService.GetAll();
-            return _asDto.GetAllMatchesAsDTO(matches);
+            return Ok(_asDto.GetAllMatchesAsDTO(matches));
         }
 
         /* GET: api/matches/{id} */
@@ -46,31 +47,31 @@ namespace FDP_App.Controllers
 
         /* PUT: api/Matches/{id} */
         [Route("{id}")]
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutMatch(int id, Match match)
+        [ResponseType(typeof(MatchDTO))]
+        public IHttpActionResult PutMatch(int id, MatchDTO matchDto)
         {
-            if (!ModelState.IsValid)
+            if (id != matchDto.match_id)
             {
-                return BadRequest(ModelState);
+                return BadRequest();
             }
+            DateTime date = matchDto.match_date.Date;
+            TimeSpan time = matchDto.match_time.TimeOfDay;
 
-            try
-            {
-                _matchService.Update(match, id);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_matchService.Exists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            Match match = new Match();
+            match.MatchId = matchDto.match_id;
+            match.GameId = matchDto.game_id;
+            match.HomeTeam = matchDto.home_team;
+            match.AwayTeam = matchDto.away_team;
+            match.HomeResult = matchDto.home_result;
+            match.AwayResult = matchDto.away_result;
+            match.MatchDate = date + time;
+            
+            match.IsConfirm = matchDto.is_confirm;
 
-            return StatusCode(HttpStatusCode.NoContent);
+
+            Match existingMatch = _matchService.Update(match, id);           
+
+            return Ok(_asDto.GetMatchAsDTO(existingMatch));
         }
 
     }

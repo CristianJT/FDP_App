@@ -155,25 +155,27 @@ namespace FDP_App.DTOs
         {
             if (m != null)
             {
-                this.MatchId = m.MatchId;
-                this.GameId = m.GameId;
-                this.MatchDate = m.MatchDate;
-                this.IsConfirm = m.IsConfirm;
-                this.HomeTeam = m.HomeTeam;
-                this.AwayTeam = m.AwayTeam;
-                this.HomeResult = m.HomeResult;
-                this.AwayResult = m.AwayResult;
+                this.match_id = m.MatchId;
+                this.game_id = m.GameId;
+                this.match_date = m.MatchDate.Date;
+                this.match_time = m.MatchDate;
+                this.is_confirm = m.IsConfirm;
+                this.home_team = m.HomeTeam;
+                this.away_team = m.AwayTeam;
+                this.home_result = m.HomeResult;
+                this.away_result = m.AwayResult;
             }
         }
 
-        public int MatchId { get; set; }
-        public int GameId { get; set; }
-        public DateTime? MatchDate { get; set; }
-        public bool IsConfirm { get; set; }
-        public string HomeTeam { get; set; }
-        public string AwayTeam { get; set; }
-        public int HomeResult { get; set; }
-        public int AwayResult { get; set; }
+        public int match_id { get; set; }
+        public int game_id { get; set; }
+        public DateTime match_date { get; set; }
+        public DateTime match_time { get; set; }
+        public bool is_confirm { get; set; }
+        public string home_team { get; set; }
+        public string away_team { get; set; }
+        public int home_result { get; set; }
+        public int away_result { get; set; }
     }
 
     public class TeamsDTO

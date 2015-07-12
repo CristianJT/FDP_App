@@ -49,13 +49,13 @@
                 <br />
                 <md-content layout-padding layout-margin class="md-whiteframe-z1">
                     <div ng-repeat="partido in posiciones.fechaAnterior.matches" layout="row">
-                        <div flex="30">{{partido.homeTeam}}</div>
+                        <div flex="30">{{partido.home_team}}</div>
                         <span flex></span>
-                        <div flex="5">{{partido.homeResult}}</div>
+                        <div flex="5">{{partido.home_result}}</div>
                         <div flex="5">-</div>
-                        <div flex="5">{{partido.awayResult}}</div>
+                        <div flex="5">{{partido.away_result}}</div>
                         <span flex></span>
-                        <div flex="30">{{partido.awayTeam}}</div>
+                        <div flex="30">{{partido.away_team}}</div>
                     </div>
                 </md-content>
             </div>
@@ -66,11 +66,11 @@
                 <br />
                 <md-content layout-padding layout-margin class="md-whiteframe-z1">
                     <div ng-repeat="partido in posiciones.fechaSiguiente.matches" layout="row">
-                        <div flex="30">{{partido.homeTeam}}</div>
+                        <div flex="30">{{partido.home_team}}</div>
                         <span flex></span>
                         <div flex="5">vs</div>
                         <span flex></span>
-                        <div flex="30">{{partido.awayTeam}}</div>
+                        <div flex="30">{{partido.away_team}}</div>
                     </div>
                 </md-content>               
             </div>
@@ -83,33 +83,33 @@
         <md-list-item ng-repeat="partido in posiciones.fechaActual.matches" layout="row" layout-padding>
 
             <!-- FECHA Y HORA SIN CONFIRMAR -->
-            <div ng-show="partido.isConfirm == false" layout="row" layout-fill>          
-                <div flex="20" layout="row" layout-align="center center"><div flex="60">{{partido.homeTeam | uppercase}}</div></div>
+            <div ng-show="partido.is_confirm == false" layout="row" layout-fill>          
+                <div flex="20" layout="row" layout-align="center center"><div flex="60">{{partido.home_team | uppercase}}</div></div>
                 <div flex="5" layout="row" layout-align="center center"><div>vs</div></div>
-                <div flex="20" layout="row" layout-align="center center"><div flex="60">{{partido.awayTeam | uppercase}}</div></div>    
+                <div flex="20" layout="row" layout-align="center center"><div flex="60">{{partido.away_team | uppercase}}</div></div>    
                 <span flex></span>
                 <div flex="20" layout="row" layout-align="center center"><input type="date" class="form-control" ng-model="fecha" /></div>
                 <timepicker layout-margin flex="20" ng-model="hora" minute-step="5" show-meridian="false" mousewheel="false"></timepicker> 
                 <span flex></span>
-                <div flex="5" layout="row" layout-align="center center"><button class="btn btn-default glyphicon glyphicon-ok" ng-click="posiciones.confirmarFechaHora(fecha, hora)"></button></div>
+                <div flex="5" layout="row" layout-align="center center"><button class="btn btn-default glyphicon glyphicon-ok" ng-click="posiciones.confirmarFechaHora(partido.match_id, fecha, hora)"></button></div>
             </div>
 
             <!-- FECHA Y HORA CONFIRMADA  --> 
-            <div ng-show="partido.isConfirm == true" layout="row" layout-fill>
+            <div ng-show="partido.is_confirm == true" layout="row" layout-fill>
                 <div flex="25" layout="column" layout-margin>
                     <div layout="row">
-                        <div>FECHA</div>
-                        <span> - </span>
-                        <div>HORA</div>
+                        <div>{{partido.match_date | date: 'dd/MM'}}</div>
+                        <div> - </div>
+                        <div>{{partido.match_time | date: 'HH:mm'}}</div>
                     </div>
-                    <div ng-bind="posiciones.getEstadio(partido.homeTeam)"></div>
-                    <div ng-bind="posiciones.getCiudad(partido.homeTeam)"></div>
+                    <div ng-bind="posiciones.getEstadio(partido.home_team)"></div>
+                    <div ng-bind="posiciones.getCiudad(partido.home_team)"></div>
                 </div>
-                <div flex="25" layout="row" layout-align="center center"><div flex="60">{{partido.homeTeam | uppercase}}</div></div>
+                <div flex="25" layout="row" layout-align="center center"><div flex="60">{{partido.home_team | uppercase}}</div></div>
                 <div flex layout="row" layout-align="center center"><input type="number" min="0" max="15" ng-model="resLocal" /></div>
                 <div flex="5" layout="row" layout-align="center center"><div>-</div></div>
                 <div flex layout="row" layout-align="center center"><input type="number" min="0" max="15" ng-model="resVisitante" /></div>
-                <div flex="25" layout="row" layout-align="center center"><div flex="60">{{partido.awayTeam | uppercase}}</div></div>
+                <div flex="25" layout="row" layout-align="center center"><div flex="60">{{partido.away_team | uppercase}}</div></div>
                 <div flex="5" layout="row" layout-align="center center"><button class="btn btn-default glyphicon glyphicon-ok" ng-click="posiciones.confirmarResultado(resLocal, resVisitante)"></button></div>
             </div>
           

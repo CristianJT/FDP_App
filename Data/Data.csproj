@@ -91,6 +91,10 @@
     <Compile Include="Migrations\201506301449572_updateMatch1.Designer.cs">
       <DependentUpon>201506301449572_updateMatch1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507121739319_updateMatchDate.cs" />
+    <Compile Include="Migrations\201507121739319_updateMatchDate.Designer.cs">
+      <DependentUpon>201507121739319_updateMatchDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BaseInterface.cs" />
@@ -140,6 +144,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506301449572_updateMatch1.resx">
       <DependentUpon>201506301449572_updateMatch1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507121739319_updateMatchDate.resx">
+      <DependentUpon>201507121739319_updateMatchDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -25,10 +25,10 @@ namespace FDP_App.Controllers
         /* GET: api/leagues */
         [Route("")]
         [HttpGet]
-        public IEnumerable<LeaguesDTO> GetLeagues()
+        public IHttpActionResult GetLeagues()
         {
             var leagues = _leagueService.GetAll();
-            return _asDto.GetAllLeaguesAsDTO(leagues);
+            return Ok(_asDto.GetAllLeaguesAsDTO(leagues));
         }
 
         /* GET: api/leagues/{id} */
@@ -51,9 +51,9 @@ namespace FDP_App.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutLeague(int id, League league)
         {
-            if (!ModelState.IsValid)
+            if (id != league.LeagueId)
             {
-                return BadRequest(ModelState);
+                return BadRequest();
             }
 
             try

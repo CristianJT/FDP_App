@@ -53,14 +53,14 @@ namespace FDP_App.DTOs
                 foreach (var matchDTO in gameDTO.Matches)
                 {
                     Match match = new Match();
-                    match.MatchId = matchDTO.MatchId;
+                    match.MatchId = matchDTO.match_id;
                     match.Game = game;
-                    match.MatchDate = matchDTO.MatchDate;
-                    match.IsConfirm = matchDTO.IsConfirm;
-                    match.HomeTeam = matchDTO.HomeTeam;
-                    match.AwayTeam = matchDTO.AwayTeam;
-                    match.HomeResult = matchDTO.HomeResult;
-                    match.AwayResult = matchDTO.AwayResult;
+                    //match.MatchDate = matchDTO.MatchDate;
+                    match.IsConfirm = matchDTO.is_confirm;
+                    match.HomeTeam = matchDTO.home_team;
+                    match.AwayTeam = matchDTO.away_team;
+                    match.HomeResult = matchDTO.home_result;
+                    match.AwayResult = matchDTO.away_result;
 
                     game.Matches.Add(match);
 

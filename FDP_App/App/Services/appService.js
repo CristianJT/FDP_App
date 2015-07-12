@@ -31,3 +31,11 @@ appService.factory('gamesData', ['$resource', function ($resource) {
             'update': { method: 'PUT' }
         });
 }]);
+
+appService.factory('matchesData', ['$resource', function ($resource) {
+
+    return $resource("/api/matches/:id", null,
+        {
+            'update': { method: 'PUT' }
+        });
+}]);
