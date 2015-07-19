@@ -125,6 +125,10 @@
     <None Include="Content\js\jquery-2.1.4.intellisense.js" />
     <Content Include="Content\js\jquery-2.1.4.js" />
     <Content Include="Content\js\jquery-2.1.4.min.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\router.es5.js" />
     <Content Include="Scripts\router.es5.min.js" />
     <Content Include="Web.config" />
