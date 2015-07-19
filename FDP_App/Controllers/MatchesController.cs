@@ -18,17 +18,15 @@ namespace FDP_App.Controllers
     [RoutePrefix("api/matches")]
     public class MatchesController : ApiController
     {
-        /* Iniciar Servicios */
-        private readonly MatchService _matchService = new MatchService();
-        private readonly MapToDTO _asDto = new MapToDTO();
-        protected FDPAppContext context = new FDPAppContext();
+        private FDPAppContext db = new FDPAppContext();
 
         /* GET: api/matches */
         [Route("")]
+        [ResponseType(typeof(MatchDTO))]
         public IHttpActionResult GetMatches()
         {
-            var matches = _matchService.GetAll();
-            return Ok(_asDto.GetAllMatchesAsDTO(matches));
+            var matches = db.Matches.ToArray();
+            return Ok(matches.Select(m => new MatchDTO(m)).ToArray());
         }
 
         /* GET: api/matches/{id} */
@@ -36,40 +34,39 @@ namespace FDP_App.Controllers
         [ResponseType(typeof(MatchDTO))]
         public IHttpActionResult GetMatch(int id)
         {
-            Match match = _matchService.GetById(id);
+            Match match = db.Matches.Where(m => m.MatchId == id).FirstOrDefault();
             if (match == null)
             {
                 return NotFound();
             }
 
-            return Ok(_asDto.GetMatchAsDTO(match));
+            return Ok(new MatchDTO(match));
         }
 
         /* PUT: api/Matches/{id} */
         [Route("{id}")]
         [ResponseType(typeof(MatchDTO))]
-        public IHttpActionResult PutMatch(int id, MatchDTO matchDto)
+        [HttpPut]
+        public IHttpActionResult UpdateMatch(int id, MatchDTO matchDto)
         {
             if (id != matchDto.match_id)
             {
                 return BadRequest();
             }
 
-            Match match = new Match();
-            match.MatchId = matchDto.match_id;
-            match.GameId = matchDto.game_id;
-            match.HomeTeam = matchDto.home_team;
-            match.AwayTeam = matchDto.away_team;
+            var match = db.Matches.Where(m => m.MatchId == id).FirstOrDefault();
+            if (match == null)
+            {
+                return NotFound();
+            }
+
             match.HomeResult = matchDto.home_result;
             match.AwayResult = matchDto.away_result;
-            match.MatchDate = matchDto.match_date.ToLocalTime();
-            
+            match.MatchDate = matchDto.match_date.ToLocalTime();        
             match.IsConfirm = matchDto.is_confirm;
+            db.SaveChanges();       
 
-
-            Match existingMatch = _matchService.Update(match, id);           
-
-            return Ok(_asDto.GetMatchAsDTO(existingMatch));
+            return Ok(new MatchDTO(match));
         }
 
     }
