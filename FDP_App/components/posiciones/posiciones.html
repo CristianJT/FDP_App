@@ -108,12 +108,14 @@
                     <div ng-bind="posiciones.getCiudad(partido.home_team)"></div>
                 </div>
                 <div flex="25" layout="row" layout-align="center center"><div flex="60">{{partido.home_team | uppercase}}</div></div>
-                <div flex layout="row" layout-align="center center"><input type="number" min="0" max="15" ng-model="resLocal" /></div>
+                <div ng-hide="partido.home_result == null" flex>{{partido.home_result}}</div>
+                <div ng-show="partido.home_result == null" flex layout="row" layout-align="center center"><input type="number" min="0" max="15" ng-model="resLocal" /></div>
                 <div flex="5" layout="row" layout-align="center center"><div>-</div></div>
-                <div flex layout="row" layout-align="center center"><input type="number" min="0" max="15" ng-model="resVisitante" /></div>
+                <div ng-hide="partido.away_result == null" flex>{{partido.away_result}}</div>
+                <div ng-show="partido.away_result == null" flex layout="row" layout-align="center center"><input type="number" min="0" max="15" ng-model="resVisitante" /></div>
                 <div flex="25" layout="row" layout-align="center center"><div flex="60">{{partido.away_team | uppercase}}</div></div>
                 <div flex="5" layout="row" layout-align="center center">
-                    <button class="btn btn-default glyphicon glyphicon-ok" ng-click="posiciones.confirmarResultado(resLocal, resVisitante)"></button>
+                    <button class="btn btn-default glyphicon glyphicon-ok" ng-click="posiciones.confirmarResultado(partido, resLocal, resVisitante)"></button>
                 </div>
             </div>
           

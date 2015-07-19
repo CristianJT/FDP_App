@@ -8,8 +8,6 @@ namespace Entities.Models
         {
             this.MatchDate = DateTime.Today;
             this.IsConfirm = false;
-            this.HomeResult = 0;
-            this.AwayResult = 0;
         }
 
         public int MatchId { get; set; }
@@ -18,8 +16,8 @@ namespace Entities.Models
         public bool IsConfirm { get; set; }
         public string HomeTeam { get; set; }
         public string AwayTeam { get; set; }
-        public int HomeResult { get; set; }
-        public int AwayResult { get; set; }
+        public int? HomeResult { get; set; }
+        public int? AwayResult { get; set; }
 
         public virtual Game Game { get; set; }
     }

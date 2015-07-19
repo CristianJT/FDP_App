@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('FDPApp.posiciones', [])
-        .controller('PosicionesController', ['$routeParams', 'leaguesData', 'gamesLeagueData', 'gamesData', 'teamsData', 'matchesData', PosicionesController]);
+        .controller('PosicionesController', ['$routeParams', 'leaguesData', 'gamesLeagueData', 'gamesData', 'teamsData', 'matchesData', 'leaguesService', PosicionesController]);
 
-    function PosicionesController($routeParams, leaguesData, gamesLeagueData, gamesData, teamsData, matchesData) {
+    function PosicionesController($routeParams, leaguesData, gamesLeagueData, gamesData, teamsData, matchesData, leaguesService) {
         var vm = this;
         vm.torneo = leaguesData.get({ id: $routeParams.id });
         vm.equipos = teamsData.query();
@@ -25,6 +25,14 @@
             for (i = 0; i < vm.equipos.length; i++) {
                 if (vm.equipos[i].name == teamName)
                     return vm.equipos[i].city;
+            }
+        }
+
+        function getTeamId(teamName) {
+            var i;
+            for (i = 0; i < vm.equipos.length; i++) {
+                if (vm.equipos[i].name == teamName)
+                    return vm.equipos[i].teamId;
             }
         }
 
@@ -93,8 +101,28 @@
                 });                          
         }
         
-        vm.confirmarResultado = function (local, visitante) {
-            alert("LOCAL: " + local + " " + "VISITANTE: " + visitante);
+        vm.confirmarResultado = function (partido, local, visitante) {
+            partido.home_result = local;
+            partido.away_result = visitante;
+
+            matchesData.update(partido.match_id, partido).then(
+                function (result) {
+
+                });
+
+            //leaguesService.teams.get($routeParams.id, getTeamId(partido.home_team)).then(
+            //    function (result) {
+            //        var equipoLocal = result.data;
+            //        equipoLocal.played += 1;
+            //        equipoLocal.goalsFor += local;
+            //        equipoLocal.goalsAgainst += visitante;
+
+            //        leaguesService.teams.update(equipoLocal.leagueId, equipoLocal.teamId, equipoLocal).then(
+            //            function (result) {
+
+            //            });
+            //    })
+           
         }
 
     }

@@ -172,8 +172,8 @@ namespace FDP_App.DTOs
         public bool is_confirm { get; set; }
         public string home_team { get; set; }
         public string away_team { get; set; }
-        public int home_result { get; set; }
-        public int away_result { get; set; }
+        public int? home_result { get; set; }
+        public int? away_result { get; set; }
     }
 
     public class TeamsDTO
