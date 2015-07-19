@@ -16,6 +16,7 @@ namespace FDP_App.Controllers
     {
         private FDPAppContext db = new FDPAppContext();
 
+        /* GET: api/leagues/{leagueId}/teams */
         [Route("")]
         [ResponseType(typeof(TeamsLeagueDTO))]
         public IHttpActionResult GetLeagueTeams(int leagueId)
@@ -24,6 +25,7 @@ namespace FDP_App.Controllers
             return Ok(teams.Select(t => new TeamsLeagueDTO(t)).ToArray());
         }
 
+        /* GET: api/leagues/{leagueId}/teams/{teamId} */
         [Route("{teamId}")]
         [ResponseType(typeof(TeamsLeagueDTO))]
         public IHttpActionResult GetLeagueTeam(int leagueId, int teamId)
@@ -37,12 +39,13 @@ namespace FDP_App.Controllers
             return Ok(new TeamsLeagueDTO(team));
         }
 
+        /* PUT: api/leagues/{leagueId}/teams/{teamId} */
         [Route("{teamId}")]
         [ResponseType(typeof(TeamsLeagueDTO))]
         [HttpPut]
         public IHttpActionResult UpdateLeagueTeam(int leagueId, int teamId, TeamsLeagueDTO teamDto)
         {
-            if (teamId != teamDto.TeamId)
+            if (teamId != teamDto.team_id)
             {
                 return BadRequest();
             }
@@ -53,14 +56,14 @@ namespace FDP_App.Controllers
                 return NotFound();
             }
 
-            lt.Played = teamDto.Played;
-            lt.Points = teamDto.Points;
-            lt.Won = teamDto.Won;
-            lt.Draws = teamDto.Draws;
-            lt.Lost = teamDto.Lost;
-            lt.GoalsFor = teamDto.GoalsFor;
-            lt.GoalsAgainst = teamDto.GoalsAgainst;
-            lt.GoalDifference = teamDto.GoalDifference;
+            lt.Played = teamDto.played;
+            lt.Points = teamDto.points;
+            lt.Won = teamDto.won;
+            lt.Draws = teamDto.draws;
+            lt.Lost = teamDto.lost;
+            lt.GoalsFor = teamDto.goals_for;
+            lt.GoalsAgainst = teamDto.goals_against;
+            lt.GoalDifference = teamDto.goal_difference;
             db.SaveChanges();
 
             return Ok(new TeamsLeagueDTO(lt));

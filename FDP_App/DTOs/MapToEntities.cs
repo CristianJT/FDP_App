@@ -19,16 +19,16 @@ namespace FDP_App.DTOs
             foreach (var leagueTeamDTO in leagueDTO.Teams)
             {
                 LeagueTeam leagueTeam = new LeagueTeam();
-                leagueTeam.LeagueId = leagueTeamDTO.LeagueId;
-                leagueTeam.TeamId = leagueTeamDTO.TeamId;
-                leagueTeam.Points = leagueTeamDTO.Points;
-                leagueTeam.Played = leagueTeamDTO.Played;
-                leagueTeam.Won = leagueTeamDTO.Won;
-                leagueTeam.Draws = leagueTeamDTO.Draws;
-                leagueTeam.Lost = leagueTeamDTO.Lost;
-                leagueTeam.GoalsAgainst = leagueTeamDTO.GoalsAgainst;
-                leagueTeam.GoalsFor = leagueTeamDTO.GoalsFor;
-                leagueTeam.GoalDifference = leagueTeamDTO.GoalDifference;
+                leagueTeam.LeagueId = leagueTeamDTO.league_id;
+                leagueTeam.TeamId = leagueTeamDTO.team_id;
+                leagueTeam.Points = leagueTeamDTO.points;
+                leagueTeam.Played = leagueTeamDTO.played;
+                leagueTeam.Won = leagueTeamDTO.won;
+                leagueTeam.Draws = leagueTeamDTO.draws;
+                leagueTeam.Lost = leagueTeamDTO.lost;
+                leagueTeam.GoalsAgainst = leagueTeamDTO.goals_against;
+                leagueTeam.GoalsFor = leagueTeamDTO.goals_for;
+                leagueTeam.GoalDifference = leagueTeamDTO.goal_difference;
 
                 league.Teams.Add(leagueTeam);
             }

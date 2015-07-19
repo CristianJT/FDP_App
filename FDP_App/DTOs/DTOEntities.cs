@@ -69,35 +69,36 @@ namespace FDP_App.DTOs
     }
     public class TeamsLeagueDTO
     {
+        public TeamsLeagueDTO()
+        {
+
+        }
         public TeamsLeagueDTO(LeagueTeam tl)
         {
-            if (tl != null)
-            {
-                this.TeamId = tl.TeamId;
-                this.LeagueId = tl.LeagueId;
-                this.Name = tl.Team.Name;
-                this.Points = tl.Points;
-                this.Played = tl.Played;
-                this.Won = tl.Won;
-                this.Draws = tl.Draws;
-                this.Lost = tl.Lost;
-                this.GoalsFor = tl.GoalsFor;
-                this.GoalsAgainst = tl.GoalsAgainst;
-                this.GoalDifference = tl.GoalDifference;
-            }
+            this.team_id = tl.TeamId;
+            this.league_id = tl.LeagueId;
+            this.name = tl.Team.Name;
+            this.points = tl.Points;
+            this.played = tl.Played;
+            this.won = tl.Won;
+            this.draws = tl.Draws;
+            this.lost = tl.Lost;
+            this.goals_for = tl.GoalsFor;
+            this.goals_against = tl.GoalsAgainst;
+            this.goal_difference = tl.GoalDifference;
         }
 
-        public int TeamId { get; set; }
-        public int LeagueId { get; set; }
-        public string Name { get; set; }
-        public int Points { get; set; }
-        public int Played { get; set; }
-        public int Won { get; set; }
-        public int Draws { get; set; }
-        public int Lost { get; set; }
-        public int GoalsFor { get; set; }
-        public int GoalsAgainst { get; set; }
-        public int GoalDifference { get; set; }
+        public int team_id { get; set; }
+        public int league_id { get; set; }
+        public string name { get; set; }
+        public int points { get; set; }
+        public int played { get; set; }
+        public int won { get; set; }
+        public int draws { get; set; }
+        public int lost { get; set; }
+        public int goals_for { get; set; }
+        public int goals_against { get; set; }
+        public int goal_difference { get; set; }
     }
 
     public class FixtureLeagueDTO
@@ -151,19 +152,20 @@ namespace FDP_App.DTOs
     }
     public class MatchDTO
     {
+        public MatchDTO()
+        {
+
+        }
         public MatchDTO(Match m)
         {
-            if (m != null)
-            {
-                this.match_id = m.MatchId;
-                this.game_id = m.GameId;
-                this.match_date = m.MatchDate;
-                this.is_confirm = m.IsConfirm;
-                this.home_team = m.HomeTeam;
-                this.away_team = m.AwayTeam;
-                this.home_result = m.HomeResult;
-                this.away_result = m.AwayResult;
-            }
+            this.match_id = m.MatchId;
+            this.game_id = m.GameId;
+            this.match_date = m.MatchDate;
+            this.is_confirm = m.IsConfirm;
+            this.home_team = m.HomeTeam;
+            this.away_team = m.AwayTeam;
+            this.home_result = m.HomeResult;
+            this.away_result = m.AwayResult;
         }
 
         public int match_id { get; set; }
