@@ -32,10 +32,13 @@ appService.factory('gamesData', ['$resource', function ($resource) {
         });
 }]);
 
-appService.factory('matchesData', ['$resource', function ($resource) {
-
-    return $resource("/api/matches/:id", null,
-        {
-            'update': { method: 'PUT' }
-        });
+appService.factory('matchesData', ['$http', function ($http) {
+    return {
+        get: function (id) {
+            return $http.get('api/matches/' +id)
+        },
+        update: function (id, partido) {
+            return $http.put('api/matches/' +id, partido)
+        }
+    }
 }]);

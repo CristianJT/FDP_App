@@ -80,27 +80,29 @@
     <div layout-padding layout-margin ng-show="posiciones.fechaActual.gameNumber <= posiciones.fechas.length">
         <h2>Fecha {{posiciones.fechaActual.gameNumber}}</h2>
         <md-divider></md-divider>
-        <md-list-item ng-repeat="partido in posiciones.fechaActual.matches" layout="row" layout-padding>
+        <md-list-item ng-repeat="partido in posiciones.fechaActual.matches | orderBy: 'match_date'" layout="row" layout-padding>
 
             <!-- FECHA Y HORA SIN CONFIRMAR -->
-            <div ng-show="partido.is_confirm == false" layout="row" layout-fill>          
+            <div ng-if="partido.is_confirm == false" layout="row" layout-fill>          
                 <div flex="20" layout="row" layout-align="center center"><div flex="60">{{partido.home_team | uppercase}}</div></div>
                 <div flex="5" layout="row" layout-align="center center"><div>vs</div></div>
                 <div flex="20" layout="row" layout-align="center center"><div flex="60">{{partido.away_team | uppercase}}</div></div>    
                 <span flex></span>
-                <div flex="20" layout="row" layout-align="center center"><input type="date" class="form-control" ng-model="fecha" /></div>
-                <timepicker layout-margin flex="20" ng-model="hora" minute-step="5" show-meridian="false" mousewheel="false"></timepicker> 
+                <div flex="20" layout="row" layout-align="center center"><input type="date" class="form-control" ng-model="partido.fecha" /></div>
+                <timepicker layout-margin flex="20" ng-model="partido.hora" minute-step="5" show-meridian="false" mousewheel="false"></timepicker> 
                 <span flex></span>
-                <div flex="5" layout="row" layout-align="center center"><button class="btn btn-default glyphicon glyphicon-ok" ng-click="posiciones.confirmarFechaHora(partido.match_id, fecha, hora)"></button></div>
+                <div flex="5" layout="row" layout-align="center center">
+                    <button class="btn btn-default glyphicon glyphicon-ok" ng-click="posiciones.confirmarFechaHora(partido, partido.fecha, partido.hora)"></button>
+                </div>
             </div>
 
             <!-- FECHA Y HORA CONFIRMADA  --> 
-            <div ng-show="partido.is_confirm == true" layout="row" layout-fill>
+            <div ng-if="partido.is_confirm" layout="row" layout-fill>
                 <div flex="25" layout="column" layout-margin>
                     <div layout="row">
                         <div>{{partido.match_date | date: 'dd/MM'}}</div>
                         <div> - </div>
-                        <div>{{partido.match_time | date: 'HH:mm'}}</div>
+                        <div>{{partido.match_date | date: 'HH:mm'}}</div>
                     </div>
                     <div ng-bind="posiciones.getEstadio(partido.home_team)"></div>
                     <div ng-bind="posiciones.getCiudad(partido.home_team)"></div>
@@ -110,7 +112,9 @@
                 <div flex="5" layout="row" layout-align="center center"><div>-</div></div>
                 <div flex layout="row" layout-align="center center"><input type="number" min="0" max="15" ng-model="resVisitante" /></div>
                 <div flex="25" layout="row" layout-align="center center"><div flex="60">{{partido.away_team | uppercase}}</div></div>
-                <div flex="5" layout="row" layout-align="center center"><button class="btn btn-default glyphicon glyphicon-ok" ng-click="posiciones.confirmarResultado(resLocal, resVisitante)"></button></div>
+                <div flex="5" layout="row" layout-align="center center">
+                    <button class="btn btn-default glyphicon glyphicon-ok" ng-click="posiciones.confirmarResultado(resLocal, resVisitante)"></button>
+                </div>
             </div>
           
             <md-divider></md-divider>
@@ -118,7 +122,7 @@
         <md-button ng-click="posiciones.finalizarFecha(posiciones.fechaActual.gameId, posiciones.fechaActual.gameNumber)">Finalizar Fecha</md-button>
     </div>
 
-    <div ng-show="posiciones.fechaAnterior.gameNumber == posiciones.torneo.fixture.totalGames">
+    <div ng-if="posiciones.fechaAnterior.gameNumber == posiciones.torneo.fixture.totalGames">
         <md-button ng-click="posiciones.finalizarTorneo()">Finalizar Torneo</md-button>
     </div>
 

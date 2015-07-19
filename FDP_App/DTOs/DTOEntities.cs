@@ -157,8 +157,7 @@ namespace FDP_App.DTOs
             {
                 this.match_id = m.MatchId;
                 this.game_id = m.GameId;
-                this.match_date = m.MatchDate.Date;
-                this.match_time = m.MatchDate;
+                this.match_date = m.MatchDate;
                 this.is_confirm = m.IsConfirm;
                 this.home_team = m.HomeTeam;
                 this.away_team = m.AwayTeam;
@@ -170,7 +169,6 @@ namespace FDP_App.DTOs
         public int match_id { get; set; }
         public int game_id { get; set; }
         public DateTime match_date { get; set; }
-        public DateTime match_time { get; set; }
         public bool is_confirm { get; set; }
         public string home_team { get; set; }
         public string away_team { get; set; }

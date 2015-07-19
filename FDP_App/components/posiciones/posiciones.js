@@ -27,10 +27,15 @@
                     return vm.equipos[i].city;
             }
         }
-        //vm.fecha = gamesData.get({ id: 20 }, function () {
-        //    vm.fecha.isCurrent = true;
-        //    vm.fecha.$update({ id: 20 });
-        //});
+
+        /* Función: setear fecha (fecha actual) y hora (15hs) de partidos */
+        function setFechaHoraDefault() {
+            var j = 0;
+            for (j = 0; j < vm.fechaActual.matches.length; j++) {
+                vm.fechaActual.matches[j].fecha = new Date();
+                vm.fechaActual.matches[j].hora = new Date(0, 0, 0, 15, 0, 0);
+            }
+        }
 
         /* Obtener todas las fechas del torneo */
         vm.fechas = gamesLeagueData.query({ id: $routeParams.id }, function () {
@@ -38,6 +43,7 @@
             for (i = 0; i < vm.fechas.length; i++) {
                 if (vm.fechas[i].isCurrent == true) {
                     vm.fechaActual = vm.fechas[i];
+                    setFechaHoraDefault();
                     if (i > 0)
                         vm.fechaAnterior = vm.fechas[i - 1];
                     if (i < vm.fechas.length - 1)
@@ -59,6 +65,7 @@
 
             if (fechaNumber < vm.fechas.length) {
                 vm.fechaActual = gamesData.get({ id: fechaId + 1 }, function () {
+                    setFechaHoraDefault();
                     vm.fechaActual.isCurrent = true;
                     vm.fechaActual.$update({ id: fechaId + 1 });
                 });
@@ -76,19 +83,14 @@
             alert("El torneo: " + vm.torneo.name + " " + vm.torneo.season + " ha finalizado");
         }
        
-        
-        vm.confirmarFechaHora = function (matchId, fecha, hora) {
-            vm.partido = matchesData.get({ id: matchId }, function () {
-                vm.partido.match_date = fecha;
-                vm.partido.match_time = hora;
-                vm.partido.is_confirm = true;
-                vm.partido.$update({ id: matchId }, function () {
-                    
-                });
-            });
-            
-           
-            
+        /* Función: confirmar fecha y hora de partidos */
+        vm.confirmarFechaHora = function (partido, fecha, hora) {
+            partido.match_date = new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate(), hora.getHours(), hora.getMinutes(), 0);
+            partido.is_confirm = true;
+            matchesData.update(partido.match_id, partido).then(
+                function (result) {
+
+                });                          
         }
         
         vm.confirmarResultado = function (local, visitante) {

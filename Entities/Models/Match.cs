@@ -6,7 +6,7 @@ namespace Entities.Models
     {
         public Match()
         {
-            this.MatchDate = DateTime.Now;
+            this.MatchDate = DateTime.Today;
             this.IsConfirm = false;
             this.HomeResult = 0;
             this.AwayResult = 0;

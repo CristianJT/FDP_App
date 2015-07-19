@@ -54,8 +54,6 @@ namespace FDP_App.Controllers
             {
                 return BadRequest();
             }
-            DateTime date = matchDto.match_date.Date;
-            TimeSpan time = matchDto.match_time.ToLocalTime().TimeOfDay;
 
             Match match = new Match();
             match.MatchId = matchDto.match_id;
@@ -64,7 +62,7 @@ namespace FDP_App.Controllers
             match.AwayTeam = matchDto.away_team;
             match.HomeResult = matchDto.home_result;
             match.AwayResult = matchDto.away_result;
-            match.MatchDate = date + time;
+            match.MatchDate = matchDto.match_date.ToLocalTime();
             
             match.IsConfirm = matchDto.is_confirm;
 
