@@ -1,0 +1,70 @@
+﻿using Data;
+using Entities.Models;
+using FDP_App.DTOs;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
+
+namespace FDP_App.Controllers
+{
+    [RoutePrefix("api/leagues/{leagueId}/teams")]
+    public class LeagueTeamsController : ApiController
+    {
+        private FDPAppContext db = new FDPAppContext();
+
+        [Route("")]
+        [ResponseType(typeof(TeamsLeagueDTO))]
+        public IHttpActionResult GetLeagueTeams(int leagueId)
+        {
+            var teams = db.LeagueTeams.Where(t => t.LeagueId == leagueId).ToArray();
+            return Ok(teams.Select(t => new TeamsLeagueDTO(t)).ToArray());
+        }
+
+        [Route("{teamId}")]
+        [ResponseType(typeof(TeamsLeagueDTO))]
+        public IHttpActionResult GetLeagueTeam(int leagueId, int teamId)
+        {
+            var team = db.LeagueTeams.Where(t =>  t.LeagueId == leagueId && t.TeamId == teamId).FirstOrDefault();
+            if (team == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(new TeamsLeagueDTO(team));
+        }
+
+        [Route("{teamId}")]
+        [ResponseType(typeof(TeamsLeagueDTO))]
+        [HttpPut]
+        public IHttpActionResult UpdateLeagueTeam(int leagueId, int teamId, TeamsLeagueDTO teamDto)
+        {
+            if (teamId != teamDto.TeamId)
+            {
+                return BadRequest();
+            }
+
+            var lt = db.LeagueTeams.Where(x => x.LeagueId == leagueId && x.TeamId == teamId).FirstOrDefault();
+            if (lt == null)
+            {
+                return NotFound();
+            }
+
+            lt.Played = teamDto.Played;
+            lt.Points = teamDto.Points;
+            lt.Won = teamDto.Won;
+            lt.Draws = teamDto.Draws;
+            lt.Lost = teamDto.Lost;
+            lt.GoalsFor = teamDto.GoalsFor;
+            lt.GoalsAgainst = teamDto.GoalsAgainst;
+            lt.GoalDifference = teamDto.GoalDifference;
+            db.SaveChanges();
+
+            return Ok(new TeamsLeagueDTO(lt));
+
+        }
+    }
+}

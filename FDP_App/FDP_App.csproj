@@ -137,6 +137,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\LeaguesController.cs" />
+    <Compile Include="Controllers\LeagueTeamsController.cs" />
     <Compile Include="Controllers\MatchesController.cs" />
     <Compile Include="Controllers\TeamsController.cs" />
     <Compile Include="DTOs\DTOEntities.cs" />
