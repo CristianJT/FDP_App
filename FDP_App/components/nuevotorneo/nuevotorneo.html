@@ -19,11 +19,11 @@
                 <!--FECHA INICIO/FIN-->
                 <div layout="row" layout-sm="column" layout-align="space-between center" layout-padding>
                     <div flex="40" flex-sm="90" layout="row">
-                        <input type="date" class="form-control" ng-model="nuevotorneo.torneo.startDate" placeholder="FECHA INICIO"/> <!-- datepicker-popup="dd - MM - yyyy"  is-open="opened1" show-button-bar="false"--> 
+                        <input type="date" class="form-control" ng-model="nuevotorneo.torneo.start_date" placeholder="FECHA INICIO"/> <!-- datepicker-popup="dd - MM - yyyy"  is-open="opened1" show-button-bar="false"--> 
                         <!--<button type="button" class="btn btn-default" ng-click="nuevotorneo.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>-->
                     </div>
                     <div flex="40" flex-sm="90" layout="row">
-                        <input type="date" class="form-control" ng-model="nuevotorneo.torneo.finishDate" placeholder="FECHA FINALIZACIÓN" min="{{nuevotorneo.torneo.startDate}}"/> <!-- datepicker-popup="dd - MM - yyyy" is-open="opened2" show-button-bar="false" min-date="nuevotorneo.torneo.startDate" --> 
+                        <input type="date" class="form-control" ng-model="nuevotorneo.torneo.finish_date" placeholder="FECHA FINALIZACIÓN" min="{{nuevotorneo.torneo.start_date}}"/> <!-- datepicker-popup="dd - MM - yyyy" is-open="opened2" show-button-bar="false" min-date="nuevotorneo.torneo.startDate" --> 
                         <!--<button type="button" class="btn btn-default" ng-click="nuevotorneo.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>-->
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                 <div layout="row" layout-padding>
                     <md-input-container flex="50" flex-sm="100">
                         <label>Descensos</label>
-                        <input type="number" ng-model="nuevotorneo.torneo.relegatedTeams" min="0" max="10" />
+                        <input type="number" ng-model="nuevotorneo.torneo.relegated_teams" min="0" max="10" />
                     </md-input-container>
                 </div>  
                 <div layout="row" layout-padding ng-show="nuevotorneo.totalFechas">
