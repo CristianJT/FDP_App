@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Entities.Models
 {
@@ -10,6 +11,7 @@ namespace Entities.Models
             this.IsConfirm = false;
         }
 
+        [Key]
         public int MatchId { get; set; }
         public int GameId { get; set; }
         public DateTime MatchDate { get; set; }

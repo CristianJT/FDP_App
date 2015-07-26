@@ -99,6 +99,10 @@
     <Compile Include="Migrations\201507192121532_updateMatchResult.Designer.cs">
       <DependentUpon>201507192121532_updateMatchResult.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507262224228_toDataAnnotation.cs" />
+    <Compile Include="Migrations\201507262224228_toDataAnnotation.Designer.cs">
+      <DependentUpon>201507262224228_toDataAnnotation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BaseInterface.cs" />
@@ -154,6 +158,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507192121532_updateMatchResult.resx">
       <DependentUpon>201507192121532_updateMatchResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507262224228_toDataAnnotation.resx">
+      <DependentUpon>201507262224228_toDataAnnotation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

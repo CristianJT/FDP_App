@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Models
 {
@@ -16,7 +18,12 @@ namespace Entities.Models
             this.GoalDifference = 0;
         }
 
+        [Key]
+        [Column(Order = 1)]
         public int LeagueId { get; set; }
+
+        [Key]
+        [Column(Order = 2)]
         public int TeamId { get; set; }
 
         public int Points { get; set; }

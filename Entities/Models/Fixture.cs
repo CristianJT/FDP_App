@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Models
 {
@@ -10,6 +12,7 @@ namespace Entities.Models
             this.Games = new HashSet<Game>();
         }
 
+        [Key, ForeignKey("League")]
         public int LeagueId { get; set; }
         public int TotalGames { get; set; }
         public int SpecialGame { get; set; }
