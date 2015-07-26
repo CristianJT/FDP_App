@@ -52,7 +52,7 @@
 
         vm.confirmarTorneo = function () {
 
-            vm.torneo.isCurrent = true;
+            vm.torneo.is_current = true;
             vm.torneo.champion = null;
             vm.torneo.teams = [];
 
@@ -226,9 +226,9 @@
             }
             vm.torneo.fixture.games[0].isCurrent = true;
             vm.torneo.$save(function () {
-                vm.torneo.startDate = new Date(vm.torneo.startDate);
-                vm.torneo.finishDate = new Date(vm.torneo.finishDate);
-                $location.path("/torneo/" + vm.torneo.leagueId);
+                vm.torneo.start_date = new Date(vm.torneo.start_date);
+                vm.torneo.finish_date = new Date(vm.torneo.finish_date);
+                $location.path("/torneo/" + vm.torneo.league_id);
             });
         }
 

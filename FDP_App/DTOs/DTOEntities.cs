@@ -6,66 +6,68 @@ namespace FDP_App.DTOs
 {
     public class LeaguesDTO
     {
+        public LeaguesDTO()
+        {
+
+        }
         public LeaguesDTO(League l)
         {
-            if (l != null)
-            {
-                this.LeagueId = l.LeagueId;
-                this.Name = l.Name;
-                this.Season = l.Season;
-                this.StartDate = l.StartDate;
-                this.FinishDate = l.FinishDate;
-                this.IsCurrent = l.IsCurrent;
-                this.Champion = l.Champion;
-                this.RelegatedTeams = l.RelegatedTeams;
-            }
+            this.league_id = l.LeagueId;
+            this.name = l.Name;
+            this.season = l.Season;
+            this.start_date = l.StartDate;
+            this.finish_date = l.FinishDate;
+            this.is_current = l.IsCurrent;
+            this.champion = l.Champion;
+            this.relegated_teams = l.RelegatedTeams;
         }
 
-        public int LeagueId { get; set; }
-        public string Name { get; set; }
-        public int Season { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime FinishDate { get; set; }
-        public bool IsCurrent { get; set; }
-        public string Champion { get; set; }
-        public int RelegatedTeams { get; set; }
+        public int league_id { get; set; }
+        public string name { get; set; }
+        public int season { get; set; }
+        public DateTime start_date { get; set; }
+        public DateTime finish_date { get; set; }
+        public bool is_current { get; set; }
+        public string champion { get; set; }
+        public int relegated_teams { get; set; }
     }
     public class LeaguesDetailDTO
     {
+        public LeaguesDetailDTO()
+        {
+
+        }
         public LeaguesDetailDTO(League l)
         {
-            if (l != null)
+            this.league_id = l.LeagueId;
+            this.name = l.Name;
+            this.season = l.Season;
+            this.start_date = l.StartDate;
+            this.finish_date = l.FinishDate;
+            this.is_current = l.IsCurrent;
+            this.champion = l.Champion;
+            this.relegated_teams = l.RelegatedTeams;
+
+            List<TeamsLeagueDTO> teamList = new List<TeamsLeagueDTO>();
+            foreach (LeagueTeam t in l.Teams)
             {
-                this.LeagueId = l.LeagueId;
-                this.Name = l.Name;
-                this.Season = l.Season;
-                this.StartDate = l.StartDate;
-                this.FinishDate = l.FinishDate;
-                this.IsCurrent = l.IsCurrent;
-                this.Champion = l.Champion;
-                this.RelegatedTeams = l.RelegatedTeams;
-
-                List<TeamsLeagueDTO> teamList = new List<TeamsLeagueDTO>();
-                foreach (LeagueTeam t in l.Teams)
-                {
-                    teamList.Add(new TeamsLeagueDTO(t));
-                }
-                this.Teams = teamList.ToArray();
-
-                this.Fixture = new FixtureLeagueDTO(l.Fixture);
+                teamList.Add(new TeamsLeagueDTO(t));
             }
+            this.teams = teamList.ToArray();
+
+            this.fixture = new FixtureLeagueDTO(l.Fixture);
         }
 
-        public int LeagueId { get; set; }
-        public string Name { get; set; }
-        public int Season { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime FinishDate { get; set; }
-        public bool IsCurrent { get; set; }
-        public string Champion { get; set; }
-        public int RelegatedTeams { get; set; }
-        public TeamsLeagueDTO[] Teams { get; set; }
-        public FixtureLeagueDTO Fixture { get; set; }
+        public int league_id { get; set; }
+        public string name { get; set; }
+        public int season { get; set; }
+        public DateTime start_date { get; set; }
+        public DateTime finish_date { get; set; }
+        public bool is_current { get; set; }
+        public string champion { get; set; }
+        public int relegated_teams { get; set; }
+        public TeamsLeagueDTO[] teams { get; set; }
+        public FixtureLeagueDTO fixture { get; set; }
     }
     public class TeamsLeagueDTO
     {

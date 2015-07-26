@@ -11,24 +11,23 @@ using System.Web.Http.Description;
 using Data.Services;
 using Entities.Models;
 using FDP_App.DTOs;
+using Data;
 
 namespace FDP_App.Controllers
 {
     [RoutePrefix("api/leagues")]
     public class LeaguesController : ApiController
     {
-        /* Iniciar Servicios */
-        private readonly LeagueService _leagueService = new LeagueService();
-        private readonly MapToDTO _asDto = new MapToDTO();
-        private readonly MapToEntities _asEntity = new MapToEntities();
+        private FDPAppContext db = new FDPAppContext();
        
         /* GET: api/leagues */
         [Route("")]
         [HttpGet]
+        [ResponseType(typeof(LeaguesDTO))]
         public IHttpActionResult GetLeagues()
         {
-            var leagues = _leagueService.GetAll();
-            return Ok(_asDto.GetAllLeaguesAsDTO(leagues));
+            var leagues = db.Leagues.ToArray();
+            return Ok(leagues.Select(l => new LeaguesDTO(l)).ToArray());
         }
 
         /* GET: api/leagues/{id} */
@@ -37,49 +36,44 @@ namespace FDP_App.Controllers
         [ResponseType(typeof(LeaguesDetailDTO))]
         public IHttpActionResult GetLeague(int id)
         {
-            League league = _leagueService.GetById(id);
+            var league = db.Leagues.Where(l => l.LeagueId == id).FirstOrDefault();
             if (league == null)
             {
                 return NotFound();
             }
-            return Ok(_asDto.GetLeagueAsDTO(league));
+
+            return Ok(new LeaguesDetailDTO(league));
         }
 
         /* PUT: api/leagues/{id} */
         [Route("{id}")]
         [HttpPut]
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutLeague(int id, League league)
+        [ResponseType(typeof(LeaguesDTO))]
+        public IHttpActionResult UpdateLeague(int id, LeaguesDTO leagueDto)
         {
-            if (id != league.LeagueId)
+            if (id != leagueDto.league_id)
             {
                 return BadRequest();
             }
 
-            try
+            var league = db.Leagues.Where(l => l.LeagueId == id).FirstOrDefault();
+            if (league == null)
             {
-                _leagueService.Update(league, id);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_leagueService.Exists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            league.Champion = leagueDto.champion;
+            league.IsCurrent = leagueDto.is_current;
+            db.SaveChanges();
+
+            return Ok(new LeaguesDTO(league));
         }
 
         /* POST: api/leagues */
         [Route("")]
         [HttpPost]
         [ResponseType(typeof(LeaguesDetailDTO))]
-        public IHttpActionResult PostLeague(LeaguesDetailDTO leagueDTO)
+        public IHttpActionResult CreateLeague(LeaguesDetailDTO leagueDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -87,11 +81,12 @@ namespace FDP_App.Controllers
             }
 
             League league = new League();
-            _asEntity.LeagueDTOtoEntity(ref league, leagueDTO);
-            _leagueService.Add(league);
+            LeagueDTOtoEntity(ref league, leagueDTO);
 
-            leagueDTO.LeagueId = league.LeagueId;
-            return CreatedAtRoute("GetLeagueByIdRoute", new { id = league.LeagueId }, leagueDTO);
+            db.Leagues.Add(league);
+            db.SaveChanges();
+
+            return CreatedAtRoute("GetLeagueByIdRoute", new { id = league.LeagueId }, new LeaguesDetailDTO(league));
         }
 
         /* DELETE: api/leagues/{id} */
@@ -100,16 +95,81 @@ namespace FDP_App.Controllers
         [ResponseType(typeof(LeaguesDetailDTO))]
         public IHttpActionResult DeleteLeague(int id)
         {
-            League league = _leagueService.GetById(id);
+            var league = db.Leagues.Where(l => l.LeagueId == id).FirstOrDefault();
             if (league == null)
             {
                 return NotFound();
             }
 
-            _leagueService.Delete(id);
-            return Ok(_asDto.GetLeagueAsDTO(league));
+            db.Leagues.Remove(league);
+            db.SaveChanges();
+
+            return Ok(new LeaguesDetailDTO(league));
         }
 
+        public void LeagueDTOtoEntity(ref League league, LeaguesDetailDTO leagueDTO)
+        {
+            league.LeagueId = leagueDTO.league_id;
+            league.Season = leagueDTO.season;
+            league.Name = leagueDTO.name;
+            league.StartDate = leagueDTO.start_date;
+            league.FinishDate = leagueDTO.finish_date;
+            league.IsCurrent = leagueDTO.is_current;
+            league.Champion = leagueDTO.champion;
 
+            league.Teams = new List<LeagueTeam>();
+            foreach (var leagueTeamDTO in leagueDTO.teams)
+            {
+                LeagueTeam leagueTeam = new LeagueTeam();
+                leagueTeam.LeagueId = leagueTeamDTO.league_id;
+                leagueTeam.TeamId = leagueTeamDTO.team_id;
+                leagueTeam.Points = leagueTeamDTO.points;
+                leagueTeam.Played = leagueTeamDTO.played;
+                leagueTeam.Won = leagueTeamDTO.won;
+                leagueTeam.Draws = leagueTeamDTO.draws;
+                leagueTeam.Lost = leagueTeamDTO.lost;
+                leagueTeam.GoalsAgainst = leagueTeamDTO.goals_against;
+                leagueTeam.GoalsFor = leagueTeamDTO.goals_for;
+                leagueTeam.GoalDifference = leagueTeamDTO.goal_difference;
+
+                league.Teams.Add(leagueTeam);
+            }
+
+            league.Fixture = new Fixture();
+            league.Fixture.LeagueId = leagueDTO.fixture.LeagueId;
+            league.Fixture.TotalGames = leagueDTO.fixture.TotalGames;
+            league.Fixture.SpecialGame = leagueDTO.fixture.SpecialGame;
+            league.Fixture.League = league;
+
+            league.Fixture.Games = new List<Game>();
+            foreach (var gameDTO in leagueDTO.fixture.Games)
+            {
+                Game game = new Game();
+                game.GameId = gameDTO.GameId;
+                game.Fixture = league.Fixture;
+                game.GameNumber = gameDTO.GameNumber;
+                game.IsSpecialGame = gameDTO.IsSpecialGame;
+                game.IsCurrent = gameDTO.IsCurrent;
+
+                game.Matches = new List<Match>();
+                foreach (var matchDTO in gameDTO.Matches)
+                {
+                    Match match = new Match();
+                    match.MatchId = matchDTO.match_id;
+                    match.Game = game;
+                    match.MatchDate = matchDTO.match_date;
+                    match.IsConfirm = matchDTO.is_confirm;
+                    match.HomeTeam = matchDTO.home_team;
+                    match.AwayTeam = matchDTO.away_team;
+                    match.HomeResult = matchDTO.home_result;
+                    match.AwayResult = matchDTO.away_result;
+
+                    game.Matches.Add(match);
+
+                }
+
+                league.Fixture.Games.Add(game);
+            }
+        }
     }
 }
