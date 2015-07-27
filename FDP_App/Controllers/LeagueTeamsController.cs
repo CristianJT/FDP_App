@@ -45,7 +45,7 @@ namespace FDP_App.Controllers
         [HttpPut]
         public IHttpActionResult UpdateLeagueTeam(int leagueId, int teamId, TeamsLeagueDTO teamDto)
         {
-            if (teamId != teamDto.team_id)
+            if (teamId != teamDto.TeamId)
             {
                 return BadRequest();
             }
@@ -56,14 +56,14 @@ namespace FDP_App.Controllers
                 return NotFound();
             }
 
-            lt.Played = teamDto.played;
-            lt.Points = teamDto.points;
-            lt.Won = teamDto.won;
-            lt.Draws = teamDto.draws;
-            lt.Lost = teamDto.lost;
-            lt.GoalsFor = teamDto.goals_for;
-            lt.GoalsAgainst = teamDto.goals_against;
-            lt.GoalDifference = teamDto.goal_difference;
+            lt.Played = teamDto.Played;
+            lt.Points = teamDto.Points;
+            lt.Won = teamDto.Won;
+            lt.Draws = teamDto.Draws;
+            lt.Lost = teamDto.Lost;
+            lt.GoalsFor = teamDto.GoalsFor;
+            lt.GoalsAgainst = teamDto.GoalsAgainst;
+            lt.GoalDifference = teamDto.GoalDifference;
             db.SaveChanges();
 
             return Ok(new TeamsLeagueDTO(lt));

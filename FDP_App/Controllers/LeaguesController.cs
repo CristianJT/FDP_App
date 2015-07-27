@@ -86,7 +86,8 @@ namespace FDP_App.Controllers
             db.Leagues.Add(league);
             db.SaveChanges();
 
-            return CreatedAtRoute("GetLeagueByIdRoute", new { id = league.LeagueId }, new LeaguesDetailDTO(league));
+            leagueDTO.league_id = league.LeagueId;
+            return CreatedAtRoute("GetLeagueByIdRoute", new { id = league.LeagueId }, leagueDTO);
         }
 
         /* DELETE: api/leagues/{id} */
@@ -121,16 +122,16 @@ namespace FDP_App.Controllers
             foreach (var leagueTeamDTO in leagueDTO.teams)
             {
                 LeagueTeam leagueTeam = new LeagueTeam();
-                leagueTeam.LeagueId = leagueTeamDTO.league_id;
-                leagueTeam.TeamId = leagueTeamDTO.team_id;
-                leagueTeam.Points = leagueTeamDTO.points;
-                leagueTeam.Played = leagueTeamDTO.played;
-                leagueTeam.Won = leagueTeamDTO.won;
-                leagueTeam.Draws = leagueTeamDTO.draws;
-                leagueTeam.Lost = leagueTeamDTO.lost;
-                leagueTeam.GoalsAgainst = leagueTeamDTO.goals_against;
-                leagueTeam.GoalsFor = leagueTeamDTO.goals_for;
-                leagueTeam.GoalDifference = leagueTeamDTO.goal_difference;
+                leagueTeam.LeagueId = leagueTeamDTO.LeagueId;
+                leagueTeam.TeamId = leagueTeamDTO.TeamId;
+                leagueTeam.Points = leagueTeamDTO.Points;
+                leagueTeam.Played = leagueTeamDTO.Played;
+                leagueTeam.Won = leagueTeamDTO.Won;
+                leagueTeam.Draws = leagueTeamDTO.Draws;
+                leagueTeam.Lost = leagueTeamDTO.Lost;
+                leagueTeam.GoalsAgainst = leagueTeamDTO.GoalsAgainst;
+                leagueTeam.GoalsFor = leagueTeamDTO.GoalsFor;
+                leagueTeam.GoalDifference = leagueTeamDTO.GoalDifference;
 
                 league.Teams.Add(leagueTeam);
             }
@@ -157,7 +158,7 @@ namespace FDP_App.Controllers
                     Match match = new Match();
                     match.MatchId = matchDTO.match_id;
                     match.Game = game;
-                    match.MatchDate = matchDTO.match_date;
+                    //match.MatchDate = matchDTO.match_date;
                     match.IsConfirm = matchDTO.is_confirm;
                     match.HomeTeam = matchDTO.home_team;
                     match.AwayTeam = matchDTO.away_team;
