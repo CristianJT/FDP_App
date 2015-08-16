@@ -11,80 +11,69 @@ using System.Web.Http.Description;
 using Entities.Models;
 using Data.Services;
 using FDP_App.DTOs;
+using Data;
 
 namespace FDP_App.Controllers
 {
     [RoutePrefix("api/teams")]
     public class TeamsController : ApiController
     {
-        /* Iniciar Servicios */
-        private readonly TeamService _teamService = new TeamService();
-        private readonly MapToDTO _asDto = new MapToDTO();
-        private readonly MapToEntities _asEntity = new MapToEntities();
+        private FDPAppContext db = new FDPAppContext();
 
         /* GET: api/teams */
         [Route("")]
-        public IEnumerable<TeamsDTO> GetTeams()
+        [HttpGet]
+        [ResponseType(typeof(TeamsDTO))]
+        public IHttpActionResult GetTeams()
         {
-            var teams = _teamService.GetAll();
-            return _asDto.GetAllTeamsAsDTO(teams);
+            var teams = db.Teams.ToArray();
+            return Ok(teams.Select(t => new TeamsDTO(t)).ToArray());
         }
 
         /* GET: api/teams/{id} */
         [Route("{id}", Name = "GetTeamByIdRoute")]
+        [HttpGet]
         [ResponseType(typeof(TeamsDetailDTO))]
         public IHttpActionResult GetTeam(int id)
         {
-            Team team = _teamService.GetById(id);
+            var team = db.Teams.Where(t => t.TeamId == id).FirstOrDefault();
             if (team == null)
             {
                 return NotFound();
             }
 
-            return Ok(_asDto.GetTeamAsDTO(team));
+            return Ok(new TeamsDetailDTO(team));
         }
 
         /* PUT: api/teams/{id} */
         [Route("{id}")]
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutTeam(int id, Team team)
+        [HttpPut]
+        [ResponseType(typeof(TeamsDTO))]
+        public IHttpActionResult UpdateTeam(int id, TeamsDTO teamDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != team.TeamId)
+            if (id != teamDto.TeamId)
             {
                 return BadRequest();
             }
 
-            //Team team = _teamService.GetById(id);
-
-            try
+            var team = db.Teams.Where(t => t.TeamId == id).FirstOrDefault();
+            if (team == null)
             {
-               // _asEntity.TeamDTOtoEntity(ref team, teamDTO);
-                _teamService.Update(team, id);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_teamService.Exists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            team.IsTopDivision = teamDto.IsTopDivision;
+            team.Stadium = teamDto.Stadium;
+            db.SaveChanges();
+
+            return Ok(new TeamsDTO(team));
         }
 
         /* POST: api/teams */
         [Route("")]
+        [HttpPost]
         [ResponseType(typeof(TeamsDTO))]
-        public IHttpActionResult PostTeam(TeamsDTO teamDTO)
+        public IHttpActionResult CreateTeam(TeamsDTO teamDto)
         {
             if (!ModelState.IsValid)
             {
@@ -92,26 +81,39 @@ namespace FDP_App.Controllers
             }
 
             Team team = new Team();
-            _asEntity.TeamDTOtoEntity(ref team, teamDTO);
-            _teamService.Add(team);
+            TeamDTOtoEntity(ref team, teamDto);
 
-            teamDTO.TeamId = team.TeamId;
-            return CreatedAtRoute("GetTeamById", new { id = team.TeamId }, teamDTO);
+            db.Teams.Add(team);
+            db.SaveChanges();
+
+            teamDto.TeamId = team.TeamId;
+            return CreatedAtRoute("GetTeamById", new { id = team.TeamId }, teamDto);
         }
 
         /* DELETE: api/teams/{id} */
         [Route("{id}")]
-        [ResponseType(typeof(Team))]
+        [HttpDelete]
+        [ResponseType(typeof(TeamsDTO))]
         public IHttpActionResult DeleteTeam(int id)
         {
-            Team team = _teamService.GetById(id);
+            Team team = db.Teams.Where(t => t.TeamId == id).FirstOrDefault();
             if (team == null)
             {
                 return NotFound();
             }
 
-            _teamService.Delete(id);
-            return Ok(team);
+            db.Teams.Remove(team);
+            db.SaveChanges();
+            return Ok(new TeamsDTO(team));
+        }
+
+        public void TeamDTOtoEntity(ref Team team, TeamsDTO teamDTO)
+        {
+            team.TeamId = teamDTO.TeamId;
+            team.Name = teamDTO.Name;
+            team.Stadium = teamDTO.Stadium;
+            team.City = teamDTO.City;
+            team.IsTopDivision = teamDTO.IsTopDivision;
         }
 
     }

@@ -142,7 +142,6 @@
     <Compile Include="Controllers\TeamsController.cs" />
     <Compile Include="DTOs\DTOEntities.cs" />
     <Compile Include="DTOs\MapToDTO.cs" />
-    <Compile Include="DTOs\MapToEntities.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
