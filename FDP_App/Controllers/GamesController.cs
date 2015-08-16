@@ -18,67 +18,53 @@ namespace FDP_App.Controllers
     [RoutePrefix("api/games")]
     public class GamesController : ApiController
     {
-        /* Iniciar Servicios */
-        private readonly GameService _gameService = new GameService();
-        private readonly MapToDTO _asDto = new MapToDTO();
+        private FDPAppContext db = new FDPAppContext();
 
         /* GET: api/games */
         [Route("")]
-        public IEnumerable<GameDTO> GetGames()
+        [HttpGet]
+        [ResponseType(typeof(GameDTO))]
+        public IHttpActionResult GetGames()
         {
-            var games = _gameService.GetAll();
-            return _asDto.GetAllGamesAsDTO(games);
-        }
-
-        /* GET: api/leagues/:id/games */
-        [Route("~/api/leagues/{id}/games")]
-        public IEnumerable<GameDTO> GetLeagueGames(int id)
-        {
-            var games = _gameService.GetAll().Where(g => g.LeagueId == id );
-            return _asDto.GetAllGamesAsDTO(games);
-        }
+            var games = db.Games.ToArray();
+            return Ok (games.Select(g => new GameDTO(g)).ToArray());
+        }    
 
         /* GET: api/games/{id} */
         [Route("{id}")]
+        [HttpGet]
         [ResponseType(typeof(GameDTO))]
         public IHttpActionResult GetGame(int id)
         {
-            Game game = _gameService.GetById(id);
+            Game game = db.Games.Where(g => g.GameId == id).FirstOrDefault();
             if (game == null)
             {
                 return NotFound();
             }
 
-            return Ok(_asDto.GetGameAsDTO(game));
+            return Ok(new GameDTO(game));
         }
 
         /* PUT: api/games/{id} */
         [Route("{id}")]
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutGame(int id, Game game)
+        [ResponseType(typeof(GameDTO))]
+        public IHttpActionResult UpdateGame(int id, Game gameDto)
         {
-            if (!ModelState.IsValid)
+            if (id != gameDto.GameId)
             {
-                return BadRequest(ModelState);
+                return BadRequest();
             }
 
-            try
+            var game = db.Games.Where(g => g.GameId == id).FirstOrDefault();
+            if (game == null)
             {
-                _gameService.Update(game, id);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_gameService.Exists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            game.IsCurrent = gameDto.IsCurrent;
+            db.SaveChanges();
+
+            return Ok(new GameDTO(game));
         }
         
     }
