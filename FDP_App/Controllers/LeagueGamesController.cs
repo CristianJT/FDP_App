@@ -39,5 +39,28 @@ namespace FDP_App.Controllers
 
             return Ok(new GameDTO(game));
         }
+
+        /* PUT: api/leagues/{leagueId}/games/{gameNumber} */
+        [Route("gameNumber")]
+        [HttpPut]
+        [ResponseType(typeof(GameDTO))]
+        public IHttpActionResult UpdateLeagueGame(int leagueId, int gameNumber, GameDTO gameDto)
+        {
+            if (leagueId != gameDto.league_id || gameNumber != gameDto.game_number)
+            {
+                return BadRequest();
+            }
+
+            var game = db.Games.Where(g => g.LeagueId == leagueId && g.GameNumber == gameNumber).FirstOrDefault();
+            if (game == null)
+            {
+                return NotFound();
+            }
+
+            game.IsCurrent = gameDto.is_current;
+            db.SaveChanges();
+
+            return Ok(new GameDTO(game));
+        }
     }
 }
