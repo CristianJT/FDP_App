@@ -136,12 +136,12 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\GamesController.cs" />
+    <Compile Include="Controllers\LeagueGamesController.cs" />
     <Compile Include="Controllers\LeaguesController.cs" />
     <Compile Include="Controllers\LeagueTeamsController.cs" />
     <Compile Include="Controllers\MatchesController.cs" />
     <Compile Include="Controllers\TeamsController.cs" />
     <Compile Include="DTOs\DTOEntities.cs" />
-    <Compile Include="DTOs\MapToDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
