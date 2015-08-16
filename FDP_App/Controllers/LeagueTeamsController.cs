@@ -45,7 +45,7 @@ namespace FDP_App.Controllers
         [HttpPut]
         public IHttpActionResult UpdateLeagueTeam(int leagueId, int teamId, TeamsLeagueDTO teamDto)
         {
-            if (teamId != teamDto.TeamId)
+            if (teamId != teamDto.TeamId || leagueId != teamDto.LeagueId)
             {
                 return BadRequest();
             }

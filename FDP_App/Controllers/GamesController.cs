@@ -48,9 +48,9 @@ namespace FDP_App.Controllers
         /* PUT: api/games/{id} */
         [Route("{id}")]
         [ResponseType(typeof(GameDTO))]
-        public IHttpActionResult UpdateGame(int id, Game gameDto)
+        public IHttpActionResult UpdateGame(int id, GameDTO gameDto)
         {
-            if (id != gameDto.GameId)
+            if (id != gameDto.game_id)
             {
                 return BadRequest();
             }
@@ -61,7 +61,7 @@ namespace FDP_App.Controllers
                 return NotFound();
             }
 
-            game.IsCurrent = gameDto.IsCurrent;
+            game.IsCurrent = gameDto.is_current;
             db.SaveChanges();
 
             return Ok(new GameDTO(game));
