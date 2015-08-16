@@ -137,23 +137,23 @@ namespace FDP_App.Controllers
             }
 
             league.Fixture = new Fixture();
-            league.Fixture.LeagueId = leagueDTO.fixture.LeagueId;
-            league.Fixture.TotalGames = leagueDTO.fixture.TotalGames;
-            league.Fixture.SpecialGame = leagueDTO.fixture.SpecialGame;
+            league.Fixture.LeagueId = leagueDTO.fixture.league_id;
+            league.Fixture.TotalGames = leagueDTO.fixture.total_games;
+            league.Fixture.SpecialGame = leagueDTO.fixture.special_game;
             league.Fixture.League = league;
 
             league.Fixture.Games = new List<Game>();
-            foreach (var gameDTO in leagueDTO.fixture.Games)
+            foreach (var gameDTO in leagueDTO.fixture.games)
             {
                 Game game = new Game();
-                game.GameId = gameDTO.GameId;
+                game.GameId = gameDTO.game_id;
                 game.Fixture = league.Fixture;
-                game.GameNumber = gameDTO.GameNumber;
-                game.IsSpecialGame = gameDTO.IsSpecialGame;
-                game.IsCurrent = gameDTO.IsCurrent;
+                game.GameNumber = gameDTO.game_number;
+                game.IsSpecialGame = gameDTO.is_special_game;
+                game.IsCurrent = gameDTO.is_current;
 
                 game.Matches = new List<Match>();
-                foreach (var matchDTO in gameDTO.Matches)
+                foreach (var matchDTO in gameDTO.matches)
                 {
                     Match match = new Match();
                     match.MatchId = matchDTO.match_id;

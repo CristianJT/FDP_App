@@ -57,8 +57,8 @@
             vm.torneo.teams = [];
 
             vm.torneo.fixture = {};
-            vm.torneo.fixture.totalGames = vm.totalFechas;
-            vm.torneo.fixture.specialGame = vm.fechaEspecialNum;
+            vm.torneo.fixture.total_games = vm.totalFechas;
+            vm.torneo.fixture.special_game = vm.fechaEspecialNum;
 
             vm.torneo.fixture.games = [];
 
@@ -157,12 +157,12 @@
             var aux2 = [];
             cargarArray(aux1, aux2, vm.partidosEquipo, vm.equipoDistinto, vm.equipoElegido);
 
-            for (i = 0; i < vm.torneo.fixture.totalGames; i++) {
+            for (i = 0; i < vm.torneo.fixture.total_games; i++) {
                 var fecha = {};
-                fecha.gameNumber = i + 1;
+                fecha.game_number = i + 1;
                 fecha.matches = [];
 
-                if (vm.torneo.fixture.specialGame != fecha.gameNumber) {
+                if (vm.torneo.fixture.special_game != fecha.game_number) {
 
                     var posicionDistinto = buscarPosicion(vm.equipoDistinto, vm.partidosEquipo);
                     /*Recorro aux1*/
@@ -224,7 +224,7 @@
 
                 vm.torneo.fixture.games.push(fecha);
             }
-            vm.torneo.fixture.games[0].isCurrent = true;
+            vm.torneo.fixture.games[0].is_current = true;
             vm.torneo.$save(function () {
                 vm.torneo.start_date = new Date(vm.torneo.start_date);
                 vm.torneo.finish_date = new Date(vm.torneo.finish_date);

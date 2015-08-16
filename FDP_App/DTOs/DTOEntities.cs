@@ -105,52 +105,54 @@ namespace FDP_App.DTOs
 
     public class FixtureLeagueDTO
     {
+        public FixtureLeagueDTO()
+        {
+
+        }
         public FixtureLeagueDTO(Fixture f)
         {
-            if (f != null)
+            this.league_id = f.LeagueId;
+            this.total_games = f.TotalGames;
+            this.special_game = f.SpecialGame;
+            List<GameDTO> gameList = new List<GameDTO>();
+            foreach (Game g in f.Games)
             {
-                this.LeagueId = f.LeagueId;
-                this.TotalGames = f.TotalGames;
-                this.SpecialGame = f.SpecialGame;
-                List<GameDTO> gameList = new List<GameDTO>();
-                foreach (Game g in f.Games)
-                {
-                    gameList.Add(new GameDTO(g));
-                }
-                this.Games = gameList.ToArray();
+                gameList.Add(new GameDTO(g));
             }
+            this.games = gameList.ToArray();
         }
-        public int LeagueId { get; set; }
-        public int TotalGames { get; set; }
-        public int SpecialGame { get; set; }
-        public GameDTO[] Games { get; set; }
+        public int league_id { get; set; }
+        public int total_games { get; set; }
+        public int special_game { get; set; }
+        public GameDTO[] games { get; set; }
     }
     public class GameDTO
     {
+        public GameDTO()
+        {
+
+        }
         public GameDTO(Game g)
         {
-            if (g != null)
+            this.game_id = g.GameId;
+            this.league_id = g.LeagueId;
+            this.game_number = g.GameNumber;
+            this.is_special_game = g.IsSpecialGame;
+            this.is_current = g.IsCurrent;
+            List<MatchDTO> matchList = new List<MatchDTO>();
+            foreach (Match m in g.Matches)
             {
-                this.GameId = g.GameId;
-                this.LeagueId = g.LeagueId;
-                this.GameNumber = g.GameNumber;
-                this.IsSpecialGame = g.IsSpecialGame;
-                this.IsCurrent = g.IsCurrent;
-                List<MatchDTO> matchList = new List<MatchDTO>();
-                foreach (Match m in g.Matches)
-                {
-                    matchList.Add(new MatchDTO(m));
-                }
-                this.Matches = matchList.ToArray();
+                matchList.Add(new MatchDTO(m));
             }
+            this.matches = matchList.ToArray();
         }
 
-        public int GameId { get; set; }
-        public int LeagueId { get; set; }
-        public int GameNumber { get; set; }
-        public bool IsSpecialGame { get; set; }
-        public bool IsCurrent { get; set; }
-        public MatchDTO[] Matches { get; set; }
+        public int game_id { get; set; }
+        public int league_id { get; set; }
+        public int game_number { get; set; }
+        public bool is_special_game { get; set; }
+        public bool is_current { get; set; }
+        public MatchDTO[] matches { get; set; }
     }
     public class MatchDTO
     {
@@ -182,16 +184,17 @@ namespace FDP_App.DTOs
 
     public class TeamsDTO
     {
+        public TeamsDTO()
+        {
+
+        }
         public TeamsDTO(Team t)
         {
-            if (t != null)
-            {
-                this.TeamId = t.TeamId;
-                this.Name = t.Name;
-                this.Stadium = t.Stadium;
-                this.City = t.City;
-                this.IsTopDivision = t.IsTopDivision;
-            }
+            this.TeamId = t.TeamId;
+            this.Name = t.Name;
+            this.Stadium = t.Stadium;
+            this.City = t.City;
+            this.IsTopDivision = t.IsTopDivision;
         }
 
         public int TeamId { get; set; }
@@ -202,23 +205,24 @@ namespace FDP_App.DTOs
     }
     public class TeamsDetailDTO
     {
+        public TeamsDetailDTO()
+        {
+
+        }
         public TeamsDetailDTO(Team t)
         {
-            if (t != null)
-            {
-                this.TeamId = t.TeamId;
-                this.Name = t.Name;
-                this.Stadium = t.Stadium;
-                this.City = t.City;
-                this.IsTopDivision = t.IsTopDivision;
+            this.TeamId = t.TeamId;
+            this.Name = t.Name;
+            this.Stadium = t.Stadium;
+            this.City = t.City;
+            this.IsTopDivision = t.IsTopDivision;
 
-                List<LeaguesTeamDTO> leagueList = new List<LeaguesTeamDTO>();
-                foreach (LeagueTeam l in t.Leagues)
-                {
-                    leagueList.Add(new LeaguesTeamDTO(l));
-                }
-                this.Leagues = leagueList.ToArray();
+            List<LeaguesTeamDTO> leagueList = new List<LeaguesTeamDTO>();
+            foreach (LeagueTeam l in t.Leagues)
+            {
+                leagueList.Add(new LeaguesTeamDTO(l));
             }
+            this.Leagues = leagueList.ToArray();
         }
 
         public int TeamId { get; set; }

@@ -77,8 +77,8 @@
         </div>
     </div> 
 
-    <div layout-padding layout-margin ng-show="posiciones.fechaActual.gameNumber <= posiciones.fechas.length">
-        <h2>Fecha {{posiciones.fechaActual.gameNumber}}</h2>
+    <div layout-padding layout-margin ng-show="posiciones.fechaActual.game_number <= posiciones.fechas.length">
+        <h2>Fecha {{posiciones.fechaActual.game_number}}</h2>
         <md-divider></md-divider>
         <md-list-item ng-repeat="partido in posiciones.fechaActual.matches | orderBy: 'match_date'" layout="row" layout-padding>
 
@@ -121,10 +121,10 @@
           
             <md-divider></md-divider>
         </md-list-item>
-        <md-button ng-click="posiciones.finalizarFecha(posiciones.fechaActual.gameId, posiciones.fechaActual.gameNumber)">Finalizar Fecha</md-button>
+        <md-button ng-click="posiciones.finalizarFecha(posiciones.fechaActual.game_id, posiciones.fechaActual.game_gumber)">Finalizar Fecha</md-button>
     </div>
 
-    <div ng-if="posiciones.fechaAnterior.gameNumber == posiciones.torneo.fixture.totalGames">
+    <div ng-if="posiciones.fechaAnterior.game_number == posiciones.torneo.fixture.total_games">
         <md-button ng-click="posiciones.finalizarTorneo()">Finalizar Torneo</md-button>
     </div>
 
