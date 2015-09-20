@@ -3,6 +3,20 @@
 appService.factory('leaguesService', ['$http', function ($http) {
 
     return {
+        get: function (leagueId) {
+            if (typeof (leagueId) === 'undefined')
+                return $http.get('/api/leagues')
+            return $http.get('/api/leagues/' + leagueId)
+        },
+        update: function (leagueId, league) {
+            return $http.put('/api/leagues/' + leagueId, league)
+        },
+        create: function (league) {
+            return $http.post('/api/leagues', league)
+        },
+        delete: function (leagueId) {
+            return $http.delete('/api/leagues/' + leagueId)
+        },
         teams: {
             get: function (leagueId, teamId) {
                 if (typeof (teamId) === 'undefined')
@@ -11,6 +25,13 @@ appService.factory('leaguesService', ['$http', function ($http) {
             },
             update: function (leagueId, teamId, team) {
                 return $http.put('/api/leagues/'+ leagueId + '/teams/' + teamId, team)
+            }
+        },
+        games: {
+            get: function (leagueId, gameNumber) {
+                if (typeof (gameNumber) === 'undefined')
+                    return $http.get('/api/leagues/' + leagueId + '/games')
+                return $http.get('/api/leagues/' + leagueId + '/games/' + gameNumber)
             }
         }
     }
