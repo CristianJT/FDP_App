@@ -81,20 +81,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\app.js" />
-    <Content Include="app\Directives\tabsPage.js" />
-    <Content Include="components\fixture\fixture.js" />
-    <Content Include="components\main\main.html" />
-    <Content Include="components\main\main.js" />
-    <Content Include="components\nuevotorneo\nuevotorneo.js" />
-    <Content Include="app\Services\appService.js" />
-    <Content Include="components\fixture\fixture.html" />
-    <Content Include="components\posiciones\posiciones.html" />
-    <Content Include="app\Views\TabsPage.html" />
-    <Content Include="components\nuevotorneo\nuevotorneo.html" />
-    <Content Include="components\posiciones\posiciones.js" />
-    <Content Include="components\torneo\torneo.html" />
-    <Content Include="components\torneo\torneo.js" />
+    <Content Include="Front_Code\app\app.js" />
+    <Content Include="Front_Code\app\Directives\tabsPage.js" />
+    <Content Include="Front_Code\components\fixture\fixture.js" />
+    <Content Include="Front_Code\components\main\main.html" />
+    <Content Include="Front_Code\components\main\main.js" />
+    <Content Include="Front_Code\components\nuevotorneo\nuevotorneo.js" />
+    <Content Include="Front_Code\app\Services\appService.js" />
+    <Content Include="Front_Code\components\fixture\fixture.html" />
+    <Content Include="Front_Code\components\posiciones\posiciones.html" />
+    <Content Include="Front_Code\app\Views\TabsPage.html" />
+    <Content Include="Front_Code\components\nuevotorneo\nuevotorneo.html" />
+    <Content Include="Front_Code\components\posiciones\posiciones.js" />
+    <Content Include="Front_Code\components\torneo\torneo.html" />
+    <Content Include="Front_Code\components\torneo\torneo.js" />
     <Content Include="Content\css\angular-material.css" />
     <Content Include="Content\css\angular-material.min.css" />
     <Content Include="Content\css\bootstrap.css" />
@@ -135,13 +135,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\GamesController.cs" />
-    <Compile Include="Controllers\LeagueGamesController.cs" />
-    <Compile Include="Controllers\LeaguesController.cs" />
-    <Compile Include="Controllers\LeagueTeamsController.cs" />
-    <Compile Include="Controllers\MatchesController.cs" />
-    <Compile Include="Controllers\TeamsController.cs" />
-    <Compile Include="DTOs\DTOEntities.cs" />
+    <Compile Include="Back_Code\ContextInitializer.cs" />
+    <Compile Include="Back_Code\Controllers\GamesController.cs" />
+    <Compile Include="Back_Code\Controllers\LeagueGamesController.cs" />
+    <Compile Include="Back_Code\Controllers\LeaguesController.cs" />
+    <Compile Include="Back_Code\Controllers\LeagueTeamsController.cs" />
+    <Compile Include="Back_Code\Controllers\MatchesController.cs" />
+    <Compile Include="Back_Code\Controllers\TeamsController.cs" />
+    <Compile Include="Back_Code\DTOs\DTOEntities.cs" />
+    <Compile Include="Back_Code\FDPAppContext.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Back_Code\Models\Fixture.cs" />
+    <Compile Include="Back_Code\Models\Game.cs" />
+    <Compile Include="Back_Code\Models\League.cs" />
+    <Compile Include="Back_Code\Models\LeagueTeam.cs" />
+    <Compile Include="Back_Code\Models\Match.cs" />
+    <Compile Include="Back_Code\Models\Team.cs" />
+    <Compile Include="Back_Code\Services\BaseInterface.cs" />
+    <Compile Include="Back_Code\Services\BaseService.cs" />
+    <Compile Include="Back_Code\Services\GameService.cs" />
+    <Compile Include="Back_Code\Services\LeagueService.cs" />
+    <Compile Include="Back_Code\Services\MatchService.cs" />
+    <Compile Include="Back_Code\Services\TeamService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -159,16 +174,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Data\Data.csproj">
-      <Project>{505601c2-f928-426c-892c-4be3dffa95be}</Project>
-      <Name>Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Entities\Entities.csproj">
-      <Project>{95940999-846f-489a-93e2-d5cfe6397a60}</Project>
-      <Name>Entities</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
