@@ -9,22 +9,24 @@ namespace App.FDP
 
         public League()
         {
-            this.Teams = new HashSet<LeagueTeam>();
+            Teams = new HashSet<LeagueTeam>();
+            Games = new HashSet<Game>();
         }
 
-        [Key]
-        public int LeagueId { get; set; }
-
+        public int Id { get; set; }
         public string Name { get; set; }
         public int Season { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime FinishDate { get; set; }
         public bool IsCurrent { get; set; }
         public string Champion { get; set; }
-        public int RelegatedTeams { get; set; }
+        public int? RelegatedTeams { get; set; }
+        public int TotalGames { get; set; }
+        public int TotalTeams { get; set; }
+        public int? SpecialGame { get; set; }
 
         public virtual ICollection<LeagueTeam> Teams { get; set; }
-        public virtual Fixture Fixture { get; set; }
+        public virtual ICollection<Game> Games { get; set; }
 
     }
 

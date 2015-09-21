@@ -8,18 +8,25 @@ namespace App.FDP
 
         public Game()
         {
-            this.Matches = new HashSet<Match>();
+            Matches = new HashSet<Match>();
         }
 
-        [Key]
-        public int GameId { get; set; }
+        public int Id { get; set; }
         public int LeagueId { get; set; }
         public int GameNumber { get; set; }
-        public bool IsSpecialGame { get; set; }
-        public bool IsCurrent { get; set; }
+        public bool? IsSpecialGame { get; set; }
+        public GameState? State { get; set; }
 
-        public virtual Fixture Fixture { get; set; }
+        public virtual League League { get; set; }
         public virtual ICollection<Match> Matches { get; set; }
 
     }
+
+    public enum GameState
+    {
+        in_progress = 1,
+        finished = 2,
+        postponed = 3
+    }
+
 }

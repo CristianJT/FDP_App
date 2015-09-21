@@ -7,14 +7,14 @@ namespace App.FDP
     {
         public LeagueTeam()
         {
-            this.Points = 0;
-            this.Played = 0;
-            this.Won = 0;
-            this.Draws = 0;
-            this.Lost = 0;
-            this.GoalsFor = 0;
-            this.GoalsAgainst = 0;
-            this.GoalDifference = 0;
+            Points = 0;
+            Played = 0;
+            Won = 0;
+            Draws = 0;
+            Lost = 0;
+            GoalsFor = 0;
+            GoalsAgainst = 0;
+            GoalDifference = 0;
         }
 
         [Key]

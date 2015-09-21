@@ -7,17 +7,16 @@ namespace App.FDP
     {
         public Team()
         {
-            this.Leagues = new HashSet<LeagueTeam>();
+            Leagues = new HashSet<LeagueTeam>();
         }
 
-        [Key]
-        public int TeamId { get; set; }
-
+        public int Id { get; set; }
+        public int StadiumId { get; set; }
         public string Name { get; set; }
-        public string Stadium { get; set; }
-        public string City { get; set; }
+        public string Location { get; set; }
         public bool IsTopDivision { get; set; }
 
         public virtual ICollection<LeagueTeam> Leagues { get; set; }
+        public virtual Stadium Stadium { get; set; }
     }
 }
