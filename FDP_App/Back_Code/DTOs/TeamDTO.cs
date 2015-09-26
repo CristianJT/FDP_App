@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace App.FDP
 {
-    public class TeamsDTO
+
+    public class TeamIdsDTO
+    {
+        public int[] ids { get; set; }
+    }
+
+    public class TeamDTO
     {
         public int id { get; set; }
         public string nombre { get; set; }
@@ -14,11 +20,11 @@ namespace App.FDP
         public string ubicacion { get; set; }
         public bool es_primera_division { get; set; }
 
-        public TeamsDTO()
+        public TeamDTO()
         {
 
         }
-        public TeamsDTO(Team t)
+        public TeamDTO(Team t)
         {
             id = t.Id;
             nombre = t.Name;
