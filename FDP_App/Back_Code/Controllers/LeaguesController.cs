@@ -3,7 +3,6 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
-using System.Web.Http.Description;
 
 namespace App.FDP
 {
@@ -17,12 +16,12 @@ namespace App.FDP
         [HttpGet]
         public IHttpActionResult GetLeagues()
         {
-            League[] leagues = db.Leagues.AsNoTracking().ToArray();
-            if (leagues.Length == 0)
+            League[] torneos = db.Leagues.AsNoTracking().ToArray();
+            if (torneos.Length == 0)
             {
                 return Ok(new List<LeagueDTO>().ToArray());
             }
-            return Ok(leagues.Select(l => new LeagueDTO(l)));
+            return Ok(torneos.Select(l => new LeagueDTO(l)));
         }
 
         /* GET: api/torneos/{id} */
@@ -30,13 +29,13 @@ namespace App.FDP
         [HttpGet]
         public IHttpActionResult GetLeague(int id)
         {
-            League league = db.Leagues
+            League torneo = db.Leagues
                 .Where(l => l.Id == id).AsNoTracking().FirstOrDefault();
-            if (league == null)
+            if (torneo == null)
             {
                 return NotFound();
             }
-            return Ok(new LeagueDTO(league));
+            return Ok(new LeagueDTO(torneo));
         }
 
         /* GET: api/torneos/{id}/fechas */
@@ -49,80 +48,57 @@ namespace App.FDP
             return Ok(games.Select(g => new GameDTO(g)));           
         }
 
-        /* GET: api/torneos/{id}/equipos */
-        [Route("{id}/equipos")]
-        [HttpGet]
-        public IHttpActionResult GetLeagueTeams(int id)
-        {
-            LeagueTeam[] teams = db.LeagueTeams.Where(lt => lt.LeagueId == id)
-                .AsNoTracking().ToArray();
-            return Ok(teams.Select(t => new TeamLeagueDTO(t)));
-        }
-
-        /* GET: api/torneos/{idTorneo}/equipos/{idEquipo} */
-        [Route("{idTorneo}/equipos/{idEquipo}")]
-        [HttpGet]
-        public IHttpActionResult GetLeagueTeam(int idTorneo, int idEquipo)
-        {
-            LeagueTeam team = db.LeagueTeams
-                .Where(lt => lt.LeagueId == idTorneo & lt.TeamId == idEquipo).AsNoTracking().FirstOrDefault();
-            if (team == null)
-            {
-                return NotFound();
-            }
-            return Ok(new TeamLeagueDTO(team));
-        }
 
         /* POST: api/torneos/crear */
         [Route("crear")]
         [HttpPost]
-        public IHttpActionResult CreateLeague(LeagueDTO leagueDTO)
+        public IHttpActionResult CreateLeague(LeagueDTO torneoDTO)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            League league = new League();
-            league.Name = leagueDTO.nombre;
-            league.Season = leagueDTO.temporada;
-            league.StartDate = leagueDTO.fecha_inicio;
-            league.FinishDate = leagueDTO.fecha_fin;
-            league.IsCurrent = leagueDTO.en_progreso;
-            league.Champion = leagueDTO.campeon;
-            league.RelegatedTeams = leagueDTO.cantidad_descensos;
-            league.TotalTeams = leagueDTO.total_equipos;
-            league.TotalGames = leagueDTO.total_fechas;
-            league.SpecialGame = leagueDTO.fecha_especial_numero;
+            League torneo = new League();
+            torneo.Name = torneoDTO.nombre;
+            torneo.Season = torneoDTO.temporada;
+            torneo.StartDate = torneoDTO.fecha_inicio;
+            torneo.FinishDate = torneoDTO.fecha_fin;
+            torneo.IsCurrent = torneoDTO.en_progreso;
+            torneo.Champion = torneoDTO.campeon;
+            torneo.RelegatedTeams = torneoDTO.cantidad_descensos;
+            torneo.TotalTeams = torneoDTO.total_equipos;
+            torneo.TotalGames = torneoDTO.total_fechas;
+            torneo.SpecialGame = torneoDTO.fecha_especial_numero;
 
-            db.Leagues.Add(league);
+            db.Leagues.Add(torneo);
             db.SaveChanges();
 
-            return Ok();
+            return Ok(torneoDTO);
         }
 
         /* PUT: api/torneos/{id} */
         [Route("{id}")]
         [HttpPut]
-        public IHttpActionResult UpdateLeague(int id, LeagueDTO leagueDTO)
+        public IHttpActionResult UpdateLeague(int id, LeagueDTO torneoDTO)
         {
-            if (id != leagueDTO.id)
+            if (id != torneoDTO.id)
             {
                 return BadRequest();
             }
 
-            League league = db.Leagues
+            League torneo = db.Leagues
                 .Where(l => l.Id == id).FirstOrDefault();
-            if (league == null)
+            if (torneo == null)
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            league.Champion = leagueDTO.campeon;
-            league.IsCurrent = leagueDTO.en_progreso;
+            torneo.Champion = torneoDTO.campeon;
+            torneo.IsCurrent = torneoDTO.en_progreso;
             db.SaveChanges();
 
-            return Ok(new LeagueDTO(league));
+            return Ok(new LeagueDTO(torneo));
         }
 
         /* DELETE: api/torneos/{id}/eliminar */
@@ -130,13 +106,13 @@ namespace App.FDP
         [HttpPost]
         public IHttpActionResult DeleteLeague(int id)
         {
-            League league = db.Leagues
+            League torneo = db.Leagues
                 .Where(l => l.Id == id).FirstOrDefault();
-            if (league == null)
+            if (torneo == null)
             {
-                return NotFound();
+                return BadRequest();
             }
-            db.Leagues.Remove(league);
+            db.Leagues.Remove(torneo);
             db.SaveChanges();
 
             return Ok();
