@@ -14,9 +14,9 @@ namespace App.FDP
         public DbSet<League> Leagues { get; set; }
         public DbSet<LeagueTeam> LeagueTeams { get; set; }
         public DbSet<Team> Teams { get; set; }
-        public DbSet<Fixture> Fixture { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<Match> Matches { get; set; }
+        public DbSet<Stadium> Stadiums { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -35,10 +35,13 @@ namespace App.FDP
             //modelBuilder.Entity<LeagueTeam>()
             //    .HasKey(lt => new { lt.LeagueId, lt.TeamId });
 
-            //modelBuilder.Entity<Fixture>()
-            //    .HasKey(f => f.LeagueId)
-            //    .HasRequired(f => f.League)
-            //    .WithOptional(l => l.Fixture);
+            modelBuilder.Entity<Stadium>()
+                .HasOptional(s => s.Team)
+                .WithRequired(t => t.Stadium);
+
+            modelBuilder.Entity<Team>()
+                .HasRequired(t => t.Stadium)
+                .WithOptional(s => s.Team);
 
             //modelBuilder.Entity<Fixture>()
             //    .HasMany<Game>(f => f.Games)

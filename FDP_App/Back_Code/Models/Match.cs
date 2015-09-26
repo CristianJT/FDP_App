@@ -12,10 +12,10 @@ namespace App.FDP
 
         public int Id { get; set; }
         public int GameId { get; set; }
-        public int StadiumId { get; set; }
+        public int? StadiumId { get; set; }
         public DateTime? MatchDate { get; set; }
-        public int HomeTeamId { get; set; }
-        public int AwayTeamId { get; set; }
+        public int? HomeTeamId { get; set; }
+        public int? AwayTeamId { get; set; }
         public int? HomeResult { get; set; }
         public int? AwayResult { get; set; }
         public MatchState State { get; set; }
