@@ -9,7 +9,7 @@ namespace App.FDP
         protected override void Seed(FDPAppContext context)
         {
             context.Leagues.AddOrUpdate(new League[] {
-                new League { Id = 1, Name = "Final", Season = 2014, StartDate = DateTime.Parse("2014-02-07"), FinishDate = DateTime.Parse("2014-05-19"), IsCurrent = false, Champion = "River Plate", RelegatedTeams = 2  }
+                new League { Id = 1, Name = "Final", Season = "2014", StartDate = DateTime.Parse("2014-02-07"), FinishDate = DateTime.Parse("2014-05-19"), IsCurrent = false, Champion = "River Plate", RelegatedTeams = 2  }
             });
 
             context.Teams.AddOrUpdate(new Team[] {

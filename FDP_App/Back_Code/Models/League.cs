@@ -15,7 +15,7 @@ namespace App.FDP
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Season { get; set; }
+        public string Season { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime FinishDate { get; set; }
         public bool IsCurrent { get; set; }

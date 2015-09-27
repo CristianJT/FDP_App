@@ -6,7 +6,7 @@ namespace App.FDP
     {
         public int id { get; set; }
         public string nombre { get; set; }
-        public int temporada { get; set; }
+        public string temporada { get; set; }
         public DateTime fecha_inicio { get; set; }
         public DateTime fecha_fin { get; set; }
         public bool en_progreso { get; set; }
