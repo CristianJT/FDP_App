@@ -1,4 +1,4 @@
-namespace FDP_App.Migrations
+namespace App.FDP
 {
     using System;
     using System.Data.Entity.Migrations;
@@ -27,7 +27,7 @@ namespace FDP_App.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(),
-                        Season = c.Int(nullable: false),
+                        Season = c.String(),
                         StartDate = c.DateTime(nullable: false),
                         FinishDate = c.DateTime(nullable: false),
                         IsCurrent = c.Boolean(nullable: false),
@@ -64,22 +64,22 @@ namespace FDP_App.Migrations
                 "dbo.Team",
                 c => new
                     {
-                        Id = c.Int(nullable: false),
-                        StadiumId = c.Int(nullable: false),
+                        Id = c.Int(nullable: false, identity: true),
+                        StadiumId = c.Int(),
                         Name = c.String(),
                         Location = c.String(),
                         IsTopDivision = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Stadium", t => t.Id)
-                .Index(t => t.Id);
+                .ForeignKey("dbo.Stadium", t => t.StadiumId)
+                .Index(t => t.StadiumId);
             
             CreateTable(
                 "dbo.Stadium",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        TeamId = c.Int(nullable: false),
+                        TeamId = c.Int(),
                         Name = c.String(),
                         Location = c.String(),
                         Size = c.Int(),
@@ -115,7 +115,7 @@ namespace FDP_App.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.Team", "Id", "dbo.Stadium");
+            DropForeignKey("dbo.Team", "StadiumId", "dbo.Stadium");
             DropForeignKey("dbo.Match", "StadiumId", "dbo.Stadium");
             DropForeignKey("dbo.Match", "HomeTeamId", "dbo.Team");
             DropForeignKey("dbo.Match", "GameId", "dbo.Game");
@@ -127,7 +127,7 @@ namespace FDP_App.Migrations
             DropIndex("dbo.Match", new[] { "HomeTeamId" });
             DropIndex("dbo.Match", new[] { "StadiumId" });
             DropIndex("dbo.Match", new[] { "GameId" });
-            DropIndex("dbo.Team", new[] { "Id" });
+            DropIndex("dbo.Team", new[] { "StadiumId" });
             DropIndex("dbo.LeagueTeam", new[] { "TeamId" });
             DropIndex("dbo.LeagueTeam", new[] { "LeagueId" });
             DropIndex("dbo.Game", new[] { "LeagueId" });

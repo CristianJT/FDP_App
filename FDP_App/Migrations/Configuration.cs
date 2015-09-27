@@ -1,6 +1,5 @@
-namespace FDP_App.Migrations
+namespace App.FDP
 {
-    using App.FDP;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -22,7 +21,7 @@ namespace FDP_App.Migrations
             context.Teams.AddOrUpdate(new Team[] {
                 new Team { Id = 1, StadiumId = 1, Name = "Independiente", Location = "Avellaneda(BsAs)", IsTopDivision = true },
                 new Team { Id = 2, StadiumId = 2, Name = "River Plate", Location = "Nuñez(CapFed)", IsTopDivision = true },
-                new Team { Id = 3, StadiumId = 3, Name = "Boca Juniors", Location = "La Boca(CapFed)", IsTopDivision = true }
+                new Team { Id = 3, Name = "Boca Juniors", Location = "La Boca(CapFed)", IsTopDivision = true }
             });
 
             context.LeagueTeams.AddOrUpdate(new LeagueTeam[] {
@@ -33,8 +32,9 @@ namespace FDP_App.Migrations
             context.Stadiums.AddOrUpdate(new Stadium[] {
                 new Stadium { Id = 1, TeamId = 1, Name = "Libertadores de América", Location = "Avellaneda(BsAs)" },
                 new Stadium { Id = 2, TeamId = 2, Name = "Antonio Vespucio Liberti", Location = "Nuñez(CapFed)" },
-                new Stadium { Id = 3, TeamId = 3, Name = "Alberto J. Armando", Location = "La Boca(CapFed)" },
-                new Stadium { Id = 4, Name = "Ciudad de La Plata", Location = "La Plata(BsAs)" }
+                new Stadium { Id = 3, Name = "Alberto J. Armando", Location = "La Boca(CapFed)" },
+                new Stadium { Id = 4, Name = "Ciudad de La Plata", Location = "La Plata(BsAs)" },
+                new Stadium { Id = 5, Name = "Pedro Bidegain", Location = "Bajo Flores(CapFed)" }
             });
         }
     }
