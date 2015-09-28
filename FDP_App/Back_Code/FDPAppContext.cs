@@ -35,13 +35,13 @@ namespace App.FDP
             //modelBuilder.Entity<LeagueTeam>()
             //    .HasKey(lt => new { lt.LeagueId, lt.TeamId });
 
-            modelBuilder.Entity<Stadium>()
-                .HasOptional(s => s.Team)
-                .WithRequired(t => t.Stadium);
+            //modelBuilder.Entity<Stadium>()
+            //    .HasOptional(s => s.Team).WithMany()
+            //    .HasForeignKey(s => s.TeamId);
 
-            modelBuilder.Entity<Team>()
-                .HasRequired(t => t.Stadium)
-                .WithOptional(s => s.Team);
+            //modelBuilder.Entity<Team>()
+            //    .HasRequired(t => t.Stadium).WithMany()
+            //    .HasForeignKey(t => t.StadiumId);
 
             //modelBuilder.Entity<Fixture>()
             //    .HasMany<Game>(f => f.Games)

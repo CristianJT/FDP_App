@@ -11,7 +11,7 @@ namespace App.FDP
         }
 
         public int Id { get; set; }
-        public int StadiumId { get; set; }
+        public int? StadiumId { get; set; }
         public string Name { get; set; }
         public string Location { get; set; }
         public bool IsTopDivision { get; set; }
